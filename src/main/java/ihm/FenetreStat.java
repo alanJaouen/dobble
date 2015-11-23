@@ -1,31 +1,19 @@
 package ihm;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JScrollBar;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -142,7 +130,6 @@ public class FenetreStat extends JFrame {
 		
 		 TableRowSorter trs = new TableRowSorter(model);
 
-	        @SuppressWarnings("rawtypes")
 			class IntComparator implements Comparator {
 	            public int compare(Object o1, Object o2) {
 	                Integer int1 = (Integer)o1;
@@ -154,8 +141,6 @@ public class FenetreStat extends JFrame {
 	                return this.equals(o2);
 	            }
 	        }
-	        
-	        @SuppressWarnings("rawtypes")
 			class IntegertpsjComparator implements Comparator {
 	            public int compare(Object o1, Object o2) {
 	            	Integertpsj int1 = (Integertpsj)o1;
@@ -318,7 +303,6 @@ public class FenetreStat extends JFrame {
 		public void actionPerformed(ActionEvent e)
 		{
 			
-			String str=e.getActionCommand();
 			//new FenetreMenu();
 			FenetreStat.this.dispose();
 			
