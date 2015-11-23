@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="dobble1" version="3">
+  <DEPS>
+    <ID name="dobble1" mc="PropertyContainer" uid="3b333142-ec9f-45bf-bc4d-c050ccecc7cd"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="dobble1" mc="PropertyContainer" uid="3b333142-ec9f-45bf-bc4d-c050ccecc7cd"/>
+    <PID name="dobble1" mc="AnalystProject" uid="a4a0693b-cae1-4f26-b297-2aaa9e75388b"/>
+    <ATTRIBUTES>
+      <ATT name="Name"><![CDATA[dobble1]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES></DEPENDENCIES>
+  </OBJECT>
+</EXT>

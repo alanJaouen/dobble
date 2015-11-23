@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Stats.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">Stats.java</span></div><h1>Stats.java</h1><pre class="source lang-java linenums">/*					CeCILL licence
+ *
+ * Copyright or Â© or Copr. Klervi BLESCHET, Eva TERZAGO, Adrien BOIZARD, Kyllian GAUTIER, Alan JAOUEN
+ *
+ *  -
+ *  -
+ *  -
+ *  -
+ *  - alan.jaouen.96@gmail.com 
+ *  
+ *  This software is a computer program whose purpose is to play to the Dobble game.
+ *
+ *  This software is governed by the CeCILL license under French law and abiding by the rules of distribution of free software. You can use, modify and/ or redistribute the software under the terms of the CeCILL license as circulated by CEA, CNRS and INRIA at the following URL &quot;http://www.cecill.info&quot;.
+ *
+ *  As a counterpart to the access to the source code and rights to copy, modify and redistribute granted by the license, users are provided only with a limited warranty and the software's author, the holder of the economic rights, and the successive licensors have only limited
+ *  liability.
+ *
+ *  In this respect, the user's attention is drawn to the risks associated with loading, using, modifying and/or developing or reproducing the software by the user in light of its specific status of free software, that may mean that it is complicated to manipulate, and that also
+ *  therefore means that it is reserved for developers and experienced professionals having in-depth computer knowledge. Users are therefore encouraged to load and test the software's suitability as regards their requirements in conditions enabling the security of their systems and/or data to be ensured and, more generally, to use and operate it in the same conditions as regards security.
+ *
+ *  The fact that you are presently reading this means that you have had knowledge of the CeCILL license and that you accept its terms.
+ * 
+ * 
+ * 				GNU GPL licence
+ * 
+ *  Copyright (C) 2016 Klervi BLESCHET, Eva TERZAGO, Adrien BOIZARD, Kyllian GAUTIER, Alan JAOUEN
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+package dobble;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import dobble.Stats.BddException;
+
+/**
+ * Classe modelisant les statistiques d'un joueur
+ * test55
+ * @author Alan JAOUEN
+ *
+ */
+public class Stats {
+
+	/**
+	 * Le niveau du joueur
+	 */
+    private int niveau;
+    
+    /**
+     * l'experience du joueur
+     */
+    private int exp;
+
+   
+    /**
+     * le temps de jeu du joueur en min
+     */
+    private int tempsDeJeu;
+
+   
+    /**
+     * le temps de reaction du joueur en ms
+     */
+    private int tpsReaction;
+
+  
+    /**
+     * Le meilleur score du joueur
+     */
+    private int meilleurScore;
+
+    /**
+     * constructeur par dÃ¯Â¿Â½faut
+     */
+    public Stats()
+    {
+<span class="nc" id="L93">    	this(1,0,0,0,0);</span>
+<span class="nc" id="L94">    }</span>
+    
+    /**
+     * constructeur champ a champ
+     * @param unNiveau le niveau du joueur
+     * @param unExp l'esperience du joueur
+     * @param unTempsDeJeu le temps de jeu du joueur
+     * @param unTempsDeReaction le temps de reaction du joueur
+     * @param unMeilleurScore le meilleur score du joueur
+     */
+    public Stats(int unNiveau, int unExp, int unTempsDeJeu, int unTempsDeReaction, int unMeilleurScore)
+    {
+<span class="nc" id="L106">    	super();</span>
+<span class="nc" id="L107">    	this.setNiveau(unNiveau);</span>
+<span class="nc" id="L108">    	this.setExp(unExp);</span>
+<span class="nc" id="L109">    	this.setTempsDeJeu(unTempsDeJeu);</span>
+<span class="nc" id="L110">    	this.setTpsReaction(unTempsDeReaction);</span>
+<span class="nc" id="L111">    	this.setMeilleurScore(unMeilleurScore);</span>
+<span class="nc" id="L112">    }</span>
+    
+    /**
+     * Constructeur par copie depuis la bdd
+     * @param nom le nom du joueur dans la bdd
+     * @param mdp le mot de passe du joueur dans la bdd
+     * @throws BddException
+     */
+    public Stats( String nom, String mdp) throws BddException
+    {
+<span class="nc" id="L122">    	this();</span>
+<span class="nc" id="L123">    	this.charger( nom, mdp);</span>
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * constructeur par copie en local
+     * @param unStats l'instance de Stats a copier
+     */
+	public Stats (Stats unStats)
+    {
+<span class="nc" id="L132">    	this(unStats.getNiveau(),unStats.getExp(),unStats.getTempsDeJeu(),unStats.getTpsReaction(),</span>
+<span class="nc" id="L133">    			unStats.getMeilleurScore());</span>
+<span class="nc" id="L134">    }</span>
+    
+	/**
+	 * permet de changer les attribut de l'objet courant pour correspondre avec ceux stokes en ligne
+	 * @param nom id dans la bdd des stats a recuperer
+	 * @param mdp mot de passe associe aux stats a recuperer sur la bdd
+	 * @throws BddException
+	 */
+    public void charger(String nom, String mdp) throws BddException 
+    {
+<span class="nc" id="L144">		Stats st= this.getBddStat(nom, mdp);</span>
+<span class="nc" id="L145">		System.out.println(st);</span>
+<span class="nc" id="L146">		this.setNiveau(st.getNiveau());</span>
+<span class="nc" id="L147">		this.setExp(st.getExp());</span>
+<span class="nc" id="L148">		this.setMeilleurScore(st.getMeilleurScore());</span>
+<span class="nc" id="L149">		this.setTempsDeJeu(st.getTempsDeJeu());</span>
+<span class="nc" id="L150">		this.setTpsReaction(st.getTpsReaction());</span>
+<span class="nc" id="L151">	}</span>
+    
+
+    public void sauvegarder(String nom, String mdp) throws BddException 
+	{
+		/* Verification */
+<span class="nc bnc" id="L157" title="All 4 branches missed.">    	if(nom.trim().equals(&quot;&quot;)||mdp.trim().equals(&quot;&quot;))</span>
+<span class="nc" id="L158">    		throw new BddException(&quot;Champ(s) vide(s)&quot;);</span>
+    	
+    	/* anti sql injection*/
+<span class="nc bnc" id="L161" title="All 4 branches missed.">    	if(Joueur.verifsql(nom) || Joueur.verifsql(mdp))</span>
+<span class="nc" id="L162">    		throw new BddException(&quot;injection sql detectee et bloquee&quot;);</span>
+
+    		
+    	
+<span class="nc" id="L166">    	Connection con= MoteurJeu.connection();</span>
+    	
+<span class="nc bnc" id="L168" title="All 2 branches missed.">    	if (con==null)//si echec de la connection</span>
+<span class="nc" id="L169">    		throw new BddException(&quot;Echec de la connection Ã¯Â¿Â½ la BDD&quot;);</span>
+    	
+<span class="nc" id="L171">    	Statement st=null;</span>
+<span class="nc" id="L172">    	ResultSet rs=null;</span>
+    	
+    	try
+    	{
+<span class="nc" id="L176">    		st = con.createStatement();//creation stattement</span>
+    		
+<span class="nc" id="L178">	    	System.out.println(&quot;Connection reussie, lancement de la sauvegarde&quot;);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">	    	if(st.executeUpdate(&quot;UPDATE joueur &quot;</span>
+<span class="nc" id="L180">	    			+ &quot;SET lvl=&quot;+ this.getNiveau()+&quot;,&quot;</span>
+<span class="nc" id="L181">	    			+&quot;exp = &quot;+this.getExp()+&quot;,&quot;</span>
+<span class="nc" id="L182">	    			+&quot;tpsj = &quot;+this.getTempsDeJeu()+&quot;,&quot;</span>
+<span class="nc" id="L183">	    			+&quot;tpsr = &quot;+this.getTpsReaction()+&quot;,&quot;</span>
+<span class="nc" id="L184">	    			+&quot;score = &quot;+this.getMeilleurScore()</span>
+<span class="nc" id="L185">	    			+&quot;WHERE nom = '&quot;+nom+&quot;' AND mdp='&quot;+Crypt.encrypte(mdp)+&quot;'&quot;) !=1)</span>
+<span class="nc" id="L186">	    		throw new BddException(&quot;nom ou Mot de passe incorrect&quot;);</span>
+	    	
+    	}
+<span class="nc" id="L189">    	catch (SQLException ex) </span>
+    	{
+<span class="nc" id="L191">    		ex.printStackTrace();</span>
+<span class="nc" id="L192">    		throw new BddException(&quot;erreur lors de la communication avec la BDD&quot;);</span>
+    	}
+    	finally
+    	{
+<span class="nc" id="L196">    		 try </span>
+    		 {
+<span class="nc bnc" id="L198" title="All 4 branches missed.">    			 if (rs != null) </span>
+<span class="nc" id="L199">    				 rs.close();</span>
+<span class="nc bnc" id="L200" title="All 4 branches missed.">	             if (st != null)</span>
+<span class="nc" id="L201">	                 st.close();</span>
+<span class="nc bnc" id="L202" title="All 4 branches missed.">	             if (con != null)</span>
+<span class="nc" id="L203">	                 con.close();</span>
+    		 } 
+<span class="nc" id="L205">    		 catch (SQLException ex) </span>
+    		 {
+<span class="nc" id="L207">    			 throw new BddException(&quot;erreur lors de la fermeture de la connection a la BDD&quot;);</span>
+<span class="nc" id="L208">	         }</span>
+    	}
+<span class="nc" id="L210">	}</span>
+    
+    
+    
+    /**
+     * Creer une instance de {@link dobble.Stats} corespondant aux donnÃ¯Â¿Â½e stokees sur la bdd avec protection par id et mot de passe
+     * @param nom
+     * @param mdp
+     * @return
+     * @throws BddException
+     */
+    public Stats getBddStat(String nom, String mdp) throws BddException
+    {
+    	/* Verification */
+<span class="nc bnc" id="L224" title="All 4 branches missed.">    	if(nom.trim().equals(&quot;&quot;)||mdp.trim().equals(&quot;&quot;))</span>
+<span class="nc" id="L225">    		throw new BddException(&quot;Champ(s) vide(s)&quot;);</span>
+
+    	/* anti sql injection*/
+<span class="nc bnc" id="L228" title="All 4 branches missed.">    	if(Joueur.verifsql(nom) || Joueur.verifsql(mdp))</span>
+<span class="nc" id="L229">    		throw new BddException(&quot;injection sql detectee et bloquee&quot;);</span>
+    	
+<span class="nc" id="L231">    	Connection con= MoteurJeu.connection();</span>
+    	
+<span class="nc bnc" id="L233" title="All 2 branches missed.">    	if (con==null)//si echec de la connection</span>
+<span class="nc" id="L234">    		throw new BddException(&quot;Echec de la connection Ã¯Â¿Â½ la BDD&quot;);</span>
+    	
+<span class="nc" id="L236">    	Statement st=null;</span>
+<span class="nc" id="L237">    	ResultSet rs=null;</span>
+    	Stats stats;
+<span class="nc" id="L239">    	mdp=Crypt.encrypte(mdp);</span>
+    	
+    	try
+    	{
+<span class="nc" id="L243">    		st = con.createStatement();//creation stattement</span>
+<span class="nc" id="L244">    		rs = st.executeQuery(&quot;SELECT * FROM joueur WHERE nom='&quot;+nom+&quot;'&quot;); //on enregistre le resultat de la requete</span>
+    		
+<span class="nc bnc" id="L246" title="All 2 branches missed.">    		if(rs.next())</span>
+    		{
+<span class="nc bnc" id="L248" title="All 2 branches missed.">	    		if(mdp.equals(rs.getString(&quot;mdp&quot;)))</span>
+	    		{
+<span class="nc" id="L250">	    			System.out.println(&quot;Connection etablie, donnees copiees en local&quot;);</span>
+<span class="nc" id="L251">	    			stats=new Stats(rs.getInt(&quot;lvl&quot;),</span>
+<span class="nc" id="L252">	    					rs.getInt(&quot;exp&quot;),</span>
+<span class="nc" id="L253">	    					rs.getInt(&quot;tpsj&quot;),</span>
+<span class="nc" id="L254">	    					rs.getInt(&quot;tpsr&quot;),</span>
+<span class="nc" id="L255">	    					rs.getInt(&quot;score&quot;));</span>
+	    		}
+<span class="nc" id="L257">	    		else throw new BddException(&quot;Mot de passe incorect&quot;);</span>
+    		}
+<span class="nc" id="L259">    		else throw new BddException(&quot;nom incorect&quot;);</span>
+	    	
+    	}
+<span class="nc" id="L262">    	catch (SQLException ex) </span>
+    	{
+<span class="nc" id="L264">    		throw new BddException(&quot;erreur lors de la communication avec la BDD&quot;);</span>
+    	}
+    	finally
+    	{
+<span class="nc" id="L268">    		 try </span>
+    		 {
+<span class="nc bnc" id="L270" title="All 4 branches missed.">    			 if (rs != null) </span>
+<span class="nc" id="L271">    				 rs.close();</span>
+<span class="nc bnc" id="L272" title="All 4 branches missed.">	             if (st != null)</span>
+<span class="nc" id="L273">	                 st.close();</span>
+<span class="nc bnc" id="L274" title="All 4 branches missed.">	             if (con != null)</span>
+<span class="nc" id="L275">	                 con.close();</span>
+    		 } 
+<span class="nc" id="L277">    		 catch (SQLException ex) </span>
+    		 {
+<span class="nc" id="L279">    			 throw new BddException(&quot;erreur lors de la fermeture de la connection a la BDD&quot;);</span>
+<span class="nc" id="L280">	         }</span>
+    	}
+<span class="nc" id="L282">    	return stats;</span>
+    }
+    
+    
+	/**
+	 * acesseur de niveau
+	 * @return la valeur de l'atribut niveau
+	 * @see dobble.Stats#niveau
+	 */
+	public int getNiveau() {
+<span class="nc" id="L292">		return niveau;</span>
+	}
+
+	/**
+	 * mutateur de niveau
+	 * @param niveau la valeur a mettre dans l'atribut niveau
+	 * @see dobble.Stats#niveau
+	 */
+	public void setNiveau(int niveau) {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if(niveau&gt;0)</span>
+<span class="nc" id="L302">			this.niveau = niveau;</span>
+<span class="nc" id="L303">	}</span>
+
+	/**
+	 * acesseur de exp
+	 * @return la valeur de l'atribut exp
+	 * @see dobble.Stats#exp
+	 */
+	public int getExp() {
+<span class="nc" id="L311">		return exp;</span>
+	}
+
+	/**
+	 * mutateur de exp
+	 * @param exp la valeur a mettre dans l'atribut exp
+	 * @see dobble.Stats#exp
+	 */
+	public void setExp(int exp) {
+<span class="nc bnc" id="L320" title="All 2 branches missed.">		if(exp&gt;0)</span>
+<span class="nc" id="L321">			this.exp = exp;</span>
+<span class="nc" id="L322">	}</span>
+
+	/**
+	 * acesseur de tempsDeJeu
+	 * @return la valeur de l'atribut tempsDeJeu
+	 * @see dobble.Stats#tempsDeJeu
+	 */
+	public int getTempsDeJeu() {
+<span class="nc" id="L330">		return tempsDeJeu;</span>
+	}
+
+	/**
+	 * mutateur de tempsDeJeu
+	 * @param tempsDeJeu la valeur a mettre dans l'atribut tempsDeJeu
+	 * @see dobble.Stats#tempsDeJeu
+	 */
+	public void setTempsDeJeu(int tempsDeJeu) {
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		if(tempsDeJeu &gt;0)</span>
+<span class="nc" id="L340">			this.tempsDeJeu = tempsDeJeu;</span>
+<span class="nc" id="L341">	}</span>
+
+	/**
+	 * acesseur de tpsReaction
+	 * @return la valeur de l'atribut tpsReaction
+	 * @see dobble.Stats#tpsReaction
+	 */
+	public int getTpsReaction() {
+<span class="nc" id="L349">		return tpsReaction;</span>
+	}
+
+	/**
+	 * mutateur de tpsReaction
+	 * @param tpsReaction la valeur a mettre dans l'atribut tpsReaction
+	 * @see dobble.Stats#tpsReaction
+	 */
+	public void setTpsReaction(int tpsReaction) {
+<span class="nc bnc" id="L358" title="All 2 branches missed.">		if(tpsReaction &gt;0)</span>
+<span class="nc" id="L359">			this.tpsReaction = tpsReaction;</span>
+<span class="nc" id="L360">	}</span>
+
+	/**
+	 * acesseur de meilleurScore
+	 * @return la valeur de l'atribut meilleurScore
+	 * @see dobble.Stats#meilleurScore
+	 */
+	public int getMeilleurScore() {
+<span class="nc" id="L368">		return meilleurScore;</span>
+	}
+
+	/**
+	 * mutateur de meilleurScore
+	 * @param meilleurScore la valeur a mettre dans l'atribut meilleurScore
+	 * @see dobble.Stats#meilleurScore
+	 */
+	public void setMeilleurScore(int meilleurScore) {
+<span class="nc bnc" id="L377" title="All 2 branches missed.">		if(meilleurScore&gt;0)</span>
+<span class="nc" id="L378">			this.meilleurScore = meilleurScore;</span>
+<span class="nc" id="L379">	}</span>
+	
+	
+	
+	/** 
+	 * tansforme l'objet courant en chaine de caracteres
+	 * @see java.lang.Object#toString()
+	 * @return une chaine de caracteres corespondant a l'objet courant
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L390">		return &quot;Stats [niveau=&quot; + niveau + &quot;, exp=&quot; + exp + &quot;, tempsDeJeu=&quot; + tempsDeJeu + &quot;, tpsReaction=&quot;</span>
+				+ tpsReaction + &quot;, meilleurScore=&quot; + meilleurScore + &quot;]&quot;;
+	}
+
+	
+	/**
+	 * Compare l'objet courant avec un autre
+	 * @see java.lang.Object#equals()
+	 * @return true si les objets sont Ã¯Â¿Â½gaux, false sinon
+	 */
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L402" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L403">			return true;</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L405">			return false;</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L407">			return false;</span>
+<span class="nc" id="L408">		Stats other = (Stats) obj;</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (exp != other.exp)</span>
+<span class="nc" id="L410">			return false;</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">		if (meilleurScore != other.meilleurScore)</span>
+<span class="nc" id="L412">			return false;</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (niveau != other.niveau)</span>
+<span class="nc" id="L414">			return false;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">		if (tempsDeJeu != other.tempsDeJeu)</span>
+<span class="nc" id="L416">			return false;</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (tpsReaction != other.tpsReaction)</span>
+<span class="nc" id="L418">			return false;</span>
+<span class="nc" id="L419">		return true;</span>
+	}
+
+	
+
+	/**
+	 * 
+	 * @author Alan JAOUEN
+	 *
+	 */
+	public class BddException extends Exception
+	{
+
+		private static final long serialVersionUID = 1L;
+		
+		/**
+		 * constructeur champ a champ
+		 * @param msg le message a faire remonte
+		 */
+		public BddException(String msg)
+<span class="nc" id="L439">		{</span>
+<span class="nc" id="L440">			super(msg);</span>
+<span class="nc" id="L441">		}</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
