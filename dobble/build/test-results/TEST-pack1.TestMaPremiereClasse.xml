@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pack1.TestMaPremiereClasse" tests="6" skipped="0" failures="0" errors="0" timestamp="2015-11-19T09:09:41" hostname="p20121" time="0.012">
+  <properties/>
+  <testcase name="testTrouve1" classname="pack1.TestMaPremiereClasse" time="0.001"/>
+  <testcase name="testTrouve2" classname="pack1.TestMaPremiereClasse" time="0.0"/>
+  <testcase name="testTrouvePas" classname="pack1.TestMaPremiereClasse" time="0.0"/>
+  <testcase name="testTrouve1" classname="pack1.TestMaPremiereClasse" time="0.001"/>
+  <testcase name="testTrouve2" classname="pack1.TestMaPremiereClasse" time="0.0"/>
+  <testcase name="testTrouvePas" classname="pack1.TestMaPremiereClasse" time="0.0"/>
+  <system-out><![CDATA[Trouvé!
+Nombre d'occurences: 1
+Trouvé!
+Nombre d'occurences: 1
+aucune occurence
+Trouvé!
+Nombre d'occurences: 1
+Trouvé!
+Nombre d'occurences: 1
+aucune occurence
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

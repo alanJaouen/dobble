@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="dobble1" version="3">
+  <DEPS>
+    <ID name="dobble1" mc="Project" uid="3430059c-9771-4371-8534-a717f2e438a8"/>
+    <COMPID name="dobble1" mc="Package" uid="c8130790-0ee7-499f-a182-70896c37edc1"/>
+    <COMPID name="dobble1" mc="DiagramSet" uid="4d0349b2-01c0-4956-b87c-65395583b5fa"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="dobble1" mc="Project" uid="3430059c-9771-4371-8534-a717f2e438a8"/>
+    <ATTRIBUTES>
+      <ATT name="ProjectContext"></ATT>
+      <ATT name="ProjectDescr"></ATT>
+      <ATT name="Name"><![CDATA[dobble1]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="DiagramRoot">
+        <COMPID name="dobble1" mc="DiagramSet" uid="4d0349b2-01c0-4956-b87c-65395583b5fa"/>
+      </COMP>
+      <COMP relation="Model">
+        <COMPID name="dobble1" mc="Package" uid="c8130790-0ee7-499f-a182-70896c37edc1"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
