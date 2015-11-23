@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Mode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">Mode.java</span></div><h1>Mode.java</h1><pre class="source lang-java linenums">package dobble;
+
+
+
+public class Mode implements Constantes_defaut_projet{
+	
+	// Attributs:
+    private int nbSymbole;
+
+    private int tempsIA;
+    
+    // -------------------------------------------------------------------
+    // Constructeurs:
+    // Par dÃ©faut:
+<span class="nc" id="L15">    public Mode() {</span>
+<span class="nc" id="L16">    	this.nbSymbole = Constantes_defaut_projet.nbSymbole_defaut; // Valeur par dÃ©faut contenue dans l'interface Constantes_defaut_projet</span>
+<span class="nc" id="L17">    	this.tempsIA = Constantes_defaut_projet.tempsIA_defaut;     // Valeur par dÃ©faut contenue dans l'interface Constantes_defaut_projet</span>
+<span class="nc" id="L18">    }</span>
+    
+    // Par champs:
+<span class="nc" id="L21">    public Mode(int nbSymbole, int tempsIA) {</span>
+<span class="nc bnc" id="L22" title="All 4 branches missed.">    	if (nbSymbole &lt; 0 || nbSymbole &gt; this.nbSymboleMax_defaut)</span>
+<span class="nc" id="L23">    		this.nbSymbole = this.nbSymbole_defaut;</span>
+    	else
+<span class="nc" id="L25">    		this.nbSymbole = nbSymbole;</span>
+    	
+<span class="nc bnc" id="L27" title="All 4 branches missed.">    	if (tempsIA &lt; 0 || tempsIA &gt; this.tempsIAMax_defaut)</span>
+<span class="nc" id="L28">    		this.tempsIA = this.tempsIA_defaut;</span>
+    	else
+<span class="nc" id="L30">    		this.tempsIA = tempsIA;</span>
+<span class="nc" id="L31">    }</span>
+    
+    // Par copie:
+<span class="nc" id="L34">    public Mode(Mode modele) {</span>
+<span class="nc" id="L35">    	this.nbSymbole = modele.getNbSymbole();</span>
+<span class="nc" id="L36">    	this.tempsIA = modele.getTempsIA();</span>
+<span class="nc" id="L37">    }</span>
+    
+    // -------------------------------------------------------------------
+    // MÃ©thodes:
+    
+    /*
+     * toString:
+     * prÃ©sente les valeurs du mode sous forme
+     * de string.
+     * 
+     */
+    public String toString() {
+<span class="nc" id="L49">    	String str = new String(&quot;&quot;);</span>
+<span class="nc" id="L50">    	str += &quot;Mode = [nbSymbole: &quot;;</span>
+<span class="nc" id="L51">    	str += this.getNbSymbole();</span>
+<span class="nc" id="L52">    	str += &quot;, tempsIA: &quot;;</span>
+<span class="nc" id="L53">    	str += this.tempsIA;</span>
+<span class="nc" id="L54">    	str += &quot;]&quot;;</span>
+<span class="nc" id="L55">    	return str;</span>
+    }
+    
+    
+    /*
+     * equals:
+     * compare les valeurs des champs suivants:
+     * 	- nbSylbole
+     * 	- tempsIA
+     * 
+     * renvoie true si les champs sont Ã©gaux, false sinon
+     * 
+     */
+    public boolean equals(Object modele) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">    	if (modele instanceof Mode) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">    		if (this.nbSymbole != ((Mode) modele).getNbSymbole())</span>
+<span class="nc" id="L71">    			return false;</span>
+    		
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    		if (this.tempsIA != ((Mode) modele).getTempsIA())</span>
+<span class="nc" id="L74">    			return false;</span>
+<span class="nc" id="L75">    	} else return false;</span>
+<span class="nc" id="L76">    	return true;</span>
+    }
+    
+    // -------------------------------------------------------------------
+    // Getter et Setters:
+    
+    public int getTempsIA() {
+<span class="nc" id="L83">    	return this.tempsIA;</span>
+    }
+
+	public int getNbSymbole() {
+<span class="nc" id="L87">		return this.nbSymbole;</span>
+	}
+
+	public void setNbSymbole(int nbSymbole) {
+<span class="nc" id="L91">		this.nbSymbole = nbSymbole;</span>
+<span class="nc" id="L92">	}</span>
+
+	public void setTempsIA(int tempsIA) {
+<span class="nc" id="L95">		this.tempsIA = tempsIA;</span>
+<span class="nc" id="L96">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

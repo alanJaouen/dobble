@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TestJoueurBdd.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">TestJoueurBdd.java</span></div><h1>TestJoueurBdd.java</h1><pre class="source lang-java linenums">package dobble;
+
+import java.util.Scanner;
+
+import dobble.Stats.BddException;
+
+<span class="nc" id="L7">public class TestJoueurBdd {</span>
+
+	public static void main(String[] args) {
+
+
+<span class="nc" id="L12">		Scanner sc= new Scanner(System.in);</span>
+		while(true)
+		{
+<span class="nc" id="L15">			sleep();</span>
+<span class="nc" id="L16">			System.out.println(&quot;\n\n\n\n\nTest de la classe Stats\n\n&quot;</span>
+					+ &quot;\t1:ajouteTom\n&quot;
+					+ &quot;\t2:supprimeTom\n&quot;
+					+ &quot;\t5:quitter&quot;);
+<span class="nc bnc" id="L20" title="All 4 branches missed.">			switch(sc.nextInt())</span>
+			{
+				case 1:
+<span class="nc" id="L23">					ajouteTom();</span>
+<span class="nc" id="L24">					break;</span>
+				case 2:
+<span class="nc" id="L26">					supprimeTom();</span>
+<span class="nc" id="L27">					break;</span>
+				case 5:
+<span class="nc" id="L29">					sc.close();</span>
+<span class="nc" id="L30">					System.exit(0);</span>
+			}
+		}
+	}
+	
+	
+	private static void ajouteTom()
+	{
+		try {
+<span class="nc" id="L39">			Joueur.nouveauJoueur(&quot;tom&quot;, &quot;tom&quot;);</span>
+<span class="nc" id="L40">		} catch (BddException e) {</span>
+<span class="nc" id="L41">			e.printStackTrace();</span>
+<span class="nc" id="L42">		}</span>
+<span class="nc" id="L43">	}</span>
+	
+	private static void supprimeTom()
+	{
+		try {
+<span class="nc" id="L48">			Joueur j=new Joueur(&quot;tom&quot;,&quot;tom&quot;);</span>
+<span class="nc" id="L49">			j.supprimerJoueur();</span>
+<span class="nc" id="L50">		} catch (BddException e) {</span>
+<span class="nc" id="L51">			e.printStackTrace();</span>
+<span class="nc" id="L52">		}</span>
+<span class="nc" id="L53">	}</span>
+	
+	private static void sleep()
+	{
+		try {
+<span class="nc" id="L58">			Thread.sleep(200);</span>
+<span class="nc" id="L59">		} catch (InterruptedException e1) {</span>
+<span class="nc" id="L60">		}</span>
+<span class="nc" id="L61">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
