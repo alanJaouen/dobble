@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TestMode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">TestMode.java</span></div><h1>TestMode.java</h1><pre class="source lang-java linenums">package dobble;
+
+<span class="nc" id="L3">public class TestMode {</span>
+	// Constructeurs:
+	
+	
+	public static void main(String args[]) {
+		
+		// Test du constructeur par dÃ©faut et de la mÃ©thode toString:
+<span class="nc" id="L10">		Mode[] mode_test = new Mode[6];</span>
+<span class="nc" id="L11">		mode_test[0] = new Mode(); // Constructeur par dÃ©faut</span>
+<span class="nc" id="L12">		mode_test[1] = new Mode(10, 7); // Constructeur par champs</span>
+<span class="nc" id="L13">		mode_test[2] = new Mode(-3, 12); // Constructeur par champs avec erreur 1er champ</span>
+<span class="nc" id="L14">		mode_test[3] = new Mode(3, -12); // Constructeur par champs avec erreur 2Ã¨me champ</span>
+<span class="nc" id="L15">		mode_test[4] = new Mode(-3, -12); // Constructeur par champs avec erreur 1er et 2Ã¨me champs</span>
+<span class="nc" id="L16">		mode_test[5] = new Mode(mode_test[2]); // Constructeur par copie</span>
+		
+<span class="nc" id="L18">		System.out.println(&quot;Tests de la classe Mode:\n&quot;);</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">		for (Mode i: mode_test)</span>
+<span class="nc" id="L20">			System.out.println(i);</span>
+<span class="nc" id="L21">		System.out.println(&quot;\nFin des tests de la classe Mode&quot;);</span>
+<span class="nc" id="L22">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

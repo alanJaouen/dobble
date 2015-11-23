@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dobble.TestChronometer" tests="12" skipped="0" failures="0" errors="0" timestamp="2015-11-21T19:01:00" hostname="PC-Alan" time="2.016">
+  <properties/>
+  <testcase name="testGetSeconds" classname="dobble.TestChronometer" time="0.005"/>
+  <testcase name="testEquals1" classname="dobble.TestChronometer" time="0.0"/>
+  <testcase name="testEquals2" classname="dobble.TestChronometer" time="0.0"/>
+  <testcase name="testEquals3" classname="dobble.TestChronometer" time="2.001"/>
+  <testcase name="testEquals5" classname="dobble.TestChronometer" time="0.0"/>
+  <testcase name="testGetHours" classname="dobble.TestChronometer" time="0.001"/>
+  <testcase name="testConstructeurCopie" classname="dobble.TestChronometer" time="0.0"/>
+  <testcase name="testToString" classname="dobble.TestChronometer" time="0.001"/>
+  <testcase name="testConstructeur" classname="dobble.TestChronometer" time="0.001"/>
+  <testcase name="testGetBeginEtStart" classname="dobble.TestChronometer" time="0.001"/>
+  <testcase name="testGetMinutes" classname="dobble.TestChronometer" time="0.001"/>
+  <testcase name="testGetMilliseconds" classname="dobble.TestChronometer" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
