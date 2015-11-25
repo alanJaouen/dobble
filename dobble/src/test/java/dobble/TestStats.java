@@ -1,11 +1,16 @@
 package dobble;
 
+import java.net.NetworkInterface;
 import java.util.Scanner;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 import dobble.Stats.BddException;
 
 public class TestStats {
 
+	// test visuel
 	public static void main(String[] args) {
 
 		Scanner sc= new Scanner(System.in);
@@ -205,7 +210,7 @@ public class TestStats {
 		
 		System.out.println("s.equals(new Stats(1,7,98,45,7)): "+s.equals(new Stats(1,7,98,45,7)));
 		
-		System.out.println("s.equals(new Chronometer()): "+s.equals(new Chronometer()));
+		System.out.println("s.equals(new Stats()): "+s.equals(new Stats()));
 	}
 	
 	private static void sauvegarder()
@@ -300,4 +305,326 @@ public class TestStats {
 		}
 		sleep();
 	}
+	
+	//test JUnit
+	
+	@Test
+	public void testConstructeurDefaut()
+	{
+		Stats s=new Stats();
+		Assert.assertNotNull(s);
+	}
+	
+	@Test
+	public void testConstructeurChampAChamp()
+	{
+		Stats s=new Stats(3,2,1,3,5);
+		Assert.assertNotNull(s);
+	}
+	
+	@Test
+	public void testConstructeurStringString()
+	{
+		
+		Stats s;
+		try {
+			s = new Stats("bob","bob");
+			Assert.assertNotNull(s);
+		} catch (BddException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	
+	@Test
+	public void testConstructeurStringString2()
+	{
+		try {
+			Stats s=new Stats("null","vide");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString3()
+	{
+		try {
+			Stats s=new Stats("","");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString4()
+	{
+		try {
+			Stats s=new Stats("bob","");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString5()
+	{
+		try {
+			Stats s=new Stats("","bob");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString6()
+	{
+		try {
+			Stats s=new Stats("bob';--","vide");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString7()
+	{
+		try {
+			Stats s=new Stats("bob","vide';--");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString8()
+	{
+		try {
+			Stats s=new Stats("bob","mauvais mdp");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurStringString9()
+	{
+		try {
+			Stats s=new Stats("';","mauvais mdp");
+			Assert.assertNull(s);
+			} catch (BddException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void testConstructeurCopie()
+	{
+		Stats s=new Stats(3,2,1,3,5);
+		Stats s2 = new Stats(s);
+		Assert.assertEquals(s, s2);
+	}
+	
+	@Test
+	public void testToString()
+	{
+		Stats s=new Stats(3,2,1,3,5);
+
+		Assert.assertEquals("Stats [niveau=3, exp=2, tempsDeJeu=1, tpsReaction="
+				+"3, meilleurScore=5]", s.toString());
+		
+		 
+	}
+	
+	@Test
+	public void testSetNiveau1()
+	{
+		Stats s=new Stats(1,1,1,1,1);
+
+		s.setNiveau(-3);
+		
+		Assert.assertEquals(1, s.getNiveau());
+
+	}
+	
+	@Test
+	public void testSetNiveau2()
+	{
+		Stats s=new Stats(1,1,1,1,1);
+
+		s.setNiveau(7);
+		
+		Assert.assertEquals(7, s.getNiveau());
+
+	}
+	
+	@Test
+	public void testEquals1()
+	{
+		Stats c = new Stats();
+		Assert.assertEquals(c, c);
+	}
+	
+	@Test
+	public void testEquals2()
+	{
+		Stats c = new Stats();
+		Assert.assertNotEquals(c, null);
+	}
+	
+	@Test
+	public void testEquals3()
+	{
+		Stats c = new Stats(1,1,1,1,1);
+		Stats c2 = new Stats(2,1,1,1,1);
+		Assert.assertNotEquals(c, c2);
+	}
+	
+	@Test
+	public void testEquals4()
+	{
+		Stats c = new Stats(1,1,1,1,1);
+		Stats c2 = new Stats(1,2,1,1,1);
+		Assert.assertNotEquals(c, c2);
+	}
+	
+	@Test
+	public void testEquals5()
+	{
+		Stats c = new Stats();		
+		Assert.assertNotEquals(c,new Integer(5));
+	}
+	
+	@Test
+	public void testEquals6()
+	{
+		Stats c = new Stats(1,1,1,1,1);
+		Stats c2 = new Stats(1,1,2,1,1);
+		Assert.assertNotEquals(c, c2);
+	}
+	
+	@Test
+	public void testEquals7()
+	{
+		Stats c = new Stats(1,1,1,1,1);
+		Stats c2 = new Stats(1,1,1,2,1);
+		Assert.assertNotEquals(c, c2);
+	}
+	
+	@Test
+	public void testEquals8()
+	{
+		Stats c = new Stats(1,1,1,1,1);
+		Stats c2 = new Stats(1,1,1,1,2);
+		Assert.assertNotEquals(c, c2);
+	}
+	
+	
+	@Test
+	public void testSauvegarder1() throws BddException
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		s1.sauvegarder("bob", "bob");
+	}
+	
+	@Test
+	public void testSauvegarder2()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("bob", "");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder3()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("", "bob");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder4()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("", "");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder5()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("bob", "';--");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder6()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("bob';--", "null");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder7()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("bob';--", "';--");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder8()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("karl", "Marx");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSauvegarder9()
+	{
+		Stats s1=new Stats(1,2,3,4,5);
+		try {
+			s1.sauvegarder("bob'';'", "");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
 }

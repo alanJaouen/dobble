@@ -304,7 +304,7 @@ public class MoteurJeu {
 		 */
 		private int getTempsIA()
 		{
-			
+			return 0;//TODO a changer
 		}
 
 	}//fin AnctualiseThread
