@@ -39,6 +39,7 @@ public class MoteurJeu {
     private int joueurActif;
     
     
+    
     // -------------------------------------------------------------------
     // Constructeurs :
     
@@ -65,30 +66,70 @@ public class MoteurJeu {
     	this.inGame = modele.isInGame();
     	this.joueurActif = modele.getJoueurActif();
     }
+    
+    /**
+     * constructeur par defaut
+     */
+    public MoteurJeu()
+    {
+    	//TODO initialiser tout les attribut a 0
+    }
 
     // -------------------------------------------------------------------
     // Méthodes :
     
-    
+    /**
+     * ecrit l'objet courant dans un fichier
+     */
     public void sauvegarder() {
+    	//TODO
     }
 
+    /**
+     * restaure l'objet courant depuis un fichier
+     */
     public void charger() {
+    	//TODO
     }
 
-    public void interagir() {
+    /**
+     * Fais interagir un joueur avec la carte centrale en comparant s et le symbole commun
+     * si c'est le meme placer la carte du joueur au centre
+     * 
+     *TODO changer le type de retour de la methode en boolean pour plus tard changer les stats du joueur dynamiquement
+     * 
+     * @param idJoueur le joueur qui interagi
+     * @param s le symbole que le joueur a choisi
+     */
+    public void interagir(int idJoueur,Symbole s) {
+    	//TODO
     }
 
+    
     public void lancerJeu(ArrayList<Carte> paquet) {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
+    	//TODO lancer le chonometre
+    	//TODO lancer un thread pour l'ia
     }
 
+    /**
+     * met fin a la partie et met a jour les stats du joueur notament le score max
+     */
     public void finPartie() {
     	this.inGame = false;
+    	//TODO mise a jour du score du joueur courant
+    	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
     }
 
+    
     public void initialiser() {
+    	/*
+    	 * TODO ajouter les differents joueur + ia en fonction du mode
+    	 * TODO mettre les score a 0 des joueurs
+    	 * TODO mettre le chonometre a 0
+    	 * 
+    	 */
     }
 
     public void ajouterJoueur(Joueur nouveauJoueur) {
@@ -99,12 +140,16 @@ public class MoteurJeu {
     	this.arrayJoueur.remove(supprimerJoueur);
     }
 
-    public void changerJoueur(Joueur remplacant, int indice) {
+    public void changerJoueurActif(Joueur remplacant, int indice) {
     	this.arrayJoueur.remove(indice);
     	this.ajouterJoueur(remplacant);
     }
 
+    /**
+     * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
+     */
     public void quitter() {
+    	//TODO fermer la partie meme si non terminée ( this.finpartie()), TODO plus tard si le temps ajouter un malus aux leavers.
     }
     
     //TODO distribuer les cartes equitablement avec de l'aleatoire entre les joueurs, avec la carte au centre
@@ -209,4 +254,58 @@ public class MoteurJeu {
 	public void setJoueurActif(int joueurActif) {
 		this.joueurActif = joueurActif;
 	}
+	
+	
+	/**
+	 * Un thread permettant le jeu de l'ia
+	 * @author 
+	 *
+	 */
+	public class ActualiseThread extends Thread {
+
+		private int tpsIA;
+		
+		private int idJoueur;
+		
+		/**
+		 * Constreucteur par defaut
+		 * @param name nom du Thread
+		 */
+		public ActualiseThread(String name, int tpsIA, int idJoueur)
+		{
+			super(name);
+			this.tpsIA=tpsIA;
+			this.idJoueur=idJoueur;
+		}
+		 
+		/**
+		 * Lance le thread
+		 */
+		@Override
+		public void run()
+		{
+			while(MoteurJeu.this.isInGame())
+			{
+				//TODO faire jouer l'ia
+				try 
+				{
+					Thread.sleep(this.getTempsIA());
+				} 
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		/**
+		 * 
+		 * @return le temps a sleep pour l'ia en fonction de this.tpsIA +/- 15%
+		 */
+		private int getTempsIA()
+		{
+			
+		}
+
+	}//fin AnctualiseThread
 }
