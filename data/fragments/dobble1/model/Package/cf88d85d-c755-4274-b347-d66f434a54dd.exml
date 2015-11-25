@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="sql" version="3">
+  <DEPS>
+    <ID name="sql" mc="Package" uid="cf88d85d-c755-4274-b347-d66f434a54dd"/>
+    <COMPID name="Connection" mc="Interface" uid="540744e5-9a89-4634-942e-d9643e54b7cb"/>
+    <COMPID name="DriverManager" mc="Class" uid="eee1bd15-f6d7-426b-a92c-e380bf9c9dba"/>
+    <COMPID name="ResultSet" mc="Interface" uid="fde341f7-a34d-4651-8ae6-dd20c57355fd"/>
+    <COMPID name="SQLException" mc="Class" uid="b83aa905-e6d4-4640-880e-fa7d9816b699"/>
+    <COMPID name="Statement" mc="Interface" uid="6cb85743-a7ce-4b90-91c9-8e011ee2eb9d"/>
+    <FOREIGNID name="JavaExtern" mc="TagType" uid="003800a8-0000-0197-0000-000000000000"/>
+    <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="sql" mc="Package" uid="cf88d85d-c755-4274-b347-d66f434a54dd"/>
+    <PID name="java" mc="Package" uid="ad315056-dee4-4c64-ae64-5e06727e7bed"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[sql]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="SQLException" mc="Class" uid="b83aa905-e6d4-4640-880e-fa7d9816b699"/>
+        <COMPID name="DriverManager" mc="Class" uid="eee1bd15-f6d7-426b-a92c-e380bf9c9dba"/>
+        <COMPID name="Connection" mc="Interface" uid="540744e5-9a89-4634-942e-d9643e54b7cb"/>
+        <COMPID name="Statement" mc="Interface" uid="6cb85743-a7ce-4b90-91c9-8e011ee2eb9d"/>
+        <COMPID name="ResultSet" mc="Interface" uid="fde341f7-a34d-4651-8ae6-dd20c57355fd"/>
+      </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+      </LINK>
+      <COMP relation="Tag">
+        <OBJECT>
+          <ID name="" mc="TaggedValue" uid="ddb45c1e-0a6b-479e-803d-cb1d9b6dfc42"/>
+          <PID name="sql" mc="Package" uid="cf88d85d-c755-4274-b347-d66f434a54dd"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Definition">
+              <FOREIGNID name="JavaExtern" mc="TagType" uid="003800a8-0000-0197-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

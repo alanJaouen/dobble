@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="regex" version="3">
+  <DEPS>
+    <ID name="regex" mc="Package" uid="2f927281-4b58-423b-8a1d-39ac9f880ffe"/>
+    <COMPID name="Matcher" mc="Class" uid="59c4d59a-9a78-4b6d-9616-7c0be63a0a4b"/>
+    <COMPID name="Pattern" mc="Class" uid="c266fab0-8ce4-4a23-a955-5f61da42cc61"/>
+    <FOREIGNID name="JavaExtern" mc="TagType" uid="003800a8-0000-0197-0000-000000000000"/>
+    <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="regex" mc="Package" uid="2f927281-4b58-423b-8a1d-39ac9f880ffe"/>
+    <PID name="util" mc="Package" uid="c363be77-69c0-45f7-b58d-f78716b0c649"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[regex]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Pattern" mc="Class" uid="c266fab0-8ce4-4a23-a955-5f61da42cc61"/>
+        <COMPID name="Matcher" mc="Class" uid="59c4d59a-9a78-4b6d-9616-7c0be63a0a4b"/>
+      </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+      </LINK>
+      <COMP relation="Tag">
+        <OBJECT>
+          <ID name="" mc="TaggedValue" uid="141cbba9-b30a-409b-8326-9ae051138370"/>
+          <PID name="regex" mc="Package" uid="2f927281-4b58-423b-8a1d-39ac9f880ffe"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Definition">
+              <FOREIGNID name="JavaExtern" mc="TagType" uid="003800a8-0000-0197-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

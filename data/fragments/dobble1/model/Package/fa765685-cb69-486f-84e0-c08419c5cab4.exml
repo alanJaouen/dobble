@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="dobble" version="3">
+  <DEPS>
+    <ID name="dobble" mc="Package" uid="fa765685-cb69-486f-84e0-c08419c5cab4"/>
+    <COMPID name="Carte" mc="Class" uid="8bf1fd62-292c-45f1-b74a-cf8d6ef58dab"/>
+    <COMPID name="Chronometer" mc="Class" uid="1d1b5024-9364-46de-be1a-9ba509146028"/>
+    <COMPID name="Constantes_defaut_projet" mc="Interface" uid="23f5c49d-9ced-4968-bffe-30423d7eede7"/>
+    <COMPID name="Crypt" mc="Class" uid="1157d592-fdf8-438e-946e-af8d0ac51921"/>
+    <COMPID name="Joueur" mc="Class" uid="68b8dc8f-b431-43e9-a6c3-c3969eb7286c"/>
+    <COMPID name="Mode" mc="Class" uid="b67cc237-0d2c-4411-b484-46cdab817dd3"/>
+    <COMPID name="MoteurJeu" mc="Class" uid="a32445aa-7e1d-4a02-bbad-6020147dab14"/>
+    <COMPID name="Stats" mc="Class" uid="51bb754a-904a-4bdb-a9d6-93b63f94aec9"/>
+    <COMPID name="Symbole" mc="Class" uid="61e64484-ceb6-47b0-bea4-6f7254f28ffb"/>
+    <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="dobble" mc="Package" uid="fa765685-cb69-486f-84e0-c08419c5cab4"/>
+    <PID name="dobble1" mc="Package" uid="c8130790-0ee7-499f-a182-70896c37edc1"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[dobble]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Joueur" mc="Class" uid="68b8dc8f-b431-43e9-a6c3-c3969eb7286c"/>
+        <COMPID name="Symbole" mc="Class" uid="61e64484-ceb6-47b0-bea4-6f7254f28ffb"/>
+        <COMPID name="Mode" mc="Class" uid="b67cc237-0d2c-4411-b484-46cdab817dd3"/>
+        <COMPID name="Crypt" mc="Class" uid="1157d592-fdf8-438e-946e-af8d0ac51921"/>
+        <COMPID name="Chronometer" mc="Class" uid="1d1b5024-9364-46de-be1a-9ba509146028"/>
+        <COMPID name="MoteurJeu" mc="Class" uid="a32445aa-7e1d-4a02-bbad-6020147dab14"/>
+        <COMPID name="Carte" mc="Class" uid="8bf1fd62-292c-45f1-b74a-cf8d6ef58dab"/>
+        <COMPID name="Constantes_defaut_projet" mc="Interface" uid="23f5c49d-9ced-4968-bffe-30423d7eede7"/>
+        <COMPID name="Stats" mc="Class" uid="51bb754a-904a-4bdb-a9d6-93b63f94aec9"/>
+      </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+      </LINK>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
