@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="io" version="3">
+  <DEPS>
+    <ID name="io" mc="Package" uid="97c0be24-20ca-42d6-9127-fde99344d7bc"/>
+    <COMPID name="BufferedReader" mc="Class" uid="f623c922-cdbf-412b-b439-7e80dab3b803"/>
+    <COMPID name="File" mc="Class" uid="cbf2191d-7d31-4514-9bb0-69e7886209a8"/>
+    <COMPID name="FileInputStream" mc="Class" uid="48de994d-73f9-4ba8-9e4c-c1d6c142a42c"/>
+    <COMPID name="InputStream" mc="Class" uid="567c315a-55b5-45c1-a4f4-79e0e41ef1fd"/>
+    <COMPID name="InputStreamReader" mc="Class" uid="dae8d499-ae8b-49ed-a112-cd3e7bf82a8c"/>
+    <COMPID name="Serializable" mc="Interface" uid="5bf7605a-c3be-4901-82fa-1418a0a12d4c"/>
+    <FOREIGNID name="JavaExtern" mc="TagType" uid="003800a8-0000-0197-0000-000000000000"/>
+    <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="io" mc="Package" uid="97c0be24-20ca-42d6-9127-fde99344d7bc"/>
+    <PID name="java" mc="Package" uid="ad315056-dee4-4c64-ae64-5e06727e7bed"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[io]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="File" mc="Class" uid="cbf2191d-7d31-4514-9bb0-69e7886209a8"/>
+        <COMPID name="BufferedReader" mc="Class" uid="f623c922-cdbf-412b-b439-7e80dab3b803"/>
+        <COMPID name="InputStreamReader" mc="Class" uid="dae8d499-ae8b-49ed-a112-cd3e7bf82a8c"/>
+        <COMPID name="InputStream" mc="Class" uid="567c315a-55b5-45c1-a4f4-79e0e41ef1fd"/>
+        <COMPID name="Serializable" mc="Interface" uid="5bf7605a-c3be-4901-82fa-1418a0a12d4c"/>
+        <COMPID name="FileInputStream" mc="Class" uid="48de994d-73f9-4ba8-9e4c-c1d6c142a42c"/>
+      </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaPackage" mc="Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+      </LINK>
+      <COMP relation="Tag">
+        <OBJECT>
+          <ID name="" mc="TaggedValue" uid="083b55e5-4265-424b-9a1d-3041bdb778dd"/>
+          <PID name="io" mc="Package" uid="97c0be24-20ca-42d6-9127-fde99344d7bc"/>
+          <ATTRIBUTES>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Definition">
+              <FOREIGNID name="JavaExtern" mc="TagType" uid="003800a8-0000-0197-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
