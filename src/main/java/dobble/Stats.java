@@ -169,7 +169,6 @@ public class Stats {
     		throw new BddException("Echec de la connection ï¿½ la BDD");
     	
     	Statement st=null;
-    	ResultSet rs=null;
     	
     	try
     	{
@@ -195,8 +194,6 @@ public class Stats {
     	{
     		 try 
     		 {
-    			 if (rs != null) 
-    				 rs.close();
 	             if (st != null)
 	                 st.close();
 	             if (con != null)
