@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Carte.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">Carte.java</span></div><h1>Carte.java</h1><pre class="source lang-java linenums">package dobble;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Carte.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dobble</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">Carte.java</span></div><h1>Carte.java</h1><pre class="source lang-java linenums">package dobble;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,19 +15,19 @@ public class Carte {
 	 * Constructeur de la carte avec l'id (lecture dans le fichier carte.txt)
 	 * @param id id de la carte (ligne dans le fichier)
 	 */
-<span class="nc" id="L18">    public Carte(int id) {</span>
+<span class="fc" id="L18">    public Carte(int id) { //FIXME verifier l'id de la carte</span>
     	Symbole s;
-<span class="nc" id="L20">    	String symbolesId = Symbole.lecture(&quot;cartes.txt&quot;, id);</span>
-<span class="nc" id="L21">    	int[] tab = Carte.intsFromString(symbolesId);</span>
-<span class="nc" id="L22">    	int taille = tab.length;</span>
+<span class="fc" id="L20">    	String symbolesId = Symbole.lecture(&quot;cartes.txt&quot;, id);</span>
+<span class="fc" id="L21">    	int[] tab = Carte.intsFromString(symbolesId);</span>
+<span class="fc" id="L22">    	int taille = tab.length;</span>
     	
-<span class="nc" id="L24">    	this.arraySymbole = new ArrayList&lt;Symbole&gt;();</span>
-<span class="nc bnc" id="L25" title="All 2 branches missed.">    	for(int i = 0; i &lt; taille; i += 1)</span>
+<span class="fc" id="L24">    	this.arraySymbole = new ArrayList&lt;Symbole&gt;();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">    	for(int i = 0; i &lt; taille; i += 1)</span>
     	{
-<span class="nc" id="L27">    		s = new Symbole(tab[i]);</span>
-<span class="nc" id="L28">    		this.arraySymbole.add(s);</span>
+<span class="fc" id="L27">    		s = new Symbole(tab[i]);</span>
+<span class="fc" id="L28">    		this.arraySymbole.add(s);</span>
     	}
-<span class="nc" id="L30">    }</span>
+<span class="fc" id="L30">    }</span>
     
     /**
      * Retourne un tableau contenant les entiers d'une chaine donnï¿½e
@@ -36,23 +36,23 @@ public class Carte {
      */
     public static int[] intsFromString(String s)
     {
-<span class="nc" id="L39">    	LinkedList&lt;String&gt; list = new LinkedList&lt;String&gt;();</span>
-<span class="nc" id="L40">        Matcher matcher = Pattern.compile(&quot;\\d+&quot;).matcher(s);</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        while (matcher.find())</span>
+<span class="fc" id="L39">    	LinkedList&lt;String&gt; list = new LinkedList&lt;String&gt;();</span>
+<span class="fc" id="L40">        Matcher matcher = Pattern.compile(&quot;\\d+&quot;).matcher(s);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        while (matcher.find())</span>
         {
-<span class="nc" id="L43">            list.add(matcher.group());</span>
+<span class="fc" id="L43">            list.add(matcher.group());</span>
         }
-<span class="nc" id="L45">        String[] tabString = list.toArray(new String[list.size()]);</span>
+<span class="fc" id="L45">        String[] tabString = list.toArray(new String[list.size()]);</span>
         
-<span class="nc" id="L47">        int taille = tabString.length;</span>
-<span class="nc" id="L48">    	int[] tabInt = new int[taille];</span>
+<span class="fc" id="L47">        int taille = tabString.length;</span>
+<span class="fc" id="L48">    	int[] tabInt = new int[taille];</span>
     	
-<span class="nc bnc" id="L50" title="All 2 branches missed.">    	for(int i = 0; i &lt; taille; i += 1)</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">    	for(int i = 0; i &lt; taille; i += 1)</span>
     	{
-<span class="nc" id="L52">    		tabInt[i] = Integer.parseInt(tabString[i]);</span>
+<span class="fc" id="L52">    		tabInt[i] = Integer.parseInt(tabString[i]);</span>
     	}
     	
-<span class="nc" id="L55">    	return tabInt;</span>
+<span class="fc" id="L55">    	return tabInt;</span>
     }
     
     /**
@@ -77,15 +77,15 @@ public class Carte {
      */
     public static Symbole getSymboleCommun(Carte c1, Carte c2)
     {
-<span class="nc" id="L80">    	int taille = c1.arraySymbole.size();</span>
+<span class="fc" id="L80">    	int taille = c1.arraySymbole.size();</span>
     	
-<span class="nc bnc" id="L82" title="All 2 branches missed.">    	for (int i = 0; i &lt; taille; i += 1)</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">    	for (int i = 0; i &lt; taille; i += 1)</span>
     	{
-<span class="nc bnc" id="L84" title="All 2 branches missed.">    		for (int j = 0; j &lt; taille; j += 1)</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">    		for (int j = 0; j &lt; taille; j += 1)</span>
     		{
-<span class="nc bnc" id="L86" title="All 2 branches missed.">    			if (c1.arraySymbole.get(i).equals(c2.arraySymbole.get(j)))</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">    			if (c1.arraySymbole.get(i).equals(c2.arraySymbole.get(j)))</span>
     			{
-<span class="nc" id="L88">    				return c1.arraySymbole.get(i);</span>
+<span class="fc" id="L88">    				return c1.arraySymbole.get(i);</span>
     			}
     		}
     	}
@@ -103,12 +103,12 @@ public class Carte {
 	
 	public String toString()
 	{
-<span class="nc" id="L106">		String s = &quot;&quot;;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (int i = 0; i &lt; 8; i += 1)</span>
+<span class="fc" id="L106">		String s = &quot;&quot;;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		for (int i = 0; i &lt; 8; i += 1)</span>
 		{
-<span class="nc" id="L109">			s += i + &quot;: &quot; + arraySymbole.get(i) + &quot;\n&quot;;</span>
+<span class="fc" id="L109">			s += i + &quot;: &quot; + arraySymbole.get(i) + &quot;\n&quot;;</span>
 		}
-<span class="nc" id="L111">		return s;</span>
+<span class="fc" id="L111">		return s;</span>
 	}
 
 }

@@ -532,10 +532,14 @@ public class TestStats {
 	
 	
 	@Test
-	public void testSauvegarder1() throws BddException
+	public void testSauvegarder1()
 	{
 		Stats s1=new Stats(1,2,3,4,5);
-		s1.sauvegarder("bob", "bob");
+		try {
+			s1.sauvegarder("bob", "bob");
+		} catch (BddException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MoteurJeu.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">MoteurJeu.java</span></div><h1>MoteurJeu.java</h1><pre class="source lang-java linenums">package dobble;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MoteurJeu.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dobble</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">MoteurJeu.java</span></div><h1>MoteurJeu.java</h1><pre class="source lang-java linenums">package dobble;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,17 +13,17 @@ public class MoteurJeu {
 	/**
 	 * l'url d'acces a la bdd
 	 */
-<span class="nc" id="L16">	private static String url =&quot;jdbc:postgresql://horton.elephantsql.com:5432/sctbmxbq&quot;;</span>
+<span class="fc" id="L16">	private static String url =&quot;jdbc:postgresql://horton.elephantsql.com:5432/sctbmxbq&quot;;</span>
 	
 	/**
 	 * le nom d'utilisateur pour se connecter a la bdd
 	 */
-<span class="nc" id="L21">	private static String user = &quot;sctbmxbq&quot;;</span>
+<span class="fc" id="L21">	private static String user = &quot;sctbmxbq&quot;;</span>
 	
 	/**
 	 * le mot de passe pour de connecter a la bdd
 	 */
-<span class="nc" id="L26">	private static String password =&quot;Npei07vJfUOQOw9SQ4hQrRZM5xJlCzqW&quot;;</span>
+<span class="fc" id="L26">	private static String password =&quot;Npei07vJfUOQOw9SQ4hQrRZM5xJlCzqW&quot;;</span>
     
 	
 	private ArrayList&lt;Joueur&gt; arrayJoueur;
@@ -39,73 +39,118 @@ public class MoteurJeu {
     private int joueurActif;
     
     
+    
     // -------------------------------------------------------------------
     // Constructeurs :
     
     /*
      * Constructeur par champs :
      */
-<span class="nc" id="L48">    public MoteurJeu(ArrayList&lt;Joueur&gt; arrayJoueur, ArrayList&lt;Carte&gt; cartesCentre, Chronometer chrono, Mode modeDeJeu) {</span>
-<span class="nc" id="L49">    	this.arrayJoueur = arrayJoueur;</span>
-<span class="nc" id="L50">    	this.cartesCentre = cartesCentre;</span>
-<span class="nc" id="L51">    	this.chrono = chrono;</span>
-<span class="nc" id="L52">    	this.modeDeJeu = modeDeJeu;</span>
-<span class="nc" id="L53">    	this.inGame = false;</span>
-<span class="nc" id="L54">    	this.joueurActif = 0;</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L49">    public MoteurJeu(ArrayList&lt;Joueur&gt; arrayJoueur, ArrayList&lt;Carte&gt; cartesCentre, Chronometer chrono, Mode modeDeJeu) {</span>
+<span class="nc" id="L50">    	this.arrayJoueur = arrayJoueur;</span>
+<span class="nc" id="L51">    	this.cartesCentre = cartesCentre;</span>
+<span class="nc" id="L52">    	this.chrono = chrono;</span>
+<span class="nc" id="L53">    	this.modeDeJeu = modeDeJeu;</span>
+<span class="nc" id="L54">    	this.inGame = false;</span>
+<span class="nc" id="L55">    	this.joueurActif = 0;</span>
+<span class="nc" id="L56">    }</span>
     
     /*
      * Constructeur par copie :
      */
-<span class="nc" id="L60">    public MoteurJeu(MoteurJeu modele) {</span>
-<span class="nc" id="L61">    	this.arrayJoueur = new ArrayList&lt;Joueur&gt;(modele.getArrayJoueur());</span>
-<span class="nc" id="L62">    	this.cartesCentre = new ArrayList&lt;Carte&gt;(modele.getCartesCentre());</span>
-<span class="nc" id="L63">    	this.chrono = new Chronometer(modele.getChrono());</span>
-<span class="nc" id="L64">    	this.modeDeJeu = new Mode(modele.getModeDeJeu());</span>
-<span class="nc" id="L65">    	this.inGame = modele.isInGame();</span>
-<span class="nc" id="L66">    	this.joueurActif = modele.getJoueurActif();</span>
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L61">    public MoteurJeu(MoteurJeu modele) {</span>
+<span class="nc" id="L62">    	this.arrayJoueur = new ArrayList&lt;Joueur&gt;(modele.getArrayJoueur());</span>
+<span class="nc" id="L63">    	this.cartesCentre = new ArrayList&lt;Carte&gt;(modele.getCartesCentre());</span>
+<span class="nc" id="L64">    	this.chrono = new Chronometer(modele.getChrono());</span>
+<span class="nc" id="L65">    	this.modeDeJeu = new Mode(modele.getModeDeJeu());</span>
+<span class="nc" id="L66">    	this.inGame = modele.isInGame();</span>
+<span class="nc" id="L67">    	this.joueurActif = modele.getJoueurActif();</span>
+<span class="nc" id="L68">    }</span>
+    
+    /**
+     * constructeur par defaut
+     */
+    public MoteurJeu()
+<span class="nc" id="L74">    {</span>
+    	//TODO initialiser tout les attribut a 0
+<span class="nc" id="L76">    }</span>
 
     // -------------------------------------------------------------------
     // MÃ©thodes :
     
-    
+    /**
+     * ecrit l'objet courant dans un fichier
+     */
     public void sauvegarder() {
-<span class="nc" id="L74">    }</span>
+    	//TODO
+<span class="nc" id="L86">    }</span>
 
+    /**
+     * restaure l'objet courant depuis un fichier
+     */
     public void charger() {
-<span class="nc" id="L77">    }</span>
+    	//TODO
+<span class="nc" id="L93">    }</span>
 
-    public void interagir() {
-<span class="nc" id="L80">    }</span>
+    /**
+     * Fais interagir un joueur avec la carte centrale en comparant s et le symbole commun
+     * si c'est le meme placer la carte du joueur au centre
+     * 
+     *TODO changer le type de retour de la methode en boolean pour plus tard changer les stats du joueur dynamiquement
+     * 
+     * @param idJoueur le joueur qui interagi
+     * @param s le symbole que le joueur a choisi
+     */
+    public void interagir(int idJoueur,Symbole s) {
+    	//TODO
+<span class="nc" id="L106">    }</span>
 
+    
     public void lancerJeu(ArrayList&lt;Carte&gt; paquet) {
-<span class="nc" id="L83">    	this.distribuerCarte(paquet);</span>
-<span class="nc" id="L84">    	this.inGame = true;</span>
-<span class="nc" id="L85">    }</span>
+<span class="nc" id="L110">    	this.distribuerCarte(paquet);</span>
+<span class="nc" id="L111">    	this.inGame = true;</span>
+    	//TODO lancer le chonometre
+    	//TODO lancer un thread pour l'ia
+<span class="nc" id="L114">    }</span>
 
+    /**
+     * met fin a la partie et met a jour les stats du joueur notament le score max
+     */
     public void finPartie() {
-<span class="nc" id="L88">    	this.inGame = false;</span>
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L120">    	this.inGame = false;</span>
+    	//TODO mise a jour du score du joueur courant
+    	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
+<span class="nc" id="L123">    }</span>
 
+    
     public void initialiser() {
-<span class="nc" id="L92">    }</span>
+    	/*
+    	 * TODO ajouter les differents joueur + ia en fonction du mode
+    	 * TODO mettre les score a 0 des joueurs
+    	 * TODO mettre le chonometre a 0
+    	 * 
+    	 */
+<span class="nc" id="L133">    }</span>
 
     public void ajouterJoueur(Joueur nouveauJoueur) {
-<span class="nc" id="L95">    	this.arrayJoueur.add(nouveauJoueur);</span>
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L136">    	this.arrayJoueur.add(nouveauJoueur);</span>
+<span class="nc" id="L137">    }</span>
 
     public void supprimerJoueur(Joueur supprimerJoueur) {
-<span class="nc" id="L99">    	this.arrayJoueur.remove(supprimerJoueur);</span>
-<span class="nc" id="L100">    }</span>
+<span class="nc" id="L140">    	this.arrayJoueur.remove(supprimerJoueur);</span>
+<span class="nc" id="L141">    }</span>
 
-    public void changerJoueur(Joueur remplacant, int indice) {
-<span class="nc" id="L103">    	this.arrayJoueur.remove(indice);</span>
-<span class="nc" id="L104">    	this.ajouterJoueur(remplacant);</span>
-<span class="nc" id="L105">    }</span>
+    public void changerJoueurActif(Joueur remplacant, int indice) {
+<span class="nc" id="L144">    	this.arrayJoueur.remove(indice);</span>
+<span class="nc" id="L145">    	this.ajouterJoueur(remplacant);</span>
+<span class="nc" id="L146">    }</span>
 
+    /**
+     * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
+     */
     public void quitter() {
-<span class="nc" id="L108">    }</span>
+    	//TODO fermer la partie meme si non terminÃ©e ( this.finpartie()), TODO plus tard si le temps ajouter un malus aux leavers.
+<span class="nc" id="L153">    }</span>
     
     //TODO distribuer les cartes equitablement avec de l'aleatoire entre les joueurs, avec la carte au centre
     private void distribuerCarte(ArrayList&lt;Carte&gt; paquet){
@@ -127,7 +172,7 @@ public class MoteurJeu {
     	this.cartesCentre.add(paquet.get(0));
     	paquet.remove(0);
     	*/
-<span class="nc" id="L130">    }</span>
+<span class="nc" id="L175">    }</span>
 	
     /**
      * Permet de recuperer une instance de Connection lie a notre bdd
@@ -138,76 +183,130 @@ public class MoteurJeu {
     	/* Chargement du driver JDBC pour plsql */
     	try 
     	{
-<span class="nc" id="L141">    	    Class.forName(&quot;org.postgresql.Driver&quot;);</span>
+<span class="fc" id="L186">    	    Class.forName(&quot;org.postgresql.Driver&quot;);</span>
     	} 
-<span class="nc" id="L143">    	catch ( ClassNotFoundException e ) </span>
+<span class="fc" id="L188">    	catch ( ClassNotFoundException e ) </span>
     	{
-<span class="nc" id="L145">    	   System.out.println(&quot;echec du changement de Driver BDD&quot;);</span>
-<span class="nc" id="L146">    	}</span>
+<span class="fc" id="L190">    	   System.out.println(&quot;echec du changement de Driver BDD&quot;);</span>
+<span class="fc" id="L191">    	}</span>
     	
     	/*connection a la bdd*/
     	try
     	{
-<span class="nc" id="L151">    		Connection con = DriverManager.getConnection(url, user, password);//on se connecte</span>
-<span class="nc" id="L152">    		return con;</span>
+<span class="fc" id="L196">    		Connection con = DriverManager.getConnection(url, user, password);//on se connecte</span>
+<span class="fc" id="L197">    		return con;</span>
 	    } 
-<span class="nc" id="L154">    	catch (SQLException ex) </span>
+<span class="fc" id="L199">    	catch (SQLException ex) </span>
     	{
-<span class="nc" id="L156">    		System.out.println(&quot;echec de la connection a la bdd&quot;);</span>
+<span class="fc" id="L201">    		System.out.println(&quot;echec de la connection a la bdd&quot;);</span>
     	}
 	    	
-<span class="nc" id="L159">    	return null;</span>
+<span class="fc" id="L204">    	return null;</span>
     }
 	
     // -------------------------------------------------------------------
 	// Getters &amp; Setters :
     
 	public ArrayList&lt;Joueur&gt; getArrayJoueur() {
-<span class="nc" id="L166">		return arrayJoueur;</span>
+<span class="nc" id="L211">		return arrayJoueur;</span>
 	}
 	
 	public void setArrayJoueur(ArrayList&lt;Joueur&gt; arrayJoueur) {
-<span class="nc" id="L170">		this.arrayJoueur = arrayJoueur;</span>
-<span class="nc" id="L171">	}</span>
+<span class="nc" id="L215">		this.arrayJoueur = arrayJoueur;</span>
+<span class="nc" id="L216">	}</span>
 
 	public ArrayList&lt;Carte&gt; getCartesCentre() {
-<span class="nc" id="L174">		return cartesCentre;</span>
+<span class="nc" id="L219">		return cartesCentre;</span>
 	}
 
 	public void setCartesCentre(ArrayList&lt;Carte&gt; cartesCentre) {
-<span class="nc" id="L178">		this.cartesCentre = cartesCentre;</span>
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L223">		this.cartesCentre = cartesCentre;</span>
+<span class="nc" id="L224">	}</span>
 
 	public Chronometer getChrono() {
-<span class="nc" id="L182">		return chrono;</span>
+<span class="nc" id="L227">		return chrono;</span>
 	}
 
 	public void setChrono(Chronometer chrono) {
-<span class="nc" id="L186">		this.chrono = chrono;</span>
-<span class="nc" id="L187">	}</span>
+<span class="nc" id="L231">		this.chrono = chrono;</span>
+<span class="nc" id="L232">	}</span>
 
 	public Mode getModeDeJeu() {
-<span class="nc" id="L190">		return modeDeJeu;</span>
+<span class="nc" id="L235">		return modeDeJeu;</span>
 	}
 
 	public void setModeDeJeu(Mode modeDeJeu) {
-<span class="nc" id="L194">		this.modeDeJeu = modeDeJeu;</span>
-<span class="nc" id="L195">	}</span>
+<span class="nc" id="L239">		this.modeDeJeu = modeDeJeu;</span>
+<span class="nc" id="L240">	}</span>
 
 	public boolean isInGame() {
-<span class="nc" id="L198">		return inGame;</span>
+<span class="nc" id="L243">		return inGame;</span>
 	}
 
 	public void setInGame(boolean inGame) {
-<span class="nc" id="L202">		this.inGame = inGame;</span>
-<span class="nc" id="L203">	}</span>
+<span class="nc" id="L247">		this.inGame = inGame;</span>
+<span class="nc" id="L248">	}</span>
 
 	public int getJoueurActif() {
-<span class="nc" id="L206">		return joueurActif;</span>
+<span class="nc" id="L251">		return joueurActif;</span>
 	}
 
 	public void setJoueurActif(int joueurActif) {
-<span class="nc" id="L210">		this.joueurActif = joueurActif;</span>
-<span class="nc" id="L211">	}</span>
+<span class="nc" id="L255">		this.joueurActif = joueurActif;</span>
+<span class="nc" id="L256">	}</span>
+	
+	
+	/**
+	 * Un thread permettant le jeu de l'ia
+	 * @author 
+	 *
+	 */
+	public class ActualiseThread extends Thread {
+
+		private int tpsIA;
+		
+		private int idJoueur;
+		
+		/**
+		 * Constreucteur par defaut
+		 * @param name nom du Thread
+		 */
+		public ActualiseThread(String name, int tpsIA, int idJoueur)
+<span class="nc" id="L275">		{</span>
+<span class="nc" id="L276">			super(name);</span>
+<span class="nc" id="L277">			this.tpsIA=tpsIA;</span>
+<span class="nc" id="L278">			this.idJoueur=idJoueur;</span>
+<span class="nc" id="L279">		}</span>
+		 
+		/**
+		 * Lance le thread
+		 */
+		@Override
+		public void run()
+		{
+<span class="nc bnc" id="L287" title="All 2 branches missed.">			while(MoteurJeu.this.isInGame())</span>
+			{
+				//TODO faire jouer l'ia
+				try 
+				{
+<span class="nc" id="L292">					Thread.sleep(this.getTempsIA());</span>
+				} 
+<span class="nc" id="L294">				catch (InterruptedException e)</span>
+				{
+<span class="nc" id="L296">					e.printStackTrace();</span>
+<span class="nc" id="L297">				}</span>
+			}
+<span class="nc" id="L299">		}</span>
+		
+		/**
+		 * 
+		 * @return le temps a sleep pour l'ia en fonction de this.tpsIA +/- 15%
+		 */
+		private int getTempsIA()
+		{
+<span class="nc" id="L307">			return 0;//TODO a changer</span>
+		}
+
+	}//fin AnctualiseThread
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

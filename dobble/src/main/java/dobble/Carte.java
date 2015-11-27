@@ -15,7 +15,7 @@ public class Carte {
 	 * Constructeur de la carte avec l'id (lecture dans le fichier carte.txt)
 	 * @param id id de la carte (ligne dans le fichier)
 	 */
-    public Carte(int id) {
+    public Carte(int id) { //FIXME verifier l'id de la carte
     	Symbole s;
     	String symbolesId = Symbole.lecture("cartes.txt", id);
     	int[] tab = Carte.intsFromString(symbolesId);

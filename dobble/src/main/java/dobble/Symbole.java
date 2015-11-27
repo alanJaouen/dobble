@@ -82,6 +82,7 @@ public class Symbole {
 				if (i == ligne)
 				{
 					chaine = line;
+					br.close();
 					return chaine;
 				}
 			}
@@ -91,15 +92,20 @@ public class Symbole {
 		{
 			System.err.println(e.toString());
 		}
-		return chaine; //Pour ne pas faire d'erreurs: inutile? ><
+		return null;
 	}
-	
-	public boolean equals(Symbole s)
-	{
-		if(this.id == s.id)
-		{
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		return false;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Symbole other = (Symbole) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 }
