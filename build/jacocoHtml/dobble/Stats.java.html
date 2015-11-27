@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Stats.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">miniprojet</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">Stats.java</span></div><h1>Stats.java</h1><pre class="source lang-java linenums">/*					CeCILL licence
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Stats.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dobble</a> &gt; <a href="index.source.html" class="el_package">dobble</a> &gt; <span class="el_source">Stats.java</span></div><h1>Stats.java</h1><pre class="source lang-java linenums">/*					CeCILL licence
  *
  * Copyright or Â© or Copr. Klervi BLESCHET, Eva TERZAGO, Adrien BOIZARD, Kyllian GAUTIER, Alan JAOUEN
  *
@@ -90,8 +90,8 @@ public class Stats {
      */
     public Stats()
     {
-<span class="nc" id="L93">    	this(1,0,0,0,0);</span>
-<span class="nc" id="L94">    }</span>
+<span class="fc" id="L93">    	this(1,0,0,0,0);</span>
+<span class="fc" id="L94">    }</span>
     
     /**
      * constructeur champ a champ
@@ -103,13 +103,13 @@ public class Stats {
      */
     public Stats(int unNiveau, int unExp, int unTempsDeJeu, int unTempsDeReaction, int unMeilleurScore)
     {
-<span class="nc" id="L106">    	super();</span>
-<span class="nc" id="L107">    	this.setNiveau(unNiveau);</span>
-<span class="nc" id="L108">    	this.setExp(unExp);</span>
-<span class="nc" id="L109">    	this.setTempsDeJeu(unTempsDeJeu);</span>
-<span class="nc" id="L110">    	this.setTpsReaction(unTempsDeReaction);</span>
-<span class="nc" id="L111">    	this.setMeilleurScore(unMeilleurScore);</span>
-<span class="nc" id="L112">    }</span>
+<span class="fc" id="L106">    	super();</span>
+<span class="fc" id="L107">    	this.setNiveau(unNiveau);</span>
+<span class="fc" id="L108">    	this.setExp(unExp);</span>
+<span class="fc" id="L109">    	this.setTempsDeJeu(unTempsDeJeu);</span>
+<span class="fc" id="L110">    	this.setTpsReaction(unTempsDeReaction);</span>
+<span class="fc" id="L111">    	this.setMeilleurScore(unMeilleurScore);</span>
+<span class="fc" id="L112">    }</span>
     
     /**
      * Constructeur par copie depuis la bdd
@@ -119,9 +119,9 @@ public class Stats {
      */
     public Stats( String nom, String mdp) throws BddException
     {
-<span class="nc" id="L122">    	this();</span>
-<span class="nc" id="L123">    	this.charger( nom, mdp);</span>
-<span class="nc" id="L124">    }</span>
+<span class="fc" id="L122">    	this();</span>
+<span class="fc" id="L123">    	this.charger( nom, mdp);</span>
+<span class="fc" id="L124">    }</span>
 
     /**
      * constructeur par copie en local
@@ -129,9 +129,9 @@ public class Stats {
      */
 	public Stats (Stats unStats)
     {
-<span class="nc" id="L132">    	this(unStats.getNiveau(),unStats.getExp(),unStats.getTempsDeJeu(),unStats.getTpsReaction(),</span>
-<span class="nc" id="L133">    			unStats.getMeilleurScore());</span>
-<span class="nc" id="L134">    }</span>
+<span class="fc" id="L132">    	this(unStats.getNiveau(),unStats.getExp(),unStats.getTempsDeJeu(),unStats.getTpsReaction(),</span>
+<span class="fc" id="L133">    			unStats.getMeilleurScore());</span>
+<span class="fc" id="L134">    }</span>
     
 	/**
 	 * permet de changer les attribut de l'objet courant pour correspondre avec ceux stokes en ligne
@@ -141,73 +141,70 @@ public class Stats {
 	 */
     public void charger(String nom, String mdp) throws BddException 
     {
-<span class="nc" id="L144">		Stats st= this.getBddStat(nom, mdp);</span>
-<span class="nc" id="L145">		System.out.println(st);</span>
-<span class="nc" id="L146">		this.setNiveau(st.getNiveau());</span>
-<span class="nc" id="L147">		this.setExp(st.getExp());</span>
-<span class="nc" id="L148">		this.setMeilleurScore(st.getMeilleurScore());</span>
-<span class="nc" id="L149">		this.setTempsDeJeu(st.getTempsDeJeu());</span>
-<span class="nc" id="L150">		this.setTpsReaction(st.getTpsReaction());</span>
-<span class="nc" id="L151">	}</span>
+<span class="fc" id="L144">		Stats st= this.getBddStat(nom, mdp);</span>
+<span class="fc" id="L145">		System.out.println(st);</span>
+<span class="fc" id="L146">		this.setNiveau(st.getNiveau());</span>
+<span class="fc" id="L147">		this.setExp(st.getExp());</span>
+<span class="fc" id="L148">		this.setMeilleurScore(st.getMeilleurScore());</span>
+<span class="fc" id="L149">		this.setTempsDeJeu(st.getTempsDeJeu());</span>
+<span class="fc" id="L150">		this.setTpsReaction(st.getTpsReaction());</span>
+<span class="fc" id="L151">	}</span>
     
 
     public void sauvegarder(String nom, String mdp) throws BddException 
 	{
 		/* Verification */
-<span class="nc bnc" id="L157" title="All 4 branches missed.">    	if(nom.trim().equals(&quot;&quot;)||mdp.trim().equals(&quot;&quot;))</span>
-<span class="nc" id="L158">    		throw new BddException(&quot;Champ(s) vide(s)&quot;);</span>
+<span class="fc bfc" id="L157" title="All 4 branches covered.">    	if(nom.trim().equals(&quot;&quot;)||mdp.trim().equals(&quot;&quot;))</span>
+<span class="fc" id="L158">    		throw new BddException(&quot;Champ(s) vide(s)&quot;);</span>
     	
     	/* anti sql injection*/
-<span class="nc bnc" id="L161" title="All 4 branches missed.">    	if(Joueur.verifsql(nom) || Joueur.verifsql(mdp))</span>
-<span class="nc" id="L162">    		throw new BddException(&quot;injection sql detectee et bloquee&quot;);</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">    	if(Joueur.verifsql(nom) || Joueur.verifsql(mdp))</span>
+<span class="fc" id="L162">    		throw new BddException(&quot;injection sql detectee et bloquee&quot;);</span>
 
     		
     	
-<span class="nc" id="L166">    	Connection con= MoteurJeu.connection();</span>
+<span class="fc" id="L166">    	Connection con= MoteurJeu.connection();</span>
     	
-<span class="nc bnc" id="L168" title="All 2 branches missed.">    	if (con==null)//si echec de la connection</span>
-<span class="nc" id="L169">    		throw new BddException(&quot;Echec de la connection Ã¯Â¿Â½ la BDD&quot;);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">    	if (con==null)//si echec de la connection</span>
+<span class="fc" id="L169">    		throw new BddException(&quot;Echec de la connection Ã¯Â¿Â½ la BDD&quot;);</span>
     	
-<span class="nc" id="L171">    	Statement st=null;</span>
-<span class="nc" id="L172">    	ResultSet rs=null;</span>
+<span class="fc" id="L171">    	Statement st=null;</span>
     	
     	try
     	{
-<span class="nc" id="L176">    		st = con.createStatement();//creation stattement</span>
+<span class="fc" id="L175">    		st = con.createStatement();//creation stattement</span>
     		
-<span class="nc" id="L178">	    	System.out.println(&quot;Connection reussie, lancement de la sauvegarde&quot;);</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">	    	if(st.executeUpdate(&quot;UPDATE joueur &quot;</span>
-<span class="nc" id="L180">	    			+ &quot;SET lvl=&quot;+ this.getNiveau()+&quot;,&quot;</span>
-<span class="nc" id="L181">	    			+&quot;exp = &quot;+this.getExp()+&quot;,&quot;</span>
-<span class="nc" id="L182">	    			+&quot;tpsj = &quot;+this.getTempsDeJeu()+&quot;,&quot;</span>
-<span class="nc" id="L183">	    			+&quot;tpsr = &quot;+this.getTpsReaction()+&quot;,&quot;</span>
-<span class="nc" id="L184">	    			+&quot;score = &quot;+this.getMeilleurScore()</span>
-<span class="nc" id="L185">	    			+&quot;WHERE nom = '&quot;+nom+&quot;' AND mdp='&quot;+Crypt.encrypte(mdp)+&quot;'&quot;) !=1)</span>
-<span class="nc" id="L186">	    		throw new BddException(&quot;nom ou Mot de passe incorrect&quot;);</span>
+<span class="fc" id="L177">	    	System.out.println(&quot;Connection reussie, lancement de la sauvegarde&quot;);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">	    	if(st.executeUpdate(&quot;UPDATE joueur &quot;</span>
+<span class="fc" id="L179">	    			+ &quot;SET lvl=&quot;+ this.getNiveau()+&quot;,&quot;</span>
+<span class="fc" id="L180">	    			+&quot;exp = &quot;+this.getExp()+&quot;,&quot;</span>
+<span class="fc" id="L181">	    			+&quot;tpsj = &quot;+this.getTempsDeJeu()+&quot;,&quot;</span>
+<span class="fc" id="L182">	    			+&quot;tpsr = &quot;+this.getTpsReaction()+&quot;,&quot;</span>
+<span class="fc" id="L183">	    			+&quot;score = &quot;+this.getMeilleurScore()</span>
+<span class="fc" id="L184">	    			+&quot;WHERE nom = '&quot;+nom+&quot;' AND mdp='&quot;+Crypt.encrypte(mdp)+&quot;'&quot;) !=1)</span>
+<span class="fc" id="L185">	    		throw new BddException(&quot;nom ou Mot de passe incorrect&quot;);</span>
 	    	
     	}
-<span class="nc" id="L189">    	catch (SQLException ex) </span>
+<span class="nc" id="L188">    	catch (SQLException ex) </span>
     	{
-<span class="nc" id="L191">    		ex.printStackTrace();</span>
-<span class="nc" id="L192">    		throw new BddException(&quot;erreur lors de la communication avec la BDD&quot;);</span>
+<span class="nc" id="L190">    		ex.printStackTrace();</span>
+<span class="nc" id="L191">    		throw new BddException(&quot;erreur lors de la communication avec la BDD&quot;);</span>
     	}
     	finally
     	{
-<span class="nc" id="L196">    		 try </span>
+<span class="fc" id="L195">    		 try </span>
     		 {
-<span class="nc bnc" id="L198" title="All 4 branches missed.">    			 if (rs != null) </span>
-<span class="nc" id="L199">    				 rs.close();</span>
-<span class="nc bnc" id="L200" title="All 4 branches missed.">	             if (st != null)</span>
-<span class="nc" id="L201">	                 st.close();</span>
-<span class="nc bnc" id="L202" title="All 4 branches missed.">	             if (con != null)</span>
-<span class="nc" id="L203">	                 con.close();</span>
+<span class="pc bpc" id="L197" title="2 of 4 branches missed.">	             if (st != null)</span>
+<span class="fc" id="L198">	                 st.close();</span>
+<span class="pc bpc" id="L199" title="2 of 4 branches missed.">	             if (con != null)</span>
+<span class="fc" id="L200">	                 con.close();</span>
     		 } 
-<span class="nc" id="L205">    		 catch (SQLException ex) </span>
+<span class="nc" id="L202">    		 catch (SQLException ex) </span>
     		 {
-<span class="nc" id="L207">    			 throw new BddException(&quot;erreur lors de la fermeture de la connection a la BDD&quot;);</span>
-<span class="nc" id="L208">	         }</span>
+<span class="pc" id="L204">    			 throw new BddException(&quot;erreur lors de la fermeture de la connection a la BDD&quot;);</span>
+<span class="fc" id="L205">	         }</span>
     	}
-<span class="nc" id="L210">	}</span>
+<span class="fc" id="L207">	}</span>
     
     
     
@@ -221,65 +218,65 @@ public class Stats {
     public Stats getBddStat(String nom, String mdp) throws BddException
     {
     	/* Verification */
-<span class="nc bnc" id="L224" title="All 4 branches missed.">    	if(nom.trim().equals(&quot;&quot;)||mdp.trim().equals(&quot;&quot;))</span>
-<span class="nc" id="L225">    		throw new BddException(&quot;Champ(s) vide(s)&quot;);</span>
+<span class="fc bfc" id="L221" title="All 4 branches covered.">    	if(nom.trim().equals(&quot;&quot;)||mdp.trim().equals(&quot;&quot;))</span>
+<span class="fc" id="L222">    		throw new BddException(&quot;Champ(s) vide(s)&quot;);</span>
 
     	/* anti sql injection*/
-<span class="nc bnc" id="L228" title="All 4 branches missed.">    	if(Joueur.verifsql(nom) || Joueur.verifsql(mdp))</span>
-<span class="nc" id="L229">    		throw new BddException(&quot;injection sql detectee et bloquee&quot;);</span>
+<span class="fc bfc" id="L225" title="All 4 branches covered.">    	if(Joueur.verifsql(nom) || Joueur.verifsql(mdp))</span>
+<span class="fc" id="L226">    		throw new BddException(&quot;injection sql detectee et bloquee&quot;);</span>
     	
-<span class="nc" id="L231">    	Connection con= MoteurJeu.connection();</span>
+<span class="fc" id="L228">    	Connection con= MoteurJeu.connection();</span>
     	
-<span class="nc bnc" id="L233" title="All 2 branches missed.">    	if (con==null)//si echec de la connection</span>
-<span class="nc" id="L234">    		throw new BddException(&quot;Echec de la connection Ã¯Â¿Â½ la BDD&quot;);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">    	if (con==null)//si echec de la connection</span>
+<span class="fc" id="L231">    		throw new BddException(&quot;Echec de la connection Ã¯Â¿Â½ la BDD&quot;);</span>
     	
-<span class="nc" id="L236">    	Statement st=null;</span>
-<span class="nc" id="L237">    	ResultSet rs=null;</span>
+<span class="fc" id="L233">    	Statement st=null;</span>
+<span class="fc" id="L234">    	ResultSet rs=null;</span>
     	Stats stats;
-<span class="nc" id="L239">    	mdp=Crypt.encrypte(mdp);</span>
+<span class="fc" id="L236">    	mdp=Crypt.encrypte(mdp);</span>
     	
     	try
     	{
-<span class="nc" id="L243">    		st = con.createStatement();//creation stattement</span>
-<span class="nc" id="L244">    		rs = st.executeQuery(&quot;SELECT * FROM joueur WHERE nom='&quot;+nom+&quot;'&quot;); //on enregistre le resultat de la requete</span>
+<span class="fc" id="L240">    		st = con.createStatement();//creation stattement</span>
+<span class="fc" id="L241">    		rs = st.executeQuery(&quot;SELECT * FROM joueur WHERE nom='&quot;+nom+&quot;'&quot;); //on enregistre le resultat de la requete</span>
     		
-<span class="nc bnc" id="L246" title="All 2 branches missed.">    		if(rs.next())</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">    		if(rs.next())</span>
     		{
-<span class="nc bnc" id="L248" title="All 2 branches missed.">	    		if(mdp.equals(rs.getString(&quot;mdp&quot;)))</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">	    		if(mdp.equals(rs.getString(&quot;mdp&quot;)))</span>
 	    		{
-<span class="nc" id="L250">	    			System.out.println(&quot;Connection etablie, donnees copiees en local&quot;);</span>
-<span class="nc" id="L251">	    			stats=new Stats(rs.getInt(&quot;lvl&quot;),</span>
-<span class="nc" id="L252">	    					rs.getInt(&quot;exp&quot;),</span>
-<span class="nc" id="L253">	    					rs.getInt(&quot;tpsj&quot;),</span>
-<span class="nc" id="L254">	    					rs.getInt(&quot;tpsr&quot;),</span>
-<span class="nc" id="L255">	    					rs.getInt(&quot;score&quot;));</span>
+<span class="fc" id="L247">	    			System.out.println(&quot;Connection etablie, donnees copiees en local&quot;);</span>
+<span class="fc" id="L248">	    			stats=new Stats(rs.getInt(&quot;lvl&quot;),</span>
+<span class="fc" id="L249">	    					rs.getInt(&quot;exp&quot;),</span>
+<span class="fc" id="L250">	    					rs.getInt(&quot;tpsj&quot;),</span>
+<span class="fc" id="L251">	    					rs.getInt(&quot;tpsr&quot;),</span>
+<span class="fc" id="L252">	    					rs.getInt(&quot;score&quot;));</span>
 	    		}
-<span class="nc" id="L257">	    		else throw new BddException(&quot;Mot de passe incorect&quot;);</span>
+<span class="fc" id="L254">	    		else throw new BddException(&quot;Mot de passe incorect&quot;);</span>
     		}
-<span class="nc" id="L259">    		else throw new BddException(&quot;nom incorect&quot;);</span>
+<span class="fc" id="L256">    		else throw new BddException(&quot;nom incorect&quot;);</span>
 	    	
     	}
-<span class="nc" id="L262">    	catch (SQLException ex) </span>
+<span class="fc" id="L259">    	catch (SQLException ex) </span>
     	{
-<span class="nc" id="L264">    		throw new BddException(&quot;erreur lors de la communication avec la BDD&quot;);</span>
+<span class="fc" id="L261">    		throw new BddException(&quot;erreur lors de la communication avec la BDD&quot;);</span>
     	}
     	finally
     	{
-<span class="nc" id="L268">    		 try </span>
+<span class="fc" id="L265">    		 try </span>
     		 {
-<span class="nc bnc" id="L270" title="All 4 branches missed.">    			 if (rs != null) </span>
-<span class="nc" id="L271">    				 rs.close();</span>
-<span class="nc bnc" id="L272" title="All 4 branches missed.">	             if (st != null)</span>
-<span class="nc" id="L273">	                 st.close();</span>
-<span class="nc bnc" id="L274" title="All 4 branches missed.">	             if (con != null)</span>
-<span class="nc" id="L275">	                 con.close();</span>
+<span class="pc bpc" id="L267" title="1 of 4 branches missed.">    			 if (rs != null) </span>
+<span class="fc" id="L268">    				 rs.close();</span>
+<span class="pc bpc" id="L269" title="2 of 4 branches missed.">	             if (st != null)</span>
+<span class="fc" id="L270">	                 st.close();</span>
+<span class="pc bpc" id="L271" title="2 of 4 branches missed.">	             if (con != null)</span>
+<span class="fc" id="L272">	                 con.close();</span>
     		 } 
-<span class="nc" id="L277">    		 catch (SQLException ex) </span>
+<span class="nc" id="L274">    		 catch (SQLException ex) </span>
     		 {
-<span class="nc" id="L279">    			 throw new BddException(&quot;erreur lors de la fermeture de la connection a la BDD&quot;);</span>
-<span class="nc" id="L280">	         }</span>
+<span class="pc" id="L276">    			 throw new BddException(&quot;erreur lors de la fermeture de la connection a la BDD&quot;);</span>
+<span class="fc" id="L277">	         }</span>
     	}
-<span class="nc" id="L282">    	return stats;</span>
+<span class="fc" id="L279">    	return stats;</span>
     }
     
     
@@ -289,7 +286,7 @@ public class Stats {
 	 * @see dobble.Stats#niveau
 	 */
 	public int getNiveau() {
-<span class="nc" id="L292">		return niveau;</span>
+<span class="fc" id="L289">		return niveau;</span>
 	}
 
 	/**
@@ -298,9 +295,9 @@ public class Stats {
 	 * @see dobble.Stats#niveau
 	 */
 	public void setNiveau(int niveau) {
-<span class="nc bnc" id="L301" title="All 2 branches missed.">		if(niveau&gt;0)</span>
-<span class="nc" id="L302">			this.niveau = niveau;</span>
-<span class="nc" id="L303">	}</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		if(niveau&gt;0)</span>
+<span class="fc" id="L299">			this.niveau = niveau;</span>
+<span class="fc" id="L300">	}</span>
 
 	/**
 	 * acesseur de exp
@@ -308,7 +305,7 @@ public class Stats {
 	 * @see dobble.Stats#exp
 	 */
 	public int getExp() {
-<span class="nc" id="L311">		return exp;</span>
+<span class="fc" id="L308">		return exp;</span>
 	}
 
 	/**
@@ -317,9 +314,9 @@ public class Stats {
 	 * @see dobble.Stats#exp
 	 */
 	public void setExp(int exp) {
-<span class="nc bnc" id="L320" title="All 2 branches missed.">		if(exp&gt;0)</span>
-<span class="nc" id="L321">			this.exp = exp;</span>
-<span class="nc" id="L322">	}</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		if(exp&gt;0)</span>
+<span class="fc" id="L318">			this.exp = exp;</span>
+<span class="fc" id="L319">	}</span>
 
 	/**
 	 * acesseur de tempsDeJeu
@@ -327,7 +324,7 @@ public class Stats {
 	 * @see dobble.Stats#tempsDeJeu
 	 */
 	public int getTempsDeJeu() {
-<span class="nc" id="L330">		return tempsDeJeu;</span>
+<span class="fc" id="L327">		return tempsDeJeu;</span>
 	}
 
 	/**
@@ -336,9 +333,9 @@ public class Stats {
 	 * @see dobble.Stats#tempsDeJeu
 	 */
 	public void setTempsDeJeu(int tempsDeJeu) {
-<span class="nc bnc" id="L339" title="All 2 branches missed.">		if(tempsDeJeu &gt;0)</span>
-<span class="nc" id="L340">			this.tempsDeJeu = tempsDeJeu;</span>
-<span class="nc" id="L341">	}</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">		if(tempsDeJeu &gt;0)</span>
+<span class="fc" id="L337">			this.tempsDeJeu = tempsDeJeu;</span>
+<span class="fc" id="L338">	}</span>
 
 	/**
 	 * acesseur de tpsReaction
@@ -346,7 +343,7 @@ public class Stats {
 	 * @see dobble.Stats#tpsReaction
 	 */
 	public int getTpsReaction() {
-<span class="nc" id="L349">		return tpsReaction;</span>
+<span class="fc" id="L346">		return tpsReaction;</span>
 	}
 
 	/**
@@ -355,9 +352,9 @@ public class Stats {
 	 * @see dobble.Stats#tpsReaction
 	 */
 	public void setTpsReaction(int tpsReaction) {
-<span class="nc bnc" id="L358" title="All 2 branches missed.">		if(tpsReaction &gt;0)</span>
-<span class="nc" id="L359">			this.tpsReaction = tpsReaction;</span>
-<span class="nc" id="L360">	}</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">		if(tpsReaction &gt;0)</span>
+<span class="fc" id="L356">			this.tpsReaction = tpsReaction;</span>
+<span class="fc" id="L357">	}</span>
 
 	/**
 	 * acesseur de meilleurScore
@@ -365,7 +362,7 @@ public class Stats {
 	 * @see dobble.Stats#meilleurScore
 	 */
 	public int getMeilleurScore() {
-<span class="nc" id="L368">		return meilleurScore;</span>
+<span class="fc" id="L365">		return meilleurScore;</span>
 	}
 
 	/**
@@ -374,9 +371,9 @@ public class Stats {
 	 * @see dobble.Stats#meilleurScore
 	 */
 	public void setMeilleurScore(int meilleurScore) {
-<span class="nc bnc" id="L377" title="All 2 branches missed.">		if(meilleurScore&gt;0)</span>
-<span class="nc" id="L378">			this.meilleurScore = meilleurScore;</span>
-<span class="nc" id="L379">	}</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">		if(meilleurScore&gt;0)</span>
+<span class="fc" id="L375">			this.meilleurScore = meilleurScore;</span>
+<span class="fc" id="L376">	}</span>
 	
 	
 	
@@ -387,7 +384,7 @@ public class Stats {
 	 */
 	@Override
 	public String toString() {
-<span class="nc" id="L390">		return &quot;Stats [niveau=&quot; + niveau + &quot;, exp=&quot; + exp + &quot;, tempsDeJeu=&quot; + tempsDeJeu + &quot;, tpsReaction=&quot;</span>
+<span class="fc" id="L387">		return &quot;Stats [niveau=&quot; + niveau + &quot;, exp=&quot; + exp + &quot;, tempsDeJeu=&quot; + tempsDeJeu + &quot;, tpsReaction=&quot;</span>
 				+ tpsReaction + &quot;, meilleurScore=&quot; + meilleurScore + &quot;]&quot;;
 	}
 
@@ -399,24 +396,24 @@ public class Stats {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc bnc" id="L402" title="All 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L403">			return true;</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">		if (obj == null)</span>
-<span class="nc" id="L405">			return false;</span>
-<span class="nc bnc" id="L406" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
-<span class="nc" id="L407">			return false;</span>
-<span class="nc" id="L408">		Stats other = (Stats) obj;</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (exp != other.exp)</span>
-<span class="nc" id="L410">			return false;</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">		if (meilleurScore != other.meilleurScore)</span>
-<span class="nc" id="L412">			return false;</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (niveau != other.niveau)</span>
-<span class="nc" id="L414">			return false;</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">		if (tempsDeJeu != other.tempsDeJeu)</span>
-<span class="nc" id="L416">			return false;</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (tpsReaction != other.tpsReaction)</span>
-<span class="nc" id="L418">			return false;</span>
-<span class="nc" id="L419">		return true;</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L400">			return true;</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">		if (obj == null)</span>
+<span class="fc" id="L402">			return false;</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">		if (getClass() != obj.getClass())</span>
+<span class="fc" id="L404">			return false;</span>
+<span class="fc" id="L405">		Stats other = (Stats) obj;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">		if (exp != other.exp)</span>
+<span class="fc" id="L407">			return false;</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">		if (meilleurScore != other.meilleurScore)</span>
+<span class="fc" id="L409">			return false;</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		if (niveau != other.niveau)</span>
+<span class="fc" id="L411">			return false;</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">		if (tempsDeJeu != other.tempsDeJeu)</span>
+<span class="fc" id="L413">			return false;</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">		if (tpsReaction != other.tpsReaction)</span>
+<span class="fc" id="L415">			return false;</span>
+<span class="fc" id="L416">		return true;</span>
 	}
 
 	
@@ -436,9 +433,9 @@ public class Stats {
 		 * @param msg le message a faire remonte
 		 */
 		public BddException(String msg)
-<span class="nc" id="L439">		{</span>
-<span class="nc" id="L440">			super(msg);</span>
-<span class="nc" id="L441">		}</span>
+<span class="fc" id="L436">		{</span>
+<span class="fc" id="L437">			super(msg);</span>
+<span class="fc" id="L438">		}</span>
 	}
 
 

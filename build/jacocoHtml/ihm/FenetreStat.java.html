@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FenetreStat.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dobble</a> &gt; <a href="index.source.html" class="el_package">ihm</a> &gt; <span class="el_source">FenetreStat.java</span></div><h1>FenetreStat.java</h1><pre class="source lang-java linenums">package ihm;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+import dobble.MoteurJeu;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Comparator;
+import java.util.Vector;
+
+
+public class FenetreStat extends JFrame {
+
+	private static final long serialVersionUID = 3780582428111849380L;
+	private DefaultTableModel model;
+	private JPanel contentPane;
+	private JTable table;
+	private FenetreWait chargement;
+
+	/**
+	 * test TODO a delete
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L42">		EventQueue.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+					
+<span class="nc" id="L46">					FenetreStat frame = new FenetreStat();</span>
+<span class="nc" id="L47">					frame.setVisible(true);</span>
+<span class="nc" id="L48">				} catch (Exception e) {</span>
+<span class="nc" id="L49">					e.printStackTrace();</span>
+<span class="nc" id="L50">				}</span>
+<span class="nc" id="L51">			}</span>
+		});
+<span class="nc" id="L53">	}</span>
+
+	/**
+	 * Constructeupar dÃ©faut, crÃ©er la fenetre
+	 */
+<span class="nc" id="L58">	public FenetreStat() {</span>
+<span class="nc" id="L59">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//TODO a changer</span>
+<span class="nc" id="L60">		Dimension ecran=java.awt.Toolkit.getDefaultToolkit().getScreenSize();</span>
+<span class="nc" id="L61">		setBounds(</span>
+<span class="nc" id="L62">				(int)ecran.getWidth()/2 -(int)ecran.getWidth()/4, </span>
+<span class="nc" id="L63">				(int)ecran.getHeight()/2 -(int)ecran.getHeight()/4,</span>
+<span class="nc" id="L64">				(int)ecran.getWidth()/2, </span>
+<span class="nc" id="L65">				(int)ecran.getHeight()/2);</span>
+		
+<span class="nc" id="L67">		ImageIcon img = new ImageIcon(&quot;images/img38.png&quot;);</span>
+<span class="nc" id="L68">		this.setIconImage(img.getImage());</span>
+		
+<span class="nc" id="L70">		this.contentPane = new JPanel();</span>
+<span class="nc" id="L71">		setContentPane(contentPane);</span>
+<span class="nc" id="L72">		this.contentPane.setLayout(new BorderLayout(0, 0));</span>
+		
+		
+<span class="nc" id="L75">		JPanel panelSud = getPanelSud();</span>
+<span class="nc" id="L76">		this.contentPane.add(panelSud, BorderLayout.SOUTH);</span>
+		
+		
+<span class="nc" id="L79">		JPanel panelCentre = getPanelCentre();</span>
+<span class="nc" id="L80">		this.contentPane.add(panelCentre, BorderLayout.CENTER);</span>
+		
+<span class="nc" id="L82">		this.charger();</span>
+<span class="nc" id="L83">	}</span>
+	
+	/**
+	 * lance un thread pour tÃ©lÃ©charger les donnÃ©es depuis la base de donnÃ©e
+	 */
+	private void charger()
+	{
+<span class="nc" id="L90">		this.chargement=new FenetreWait(&quot;Connection a la bdd&quot;);</span>
+<span class="nc" id="L91">		ChargerThread t=new ChargerThread(&quot;t&quot;);</span>
+<span class="nc" id="L92">		t.start();</span>
+<span class="nc" id="L93">	}</span>
+	
+	/**
+	 * GÃ©nÃ¨re le paneau sud de la fenetre
+	 * @return le paneau sud de la fenetre
+	 */
+	private JPanel getPanelSud()
+	{
+<span class="nc" id="L101">		JPanel panelSud = new JPanel();</span>
+<span class="nc" id="L102">		panelSud.setLayout(new BorderLayout(0, 0));</span>
+		
+<span class="nc" id="L104">		JButton btnRevenirAuMenu = new JButton(&quot;Revenir au menu&quot;);</span>
+<span class="nc" id="L105">		panelSud.add(btnRevenirAuMenu, BorderLayout.EAST);</span>
+<span class="nc" id="L106">		btnRevenirAuMenu.addActionListener(new EcouteurMenu());</span>
+		
+		
+<span class="nc" id="L109">		return panelSud;</span>
+	}
+
+	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+	private JPanel getPanelCentre()
+	{
+<span class="nc" id="L115">		JPanel panelCentre = new JPanel();</span>
+<span class="nc" id="L116">		String entete[]={&quot;Nom&quot;,&quot;Niveau&quot;,&quot;Temps de jeu&quot;,&quot;Temps de rÃ©action&quot;,&quot;Meilleur Score&quot;};</span>
+<span class="nc" id="L117">		String rows[][]={};</span>
+		
+<span class="nc" id="L119">		this.model=new DefaultTableModel(rows,entete)</span>
+<span class="nc" id="L120">		{</span>
+			private static final long serialVersionUID = -1166268462744362023L;
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+<span class="nc" id="L125">				return false;</span>
+			}
+		};
+<span class="nc" id="L128">		panelCentre.setLayout(new BorderLayout(0, 0));</span>
+<span class="nc" id="L129">		this.table=new JTable(model);</span>
+		
+<span class="nc" id="L131">		 TableRowSorter trs = new TableRowSorter(model);</span>
+
+<span class="nc" id="L133">			class IntComparator implements Comparator {</span>
+	            public int compare(Object o1, Object o2) {
+<span class="nc" id="L135">	                Integer int1 = (Integer)o1;</span>
+<span class="nc" id="L136">	                Integer int2 = (Integer)o2;</span>
+<span class="nc" id="L137">	                return int1.compareTo(int2);</span>
+	            }
+
+	            public boolean equals(Object o2) {
+<span class="nc" id="L141">	                return this.equals(o2);</span>
+	            }
+	        }
+<span class="nc" id="L144">			class IntegertpsjComparator implements Comparator {</span>
+	            public int compare(Object o1, Object o2) {
+<span class="nc" id="L146">	            	Integertpsj int1 = (Integertpsj)o1;</span>
+<span class="nc" id="L147">	            	Integertpsj int2 = (Integertpsj)o2;</span>
+<span class="nc" id="L148">	                return int1.compareTo(int2);</span>
+	            }
+
+	            public boolean equals(Object o2) {
+<span class="nc" id="L152">	                return this.equals(o2);</span>
+	            }
+	        }
+	        
+	        @SuppressWarnings(&quot;rawtypes&quot;)
+<span class="nc" id="L157">			class IntegertpsrComparator implements Comparator {</span>
+	            public int compare(Object o1, Object o2) {
+<span class="nc" id="L159">	            	Integertpsr int1 = (Integertpsr)o1;</span>
+<span class="nc" id="L160">	            	Integertpsr int2 = (Integertpsr)o2;</span>
+<span class="nc" id="L161">	                return int1.compareTo(int2);</span>
+	            }
+
+	            public boolean equals(Object o2) {
+<span class="nc" id="L165">	                return this.equals(o2);</span>
+	            }
+	        }
+
+<span class="nc" id="L169">	        trs.setComparator(1, new IntComparator());</span>
+<span class="nc" id="L170">	        trs.setComparator(2, new IntegertpsjComparator());</span>
+<span class="nc" id="L171">	        trs.setComparator(3, new IntegertpsrComparator());</span>
+<span class="nc" id="L172">	        trs.setComparator(4, new IntComparator());</span>
+
+<span class="nc" id="L174">	        table.setRowSorter(trs);</span>
+
+		//this.table.setAutoCreateRowSorter(true);
+<span class="nc" id="L177">		this.table.getTableHeader().setReorderingAllowed(false);</span>
+<span class="nc" id="L178">		panelCentre.add(new JScrollPane(this.table));</span>
+<span class="nc" id="L179">		return panelCentre;</span>
+	}
+	public class ChargerThread extends Thread {
+
+		/**
+		 * Constreucteur par defaut
+		 * @param name nom du Thread
+		 */
+		public ChargerThread(String name)
+<span class="nc" id="L188">		{</span>
+<span class="nc" id="L189">			super(name);</span>
+<span class="nc" id="L190">		}</span>
+		 
+		/**
+		 * Lance le thread
+		 */
+		@SuppressWarnings(&quot;deprecation&quot;)
+		@Override
+		public void run()
+		{
+<span class="nc" id="L199">			FenetreStat.this.chargement.setLabel(&quot;Connection a la base de donnee&quot;);</span>
+			Connection con;
+<span class="nc" id="L201">			int cpt=0;</span>
+			do
+			{
+<span class="nc" id="L204">				con =MoteurJeu.connection();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">				if(cpt==3)</span>
+				{
+<span class="nc" id="L207">					JOptionPane.showMessageDialog(FenetreStat.this, </span>
+					         &quot;Impossible de se connecter a la base de donnee.\nVeuillez verifier votre connection internet&quot;
+							+&quot;et si le probleme persiste contatez le gestionnaire de la base de donnee.&quot;,
+					         &quot; Erreur de comunication &quot;,
+					         JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L212">					FenetreStat.this.chargement.dispose();</span>
+<span class="nc" id="L213">					this.stop();</span>
+				}
+<span class="nc" id="L215">				cpt++;</span>
+<span class="nc" id="L216">				FenetreStat.this.chargement.setLabel(&quot;Connection a la base de donnee (Essai nÂ°&quot;+cpt+&quot;..)&quot;);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			}while( con==null);</span>
+			
+<span class="nc" id="L219">			Statement st=null;</span>
+<span class="nc" id="L220">	    	ResultSet rs=null;</span>
+	    	
+	    	try
+	    	{
+<span class="nc" id="L224">	    		FenetreStat.this.chargement.setLabel(&quot;Recuperation des profils&quot;);</span>
+<span class="nc" id="L225">	    		st = con.createStatement();//creation stattement</span>
+<span class="nc" id="L226">	    		rs = st.executeQuery(&quot;SELECT nom,lvl,tpsj,tpsr,score FROM joueur &quot;); //on enregistre le resultat de la requete</span>
+	    		
+<span class="nc" id="L228">	    		int count=0;</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">	    		while(rs.next())</span>
+	    		{
+<span class="nc" id="L231">	    			Vector&lt;Object&gt; vec= new Vector&lt;Object&gt;();</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		    		for(int i=1;i&lt;=5;i++)</span>
+		    		{
+		    			Object str;
+<span class="nc bnc" id="L235" title="All 5 branches missed.">		    			switch(i)</span>
+		    			{
+		    			case 2:
+<span class="nc" id="L238">		    				str=new Integer(rs.getInt(2));</span>
+<span class="nc" id="L239">		    				break;</span>
+		    			case 3:
+<span class="nc" id="L241">		    				str=new Integertpsj(rs.getInt(3));</span>
+<span class="nc" id="L242">		    				break;</span>
+		    			case 4:
+<span class="nc" id="L244">		    				str=new Integertpsr(rs.getInt(4));</span>
+<span class="nc" id="L245">		    				break;</span>
+		    			case 5:
+<span class="nc" id="L247">		    				str=new Integer(rs.getInt(5));</span>
+<span class="nc" id="L248">		    				break;</span>
+		    			default:
+<span class="nc" id="L250">		    				str=rs.getString(i);</span>
+		    			
+		    			}
+<span class="nc" id="L253">		    			vec.addElement(str);</span>
+		    		}
+<span class="nc" id="L255">					FenetreStat.this.model.addRow(vec);</span>
+<span class="nc" id="L256">					count++;</span>
+<span class="nc" id="L257">					FenetreStat.this.chargement.setLabel(count+&quot; profils recuperes..&quot;);</span>
+<span class="nc" id="L258">	    		}</span>
+		    	
+	    	}
+<span class="nc" id="L261">	    	catch (SQLException ex) </span>
+	    	{
+<span class="nc" id="L263">	    		JOptionPane.showMessageDialog(FenetreStat.this, </span>
+				         &quot;Une erreur et survenue pendant la recuperation des profils, veuillez reessayer ulterieurement&quot;
+						+&quot;Si le probleme persiste contatez le gestionnaire de la base de donnee.&quot;,
+				         &quot; Erreur de transmition &quot;,
+				         JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L268">				FenetreStat.this.chargement.dispose();</span>
+<span class="nc" id="L269">				this.stop();</span>
+	    		
+	    	}
+	    	finally
+	    	{
+<span class="nc" id="L274">	    		 try </span>
+	    		 {
+<span class="nc bnc" id="L276" title="All 6 branches missed.">	    			 if (rs != null) </span>
+<span class="nc" id="L277">	    				 rs.close();</span>
+<span class="nc bnc" id="L278" title="All 6 branches missed.">		             if (st != null)</span>
+<span class="nc" id="L279">		                 st.close();</span>
+<span class="nc bnc" id="L280" title="All 6 branches missed.">		             if (con != null)</span>
+<span class="nc" id="L281">		                 con.close();</span>
+	    		 } 
+<span class="nc" id="L283">	    		 catch (SQLException ex) </span>
+	    		 {
+<span class="nc" id="L285">	    			 JOptionPane.showMessageDialog(FenetreStat.this, </span>
+					         &quot;Une erreur et survenue lors de la fermeture de la connection,&quot;
+							+&quot;Si cette erreur persiste contatez le gestionnaire de la base de donnee au plus vite.&quot;,
+					         &quot; Erreur de fin de transmition &quot;,
+					         JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L290">					FenetreStat.this.chargement.dispose();</span>
+<span class="nc" id="L291">		         }</span>
+<span class="nc" id="L292">	    		 FenetreStat.this.chargement.dispose();</span>
+<span class="nc" id="L293">	    	}</span>
+<span class="nc" id="L294">		}</span>
+
+	}//fin AnctualiseThread
+	
+<span class="nc" id="L298">	public class EcouteurMenu implements ActionListener </span>
+	{
+		/**
+		 * une action est effectuÃ©e
+		 */
+		public void actionPerformed(ActionEvent e)
+		{
+			
+			//new FenetreMenu();
+<span class="nc" id="L307">			FenetreStat.this.dispose();</span>
+			
+			
+<span class="nc" id="L310">		}    //fin ecouteur menu</span>
+	}
+	
+	@SuppressWarnings(&quot;rawtypes&quot;)
+	class Integertpsj implements Comparable {
+		
+		private int valeur;
+
+        public boolean equals(Object o2) {
+<span class="nc" id="L319">            return this.equals(o2);</span>
+        }
+
+		public int compareTo(Object arg0) {
+<span class="nc" id="L323">			Integertpsj o= (Integertpsj) arg0;</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">			if(this.valeur&gt;o.getValeur())</span>
+<span class="nc" id="L325">				return 1;</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">			if(this.valeur&lt;o.getValeur())</span>
+<span class="nc" id="L327">				return -1;</span>
+<span class="nc" id="L328">			return 0;</span>
+		}
+		
+		public Integertpsj(int v)
+<span class="nc" id="L332">		{</span>
+<span class="nc" id="L333">			super();</span>
+<span class="nc" id="L334">			this.valeur=v;</span>
+<span class="nc" id="L335">		}</span>
+		
+		public int getValeur()
+		{
+<span class="nc" id="L339">			return this.valeur;</span>
+		}
+		
+		public String toString()
+		{
+<span class="nc" id="L344">			return Integer.toString((int)valeur/60)+&quot; h &quot;+Integer.toString((int)valeur%60)+&quot; min&quot;;</span>
+		}
+    }
+	
+	@SuppressWarnings(&quot;rawtypes&quot;)
+	class Integertpsr implements Comparable {
+		
+		private int valeur;
+
+        public boolean equals(Object o2) {
+<span class="nc" id="L354">            return this.equals(o2);</span>
+        }
+
+		public int compareTo(Object arg0) {
+<span class="nc" id="L358">			Integertpsr o= (Integertpsr) arg0;</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">			if(this.valeur&gt;o.getValeur())</span>
+<span class="nc" id="L360">				return 1;</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">			if(this.valeur&lt;o.getValeur())</span>
+<span class="nc" id="L362">				return -1;</span>
+<span class="nc" id="L363">			return 0;</span>
+		}
+		
+		public Integertpsr(int v)
+<span class="nc" id="L367">		{</span>
+<span class="nc" id="L368">			super();</span>
+<span class="nc" id="L369">			this.valeur=v;</span>
+<span class="nc" id="L370">		}</span>
+		
+		public int getValeur()
+		{
+<span class="nc" id="L374">			return this.valeur;</span>
+		}
+		
+		public String toString()
+		{
+<span class="nc" id="L379">			return (double)this.valeur/100+&quot; sec&quot;;</span>
+		}
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

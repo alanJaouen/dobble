@@ -24,11 +24,7 @@ public class Joueur {
     private int score;
     
     public Joueur(){
-    	this.arrayCartes = new ArrayList<Carte>();
-    	this.stats = new Stats();
-    	this.nom = "admin";
-    	this.mdp = "admin";
-    	this.score = 0;
+    	this(new ArrayList<Carte>(), new Stats(), "admin", 0, "admin");
     }
         
     public Joueur(ArrayList<Carte> arrayCartes, Stats stats, String nom, int score, String mdp) {
@@ -56,9 +52,8 @@ public class Joueur {
      */
     public static boolean verifsql(String str)
     {
-    	Pattern pattern = Pattern.compile(";--");
-    	Matcher matcher = pattern.matcher(str);
-    	return matcher.find();
+    	 return Pattern.compile(";--").matcher(str).find() || //TODO definir les regles regex pour verifier sql
+    			 Pattern.compile(";--").matcher(str).find() ;
     }
     
     public static void nouveauJoueur(String nom, String mdp) throws BddException{
@@ -175,12 +170,12 @@ public class Joueur {
     	
     }
 
-    public void voirStats() {
-    	System.out.println(stats);
+    public String voirStats() {
+    	return this.stats.toString();
     }
 
 	public ArrayList<Carte> getArrayCartes() {
-		return arrayCartes;
+		return this.arrayCartes;
 	}
 
 	public void setArrayCartes(ArrayList<Carte> arrayCartes) {
@@ -196,7 +191,7 @@ public class Joueur {
 	}
 
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
 
 	public void setNom(String nom) {
@@ -204,7 +199,7 @@ public class Joueur {
 	}
 
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
 	public void setScore(int score) {
@@ -212,7 +207,7 @@ public class Joueur {
 	}
 	
 	public String getMdp() {
-		return mdp;
+		return this.mdp;
 	}
 
 	public void setMdp(String mdp) {
