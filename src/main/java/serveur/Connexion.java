@@ -42,7 +42,7 @@ public class Connexion implements Runnable {
 		
 		if(in.readLine().equals("connecte")){
 			
-		System.out.println("Je suis connecté "); 
+		System.out.println("Je suis connectÃ© "); 
 		connect = true;
 		  }
 		
@@ -57,7 +57,7 @@ public class Connexion implements Runnable {
 		
 		} catch (IOException e) {
 			
-			System.err.println("Le serveur ne répond plus ");
+			System.err.println("Le serveur ne rÃ©pond plus ");
 		}
 	}
 
