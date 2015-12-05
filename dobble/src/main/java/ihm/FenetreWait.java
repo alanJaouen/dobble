@@ -1,52 +1,45 @@
 package ihm;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Window.Type;
 
+/**
+ * Une fenetre de chargement infini affichant un texte
+ * @author Alan JAOUEN
+ *
+ */
 public class FenetreWait extends JFrame {
 
+	
+	private static final long serialVersionUID = -7853301710810551886L;
+
+	/**
+	 * le contentPane principal
+	 */
 	private JPanel contentPane;
 
-	private JLabel label;
-	
 	/**
-	 * Launch the application.
+	 * le texte de la fenetre
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FenetreWait frame = new FenetreWait("test");
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JLabel label;
+
 
 	/**
-	 * Create the frame.
+	 * constructeur par defaut, cree une fenetre d'attente qui ne peux etre fermée que par .dispose
 	 */
-	public FenetreWait(String titre) {
+	public FenetreWait() {
 		setType(Type.POPUP);
 		setUndecorated(true);
 		setResizable(false);
 		setAlwaysOnTop(true);
-		setTitle(titre);
+		setTitle("chargement en cour");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);//se ferme seul en cas de probleme
 		Dimension ecran=java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(
@@ -82,9 +75,14 @@ public class FenetreWait extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * permet de changer le texte de la fenetre ainsi que son titre (visible dans la bare des tâche)
+	 * @param str le texte a afficher
+	 */
 	public void setLabel(String str)
 	{
 		this.label.setText(str);
+		this.setTitle(str);
 	}
 
 }

@@ -38,18 +38,11 @@ public class FenetreStat extends JFrame {
 	/**
 	 * test TODO a delete
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					
-					FenetreStat frame = new FenetreStat();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static void main(String[] args) {				
+		FenetreStat frame = new FenetreStat();
+		frame.setVisible(true);
+
+
 	}
 
 	/**
@@ -64,7 +57,7 @@ public class FenetreStat extends JFrame {
 				(int)ecran.getWidth()/2, 
 				(int)ecran.getHeight()/2);
 		
-		ImageIcon img = new ImageIcon("images/img38.png");
+		ImageIcon img = new ImageIcon("images/icon.png");
 		this.setIconImage(img.getImage());
 		
 		this.contentPane = new JPanel();
@@ -87,7 +80,7 @@ public class FenetreStat extends JFrame {
 	 */
 	private void charger()
 	{
-		this.chargement=new FenetreWait("Connection a la bdd");
+		this.chargement=new FenetreWait();
 		ChargerThread t=new ChargerThread("t");
 		t.start();
 	}
@@ -141,23 +134,11 @@ public class FenetreStat extends JFrame {
 	                return this.equals(o2);
 	            }
 	        }
-			class IntegertpsjComparator implements Comparator {
-	            public int compare(Object o1, Object o2) {
-	            	Integertpsj int1 = (Integertpsj)o1;
-	            	Integertpsj int2 = (Integertpsj)o2;
-	                return int1.compareTo(int2);
-	            }
-
-	            public boolean equals(Object o2) {
-	                return this.equals(o2);
-	            }
-	        }
 	        
-	        @SuppressWarnings("rawtypes")
-			class IntegertpsrComparator implements Comparator {
+			class IntegertpsComparator implements Comparator {
 	            public int compare(Object o1, Object o2) {
-	            	Integertpsr int1 = (Integertpsr)o1;
-	            	Integertpsr int2 = (Integertpsr)o2;
+	            	Integertps int1 = (Integertps)o1;
+	            	Integertps int2 = (Integertps)o2;
 	                return int1.compareTo(int2);
 	            }
 
@@ -167,8 +148,8 @@ public class FenetreStat extends JFrame {
 	        }
 
 	        trs.setComparator(1, new IntComparator());
-	        trs.setComparator(2, new IntegertpsjComparator());
-	        trs.setComparator(3, new IntegertpsrComparator());
+	        trs.setComparator(2, new IntegertpsComparator());
+	        trs.setComparator(3, new IntegertpsComparator());
 	        trs.setComparator(4, new IntComparator());
 
 	        table.setRowSorter(trs);
@@ -204,12 +185,12 @@ public class FenetreStat extends JFrame {
 				con =MoteurJeu.connection();
 				if(cpt==3)
 				{
+					FenetreStat.this.chargement.dispose();
 					JOptionPane.showMessageDialog(FenetreStat.this, 
 					         "Impossible de se connecter a la base de donnee.\nVeuillez verifier votre connection internet"
 							+"et si le probleme persiste contatez le gestionnaire de la base de donnee.",
 					         " Erreur de comunication ",
 					         JOptionPane.ERROR_MESSAGE);
-					FenetreStat.this.chargement.dispose();
 					this.stop();
 				}
 				cpt++;
@@ -238,10 +219,10 @@ public class FenetreStat extends JFrame {
 		    				str=new Integer(rs.getInt(2));
 		    				break;
 		    			case 3:
-		    				str=new Integertpsj(rs.getInt(3));
+		    				str=new Integertps(rs.getInt(3));
 		    				break;
 		    			case 4:
-		    				str=new Integertpsr(rs.getInt(4));
+		    				str=new Integertps(rs.getInt(4));
 		    				break;
 		    			case 5:
 		    				str=new Integer(rs.getInt(5));
@@ -311,7 +292,7 @@ public class FenetreStat extends JFrame {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	class Integertpsj implements Comparable {
+	class Integertps implements Comparable {
 		
 		private int valeur;
 
@@ -320,7 +301,7 @@ public class FenetreStat extends JFrame {
         }
 
 		public int compareTo(Object arg0) {
-			Integertpsj o= (Integertpsj) arg0;
+			Integertps o= (Integertps) arg0;
 			if(this.valeur>o.getValeur())
 				return 1;
 			if(this.valeur<o.getValeur())
@@ -328,7 +309,7 @@ public class FenetreStat extends JFrame {
 			return 0;
 		}
 		
-		public Integertpsj(int v)
+		public Integertps(int v)
 		{
 			super();
 			this.valeur=v;
@@ -345,38 +326,5 @@ public class FenetreStat extends JFrame {
 		}
     }
 	
-	@SuppressWarnings("rawtypes")
-	class Integertpsr implements Comparable {
-		
-		private int valeur;
-
-        public boolean equals(Object o2) {
-            return this.equals(o2);
-        }
-
-		public int compareTo(Object arg0) {
-			Integertpsr o= (Integertpsr) arg0;
-			if(this.valeur>o.getValeur())
-				return 1;
-			if(this.valeur<o.getValeur())
-				return -1;
-			return 0;
-		}
-		
-		public Integertpsr(int v)
-		{
-			super();
-			this.valeur=v;
-		}
-		
-		public int getValeur()
-		{
-			return this.valeur;
-		}
-		
-		public String toString()
-		{
-			return (double)this.valeur/100+" sec";
-		}
-    }
+	
 }

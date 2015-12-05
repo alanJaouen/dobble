@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import dobble.Stats.BddException;
@@ -53,7 +52,7 @@ public class Joueur {
     public static boolean verifsql(String str)
     {
     	 return Pattern.compile(";--").matcher(str).find() || //TODO definir les regles regex pour verifier sql
-    			 Pattern.compile(";--").matcher(str).find() ;
+    			 Pattern.compile(";").matcher(str).find() ;
     }
     
     public static void nouveauJoueur(String nom, String mdp) throws BddException{
@@ -136,7 +135,7 @@ public class Joueur {
     	{
    
     		st = con.createStatement();//creation stattement
-    		st.execute("DELETE FROM joueur WHERE nom='"+nom+"'"); //on enregistre le resultat de la requete
+    		st.execute("DELETE FROM joueur WHERE nom='"+nom+"'"); //on execute la requete
     		rs = st.executeQuery("SELECT * FROM joueur WHERE nom='"+nom+"'"); //on enregistre le resultat de la requete
     		if(!rs.next())//si pas de resultat
     		{

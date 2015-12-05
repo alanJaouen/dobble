@@ -61,6 +61,7 @@ public class TestCarte {
 	{
 		for(int i=1; i<55;i++)
 		{
+			int a;
 			Carte c = new Carte(i);
 			Assert.assertNotNull(c);
 		}

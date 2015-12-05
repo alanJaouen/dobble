@@ -1,6 +1,7 @@
 package dobble;
 
 import java.sql.Connection;
+import org.postgresql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -188,6 +189,7 @@ public class MoteurJeu {
     	catch ( ClassNotFoundException e ) 
     	{
     	   System.out.println("echec du changement de Driver BDD");
+    	   e.printStackTrace();
     	}
     	
     	/*connection a la bdd*/
