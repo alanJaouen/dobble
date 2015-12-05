@@ -105,6 +105,9 @@ public class TestJoueur {
 		Assert.assertNull(j);
 	}
 	
+	
+	
+	
 	@Test
 	public void testVerifieSQL1()
 	{
@@ -120,9 +123,7 @@ public class TestJoueur {
 	@Test
 	public void testNouveauJoueur1()
 	{//necessite internet 
-		
-		Stats s= new Stats();
-		
+				
 		try {
 			Joueur.nouveauJoueur("bob", "salut");
 		} catch (BddException e) {
@@ -145,6 +146,58 @@ public class TestJoueur {
 		} catch (BddException e) 
 		{
 			throw new AssertionError("exeption inatendue:"+e.getMessage());
+		}
+	}
+	@Test
+	public void testNouveauJoueur3()
+	{//necessite internet 
+		
+		String str= new Integer((int)(Math.random()*1000)).toString();
+		try {
+			Joueur.nouveauJoueur("", "test"+str);
+		} catch (BddException e) 
+		{
+			Assert.assertEquals("Champ(s) vide(s)", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testNouveauJoueur4()
+	{//necessite internet 
+		
+		String str= new Integer((int)(Math.random()*1000)).toString();
+		try {
+			Joueur.nouveauJoueur("test"+str, "");
+		} catch (BddException e) 
+		{
+			Assert.assertEquals("Champ(s) vide(s)", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testNouveauJoueur5()
+	{//necessite internet 
+		
+		String str= new Integer((int)(Math.random()*1000)).toString();
+		try {
+			Joueur.nouveauJoueur("test';--", "test"+str);
+		} catch (BddException e) 
+		{
+
+			Assert.assertEquals("injection sql detectee et bloquee", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testNouveauJoueur6()
+	{//necessite internet 
+		
+		String str= new Integer((int)(Math.random()*1000)).toString();
+		try {
+			Joueur.nouveauJoueur("test"+str, "test';Delete form table");
+		} catch (BddException e) 
+		{
+			Assert.assertEquals("injection sql detectee et bloquee", e.getMessage());
 		}
 	}
 	
@@ -186,5 +239,72 @@ public class TestJoueur {
 		{
 			Assert.assertEquals("Mot de passe incorect", e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testGetArrayCarte()
+	{//necessite internet 
+		
+		Joueur j= new Joueur();
+		ArrayList<Carte> tab=new ArrayList<Carte>();
+		
+		j.setArrayCartes(tab);
+		
+		Assert.assertEquals(tab, j.getArrayCartes());
+	}
+	
+	@Test
+	public void testGetStats()
+	{//necessite internet 
+		
+		Joueur j= new Joueur();
+		Stats st=new Stats();		
+		j.setStats(st);
+		
+		Assert.assertEquals(st, j.getStats());
+	}
+	
+	@Test
+	public void testGetNom()
+	{//necessite internet 
+		
+		Joueur j= new Joueur();	
+		j.setNom("bob");
+		
+		Assert.assertEquals("bob", j.getNom());
+	}
+	
+	@Test
+	public void testGetMdp()
+	{//necessite internet 
+		
+		Joueur j= new Joueur();	
+		j.setMdp("bob");
+		
+		Assert.assertEquals("bob", j.getMdp());
+	}
+	
+	@Test
+	public void testGetScore()
+	{//necessite internet 
+		
+		Joueur j= new Joueur();	
+		j.setScore(269);
+		
+		Assert.assertEquals(269, j.getScore());
+	}
+	
+	@Test
+	public void testSauvegarderStats()
+	{//necessite internet 
+		
+		Joueur j=null;
+		try {
+			j = new Joueur("bob","bob");
+			j.setScore(269);
+			Assert.assertTrue(j.sauvegarderStats());
+		} catch (BddException e) {
+			throw new AssertionError(e.getMessage());
+		}	
 	}
 }
