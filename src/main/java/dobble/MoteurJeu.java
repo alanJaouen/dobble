@@ -114,17 +114,30 @@ public class MoteurJeu implements Serializable {
      * Fais interagir un joueur avec la carte centrale en comparant s et le symbole commun
      * si c'est le meme placer la carte du joueur au centre
      * 
-     *TODO changer le type de retour de la methode en boolean pour plus tard changer les stats du joueur dynamiquement
+     * TODO changer le type de retour de la methode en boolean pour plus tard changer les stats du joueur dynamiquement
      * 
-     * @param idJoueur le joueur qui interagi
+     * @param idJoueur le joueur qui interagit
      * @param s le symbole que le joueur a choisi
      */
-    public void interagir(int idJoueur,Symbole s) {
-    	//TODO
+    public void interagir(int idJoueur,Symbole s)
+    {
+    	if (s.equals(
+    	getSymboleCommun(this.arrayJoueurs.get(idJoueur).getArrayCartes.get(this.arrayJoueurs.get(idJoueur).getArrayCartes.size() - 1), 
+    			this.cartesCentre.get(cartesCentre.size() - 1))
+    		))
+    	{
+    		this.cartesCentre.remove(cartesCentre.size() - 1);
+    		this.cartesCentre.add(this.arrayJoueurs.get(idJoueur).getArrayCartes.get(this.arrayJoueurs.get(idJoueur).getArrayCartes.size() - 1));
+    	}
+    	else
+    	{
+    		System.out.println("Symbole incorrect!");
+    	}
     }
 
     
-    public void lancerJeu(ArrayList<Carte> paquet) {
+    public void lancerJeu(ArrayList<Carte> paquet)
+    {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
     	//TODO lancer le chonometre
