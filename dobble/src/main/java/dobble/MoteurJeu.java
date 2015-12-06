@@ -98,7 +98,7 @@ public class MoteurJeu implements Serializable {
     
     public MoteurJeu(ArrayList<Joueur> joueurs) {
     	this.arrayJoueur = joueurs;
-    	this.cartesCentre = null;
+    	this.cartesCentre = new ArrayList<Carte>();
     	this.chrono = new Chronometer();
     	this.modeDeJeu = new Mode();
     	this.inGame = false;
