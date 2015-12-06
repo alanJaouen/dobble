@@ -111,7 +111,7 @@ public class Carte implements Serializable {
 		String s = "";
 		for (int i = 0; i < 8; i += 1)
 		{
-			s += i + ": " + arraySymbole.get(i) + "\n";
+			s += i + ". " + arraySymbole.get(i) + "\n";
 		}
 		return s;
 	}
