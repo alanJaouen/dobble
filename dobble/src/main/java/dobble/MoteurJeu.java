@@ -196,29 +196,29 @@ public class MoteurJeu implements Serializable {
      * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
      */
     public void quitter() {
-    	//TODO fermer la partie meme si non terminÃ©e ( this.finpartie()), TODO plus tard si le temps ajouter un malus aux leavers.
+    	this.finPartie();
+    	//TODO plus tard si le temps ajouter un malus aux leavers.
     }
     
     //TODO distribuer les cartes equitablement avec de l'aleatoire entre les joueurs, avec la carte au centre
     private void distribuerCarte(ArrayList<Carte> paquet){
-    	/*
     	int nb_alea, i = 0;
     	
     	while (paquet.size() > 1) {
     			nb_alea = (int) (Math.random() * paquet.size() + 1);     //Pour un entier entre 1 et le nombre de cartes restantes dans le paquet
     			// Ajout de la carte dans le joueur suivant :
     			this.getArrayJoueur().get(i).getArrayCartes().add(paquet.get(nb_alea));
-    			// On enlÃ¨ve la carte du paquet :
+    			// On enleve la carte du paquet :
     			paquet.remove(nb_alea);
     			if (i >= this.getArrayJoueur().size() - 1)
     				i = 0;
     			else
     				i++;
     	}
-    	// On met la derniÃ¨re carte au milieu et on la retire du paquet :
+    	// On met la derniere carte au milieu et on la retire du paquet :
     	this.cartesCentre.add(paquet.get(0));
     	paquet.remove(0);
-    	*/
+    	
     }
 	
     /**
