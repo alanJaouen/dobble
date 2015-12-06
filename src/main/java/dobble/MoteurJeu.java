@@ -149,7 +149,7 @@ public class MoteurJeu implements Serializable {
     {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
-    	//TODO lancer le chonometre
+    	this.chrono.start();
     	//TODO lancer un thread pour l'ia
     }
 
@@ -164,12 +164,15 @@ public class MoteurJeu implements Serializable {
 
     
     public void initialiser() {
-    	/*
-    	 * TODO ajouter les differents joueur + ia en fonction du mode
-    	 * TODO mettre les score a 0 des joueurs
-    	 * TODO mettre le chonometre a 0
-    	 * 
-    	 */
+        
+        // Les joueurs sont ajoutés dans le constructeur.
+        // On met les scores des joueurs à 0 :
+        for (Joueur i: this.arrayJoueur) {
+        	i.setScore(0);
+        }
+        
+        // On met le schronometre à 0 :
+        this.chrono.start();
     }
 
     public void ajouterJoueur(Joueur nouveauJoueur) {
@@ -180,9 +183,13 @@ public class MoteurJeu implements Serializable {
     	this.arrayJoueur.remove(supprimerJoueur);
     }
 
-    public void changerJoueurActif(Joueur remplacant, int indice) {
-    	this.arrayJoueur.remove(indice);
-    	this.ajouterJoueur(remplacant);
+    public void changerJoueurActif(int indice) throws Exception {
+    	
+    	// Si Indice invalide :
+    	if (indice < 0 || indice >= this.arrayJoueur.size())
+    		throw new Exception("Indice non valide");
+        else // Si l'indice est correct, alors :
+        	this.joueurActif = indice;
     }
 
     /**
