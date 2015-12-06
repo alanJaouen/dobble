@@ -49,7 +49,7 @@ public class Authentification implements Runnable {
 			
 		} catch (IOException e) {
 			
-			System.err.println(login+" ne répond pas !");
+			System.err.println(login+" ne rÃ©pond pas !");
 		}
 	}
 	
