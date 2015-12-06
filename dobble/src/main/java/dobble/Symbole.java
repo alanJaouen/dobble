@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 public class Symbole implements serializable{
 	private int id;
 	private String nom;
-	private Image image;
+	private transient Image image;
 	
 	Symbole(int id)
 	{
