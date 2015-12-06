@@ -2,7 +2,7 @@ package dobble;
 
 
 
-public class Mode implements Constantes_defaut_projet{
+public class Mode implements Constantes_defaut_projet, serializable{
 	
 	// Attributs:
     private int nbSymbole;
