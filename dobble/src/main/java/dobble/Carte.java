@@ -65,7 +65,7 @@ public class Carte implements Serializable {
      * @param modedejeu Le mode de jeu
      * @return Le deck
      */
-    public ArrayList<Carte> genererDeck(Mode modedejeu){
+    public static ArrayList<Carte> genererDeck(Mode modedejeu){
     	ArrayList<Carte> deck = new ArrayList<Carte>();
     	for (int i = 1; i <= 55; i += 1) //55 cartes (pour mode normal)
     	{

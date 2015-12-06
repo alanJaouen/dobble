@@ -95,6 +95,15 @@ public class MoteurJeu implements Serializable {
     	this.inGame = false;
     	this.joueurActif = 0;
     }
+    
+    public MoteurJeu(ArrayList<Joueur> joueurs) {
+    	this.arrayJoueur = joueurs;
+    	this.cartesCentre = null;
+    	this.chrono = new Chronometer();
+    	this.modeDeJeu = new Mode();
+    	this.inGame = false;
+    	this.joueurActif = 0;
+    }
 
     // -------------------------------------------------------------------
     // Methodes :
@@ -132,13 +141,13 @@ public class MoteurJeu implements Serializable {
     	ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(fichier)) ;
     			
     	 // désérialization de l'objet
-    	MoteurJeu mj = (MoteurJeu)ois.readObject();
+    	MoteurJeu mj = (MoteurJeu)ois.readObject(); //TODO a finir
     	
     	ois.close();
     	}
     	catch (Exception e)
     	{
-    		throw new Exception("Erreur lors de la sauvegarde"); //TODO a changer
+    		throw new Exception("Erreur lors de la sauvegarde"); //TODO a changer, deg
     	}
     }
 
@@ -151,16 +160,17 @@ public class MoteurJeu implements Serializable {
      * @param idJoueur le joueur qui interagit
      * @param s le symbole que le joueur a choisi
      */
-    public void interagir(int idJoueur,Symbole s) throws Exception
+    public boolean interagir(int idJoueur,Symbole s) throws Exception
     {
     	// Si symbole commun est trouvé :
     	if (s.equals(Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
     			this.cartesCentre.get(cartesCentre.size() - 1)))) {
     		this.cartesCentre.remove(cartesCentre.size() - 1);
     		this.cartesCentre.add(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1));
+    		return true;
     	}
     	else // Si le joueur s'est trompé :
-    		throw new Exception("Symbole incorrect");
+    		return false;
     }
 
     
