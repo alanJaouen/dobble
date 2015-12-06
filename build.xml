@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="install" name="dobble">
+<project basedir="." default="install" name="dobble">
     <property environment="env"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
     <path id="dobble.classpath">
         <pathelement location="bin"/>
         <pathelement location="lib/javadesigner.jar"/>
@@ -18,8 +12,8 @@
     </path>
 
     <target name="compile">
-        <mkdir dir="classes"/>
-        <javac debug="false" destdir="classes" includeantruntime="false" source="${source}" target="${target}" encoding="UTF-8">
+        <mkdir dir="bin"/>
+        <javac debug="false" destdir="bin" includeantruntime="false" source="${source}" target="${target}" encoding="UTF-8">
              <src path="src/main/java"/>
              <classpath refid="dobble.classpath"/>
         </javac>
@@ -27,13 +21,14 @@
 	<target name="jar" depends="compile">
 		<jar destfile="dobble.jar">
 			<manifest>
-				<attribute name="Main-Class" value="FenetreStats"/>
+				<attribute name="Main-Class" value="ihm.FenetreStat"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 			<zipgroupfileset dir="lib/" includes="**/*.jar" />
-			<fileset dir="./classes"/>
+			<fileset dir="./bin"/>
          </jar>
 	</target>
               	
     <target name="install" depends="compile,jar"/>
+	
 </project>
