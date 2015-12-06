@@ -177,8 +177,9 @@ public class MoteurJeu implements Serializable {
      */
     public void finPartie() throws BddException {
     	this.inGame = false;
+    	this.arrayJoueur.get(this.joueurActif).sauvegarderStats();
     	//TODO mise a jour du score du joueur courant
-    	this.arrayJoueur.get(this.joueurActif).sauvegarderStats(); //sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
+    	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
     }
 
     
@@ -372,7 +373,9 @@ public class MoteurJeu implements Serializable {
 		 */
 		private int getTempsIA()
 		{
-			return 0;//TODO a changer
+			return (int)Math.random()*(this.tpsIA*(115/100)-this.tpsIA*(85/100)+1)
+					+ this.tpsIA*(85/100);
+			//int pour le moment,  peut-être à changer en double pour plus de réalisme
 		}
 
 	}//fin AnctualiseThread
