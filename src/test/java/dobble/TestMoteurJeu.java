@@ -14,8 +14,6 @@ public class TestMoteurJeu {
 		ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //Liste de joueurs
 		joueurs.add(j1); //Ajout de notre joueur cree a la liste
 		
-		ArrayList<Carte> cartesCentre = new ArrayList<Carte>(); //Deck central
-		cartesCentre.add(new Carte(3)); //Première carte centrale, au pif
 		
 		
 		
@@ -32,7 +30,7 @@ public class TestMoteurJeu {
 		while (jeu.isInGame()) //BOUCLE DE JEU
 		{
 			System.out.println("DEBUT TOUR");
-			jeu.interagir(1, sc.nextInt());
+			//jeu.interagir(1, sc.nextInt());
 			
 		}
 	}
