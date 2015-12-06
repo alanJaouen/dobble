@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class TestMoteurJeu {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Mode mode = new Mode(); //Mode par defaut
 		ArrayList<Carte> deck = Carte.genererDeck(mode); //Nouveau deck global de 55 cartes
 		
@@ -27,12 +27,29 @@ public class TestMoteurJeu {
 		
 		
 		Scanner sc = new Scanner(System.in);
+		
 		while (jeu.isInGame()) //BOUCLE DE JEU
 		{
 			System.out.println("DEBUT TOUR");
-			//jeu.interagir(1, sc.nextInt());
+			
+			
+			
+			System.out.println("Carte centrale:\n" + jeu.getCartesCentre().get(jeu.getCartesCentre().size() - 1) + "\n\n");
+			
+			System.out.println("Votre carte:\n" + jeu.getArrayJoueur().get(0).getArrayCartes().get(
+																			jeu.getArrayJoueur().get(0).getArrayCartes().size() - 1) + "\n\n");
+			
+			int symbole = sc.nextInt();
+			
+			if(jeu.interagir(0, new Symbole(symbole))) //Si symbole trouvé
+			{
+				System.out.println("GG WOW SUCH SKILL, tour suivant");
+			}
+			else System.out.println("NUL ESPECE DE CACA, tour suivant");
 			
 		}
+		
+		sc.close();
 	}
 
 }

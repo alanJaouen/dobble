@@ -64,7 +64,7 @@ public class Symbole implements Serializable {
 	
 	public String toString()
 	{
-		return "nom: " + this.getNom() + " - ID: " + this.getId();
+		return this.getNom() + " - ID " + this.getId();
 	}
 	
 	/**

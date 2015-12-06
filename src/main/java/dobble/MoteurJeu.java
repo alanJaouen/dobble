@@ -165,8 +165,10 @@ public class MoteurJeu implements Serializable {
     	// Si symbole commun est trouvé :
     	if (s.equals(Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
     			this.cartesCentre.get(cartesCentre.size() - 1)))) {
-    		this.cartesCentre.remove(cartesCentre.size() - 1);
+
     		this.cartesCentre.add(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1));
+
+    		
     		return true;
     	}
     	else // Si le joueur s'est trompé :
