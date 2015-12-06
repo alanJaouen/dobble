@@ -1,6 +1,7 @@
 package dobble;
 
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.util.regex.Pattern;
 
 import dobble.Stats.BddException;
 
-public class Joueur implements serializable{
+public class Joueur implements Serializable {
 	
 	private ArrayList<Carte> arrayCartes;
 	
