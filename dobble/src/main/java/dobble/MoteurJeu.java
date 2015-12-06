@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class MoteurJeu {
+public class MoteurJeu implements Serializable {
 	
     // -------------------------------------------------------------------
 	// Attributs :
@@ -88,7 +88,19 @@ public class MoteurJeu {
      * ecrit l'objet courant dans un fichier
      */
     public void sauvegarder() {
-    	//TODO
+    	
+    	try{
+    		File fichier =  new File("sauvegarde.txt") ;
+
+    		// ouverture d'un flux sur un fichier
+    		ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(fichier)) ;
+    	
+    		oos.writeObject(this);
+    	} catch (Exception e)
+    	{
+    		System.err.println("Erreur lors de la sauvegarde du fichier");
+    	}
+    	finally oos.close(); //TODO reste à tester!
     }
 
     /**
