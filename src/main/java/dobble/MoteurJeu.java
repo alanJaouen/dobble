@@ -98,20 +98,21 @@ public class MoteurJeu implements Serializable {
     /**
      * ecrit l'objet courant dans un fichier
      */
-    public void sauvegarder() {
+    public void sauvegarder() throws Exception {
     	
-    	try{
+    	// On essaie de faire une sauvegarde :
+    	try {
     		File fichier =  new File("sauvegarde.txt") ;
 
-    		// ouverture d'un flux sur un fichier
+    		// Ouverture d'un flux sur un fichier
     		ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(fichier)) ;
     	
     		oos.writeObject(this);
     		
     		oos.close();
-    	} catch (Exception e)
-    	{
-    		System.err.println("Erreur lors de la sauvegarde du fichier");
+    	} catch (Exception e) { // Si sauvegarde n'a pas marché :
+    		// Emition d'une exception si sauvegarde impossible :
+    		throw new Exception("Erreur lors de la sauvegarde");
     	}
     }
 
