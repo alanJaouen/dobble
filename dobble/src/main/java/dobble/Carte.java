@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Carte {
+public class Carte implements serializable {
 	
 	private ArrayList<Symbole> arraySymbole;
 	
