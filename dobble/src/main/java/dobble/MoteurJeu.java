@@ -236,7 +236,7 @@ public class MoteurJeu implements Serializable {
     	int nb_alea, i = 0;
     	
     	while (paquet.size() > 1) {
-    			nb_alea = (int) (Math.random() * paquet.size() + 1);     //Pour un entier entre 1 et le nombre de cartes restantes dans le paquet
+    			nb_alea = (int) (Math.random() * paquet.size());     //Pour un entier entre 1 et le nombre de cartes restantes dans le paquet
     			// Ajout de la carte dans le joueur suivant :
     			this.getArrayJoueur().get(i).getArrayCartes().add(paquet.get(nb_alea));
     			// On enleve la carte du paquet :
@@ -366,6 +366,7 @@ public class MoteurJeu implements Serializable {
 			while(MoteurJeu.this.isInGame())
 			{
 				//TODO faire jouer l'ia
+				
 				try 
 				{
 					Thread.sleep(this.getTempsIA());
