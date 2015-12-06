@@ -13,6 +13,11 @@ import dobble.Stats.BddException;
 
 public class Joueur implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8131165726505362546L;
+
 	private ArrayList<Carte> arrayCartes;
 	
 	private Stats stats;
