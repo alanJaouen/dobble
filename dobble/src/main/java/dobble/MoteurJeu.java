@@ -365,7 +365,13 @@ public class MoteurJeu implements Serializable {
 		{
 			while(MoteurJeu.this.isInGame())
 			{
-				//TODO faire jouer l'ia
+				Carte carteIa = MoteurJeu.this.arrayJoueur.get(idJoueur).getArrayCartes().get(arrayJoueur.get(idJoueur).getArrayCartes().size() -1);
+				Carte carteMilieu = MoteurJeu.this.cartesCentre.get(MoteurJeu.this.cartesCentre.size()-1);
+				try {
+					MoteurJeu.this.interagir(idJoueur,Carte.getSymboleCommun(carteIa, carteMilieu));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				
 				try 
 				{
