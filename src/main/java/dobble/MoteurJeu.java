@@ -73,7 +73,12 @@ public class MoteurJeu {
      */
     public MoteurJeu()
     {
-    	//TODO initialiser tout les attribut a 0
+    	this.arrayJoueur = null;
+    	this.cartesCentre = null;
+    	this.chrono = null;
+    	this.modeDeJeu = null;
+    	this.inGame = false;
+    	this.joueurActif = 0;
     }
 
     // -------------------------------------------------------------------
