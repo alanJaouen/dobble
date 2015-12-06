@@ -177,9 +177,8 @@ public class MoteurJeu implements Serializable {
      */
     public void finPartie() throws BddException {
     	this.inGame = false;
-    	this.arrayJoueur.get(this.joueurActif).sauvegarderStats();
     	//TODO mise a jour du score du joueur courant
-    	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
+    	this.arrayJoueur.get(this.joueurActif).sauvegarderStats(); //sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
     }
 
     
