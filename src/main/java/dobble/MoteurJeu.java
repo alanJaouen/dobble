@@ -82,7 +82,7 @@ public class MoteurJeu implements Serializable {
     }
 
     // -------------------------------------------------------------------
-    // Méthodes :
+    // MÃ©thodes :
     
     /**
      * ecrit l'objet courant dans un fichier
@@ -100,7 +100,7 @@ public class MoteurJeu implements Serializable {
     	{
     		System.err.println("Erreur lors de la sauvegarde du fichier");
     	}
-    	finally oos.close(); //TODO reste � tester!
+    	finally oos.close(); //TODO reste à tester!
     }
 
     /**
@@ -119,20 +119,16 @@ public class MoteurJeu implements Serializable {
      * @param idJoueur le joueur qui interagit
      * @param s le symbole que le joueur a choisi
      */
-    public void interagir(int idJoueur,Symbole s)
+    public void interagir(int idJoueur,Symbole s) throws Exception
     {
-    	if (s.equals(
-    	getSymboleCommun(this.arrayJoueurs.get(idJoueur).getArrayCartes.get(this.arrayJoueurs.get(idJoueur).getArrayCartes.size() - 1), 
-    			this.cartesCentre.get(cartesCentre.size() - 1))
-    		))
-    	{
+    	// Si symbole commun est trouvé :
+    	if (s.equals(getSymboleCommun(this.arrayJoueurs.get(idJoueur).getArrayCartes.get(this.arrayJoueurs.get(idJoueur).getArrayCartes.size() - 1), 
+    			this.cartesCentre.get(cartesCentre.size() - 1)))) {
     		this.cartesCentre.remove(cartesCentre.size() - 1);
     		this.cartesCentre.add(this.arrayJoueurs.get(idJoueur).getArrayCartes.get(this.arrayJoueurs.get(idJoueur).getArrayCartes.size() - 1));
     	}
-    	else
-    	{
-    		System.out.println("Symbole incorrect!");
-    	}
+    	else // Si le joueur s'est trompé :
+    		throw new Exception("Symbole incorrect");
     }
 
     
@@ -180,7 +176,7 @@ public class MoteurJeu implements Serializable {
      * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
      */
     public void quitter() {
-    	//TODO fermer la partie meme si non terminée ( this.finpartie()), TODO plus tard si le temps ajouter un malus aux leavers.
+    	//TODO fermer la partie meme si non terminÃ©e ( this.finpartie()), TODO plus tard si le temps ajouter un malus aux leavers.
     }
     
     //TODO distribuer les cartes equitablement avec de l'aleatoire entre les joueurs, avec la carte au centre
@@ -192,14 +188,14 @@ public class MoteurJeu implements Serializable {
     			nb_alea = (int) (Math.random() * paquet.size() + 1);     //Pour un entier entre 1 et le nombre de cartes restantes dans le paquet
     			// Ajout de la carte dans le joueur suivant :
     			this.getArrayJoueur().get(i).getArrayCartes().add(paquet.get(nb_alea));
-    			// On enlève la carte du paquet :
+    			// On enlÃ¨ve la carte du paquet :
     			paquet.remove(nb_alea);
     			if (i >= this.getArrayJoueur().size() - 1)
     				i = 0;
     			else
     				i++;
     	}
-    	// On met la dernière carte au milieu et on la retire du paquet :
+    	// On met la derniÃ¨re carte au milieu et on la retire du paquet :
     	this.cartesCentre.add(paquet.get(0));
     	paquet.remove(0);
     	*/
