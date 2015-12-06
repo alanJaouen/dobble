@@ -3,6 +3,7 @@ package dobble;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 
 import org.postgresql.Driver;
@@ -14,7 +15,12 @@ import java.util.ArrayList;
 
 public class MoteurJeu implements Serializable {
 	
-    // -------------------------------------------------------------------
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4484304832690972266L;
+
+	// -------------------------------------------------------------------
 	// Attributs :
 	/**
 	 * l'url d'acces a la bdd
@@ -101,11 +107,12 @@ public class MoteurJeu implements Serializable {
     		ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(fichier)) ;
     	
     		oos.writeObject(this);
+    		
+    		oos.close();
     	} catch (Exception e)
     	{
     		System.err.println("Erreur lors de la sauvegarde du fichier");
     	}
-    	finally oos.close(); //TODO reste à tester!
     }
 
     /**
