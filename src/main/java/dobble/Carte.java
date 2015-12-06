@@ -1,5 +1,6 @@
 package dobble;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -7,8 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Carte implements serializable {
+public class Carte implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6256323073888330163L;
 	private ArrayList<Symbole> arraySymbole;
 	
 	/**
