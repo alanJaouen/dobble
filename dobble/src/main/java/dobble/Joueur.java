@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import dobble.Stats.BddException;
 
-public class Joueur {
+public class Joueur implements serializable{
 	
 	private ArrayList<Carte> arrayCartes;
 	
