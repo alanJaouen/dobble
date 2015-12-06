@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class Symbole {
+public class Symbole implements serializable{
 	private int id;
 	private String nom;
 	private Image image;
