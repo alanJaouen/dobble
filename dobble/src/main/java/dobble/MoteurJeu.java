@@ -127,7 +127,7 @@ public class MoteurJeu implements Serializable {
     public void interagir(int idJoueur,Symbole s) throws Exception
     {
     	// Si symbole commun est trouvé :
-    	if (s.equals(this.cartesCentre.get(this.cartesCentre.size() - 1).getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
+    	if (s.equals(Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
     			this.cartesCentre.get(cartesCentre.size() - 1)))) {
     		this.cartesCentre.remove(cartesCentre.size() - 1);
     		this.cartesCentre.add(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1));
