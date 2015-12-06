@@ -1,12 +1,16 @@
 package dobble;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 
 import org.postgresql.Driver;
+
+import dobble.Stats.BddException;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -55,7 +59,7 @@ public class MoteurJeu implements Serializable {
     // -------------------------------------------------------------------
     // Constructeurs :
     
-    /*
+    /**
      * Constructeur par champs :
      */
     public MoteurJeu(ArrayList<Joueur> arrayJoueur, ArrayList<Carte> cartesCentre, Chronometer chrono, Mode modeDeJeu) {
@@ -67,7 +71,7 @@ public class MoteurJeu implements Serializable {
     	this.joueurActif = 0;
     }
     
-    /*
+    /**
      * Constructeur par copie :
      */
     public MoteurJeu(MoteurJeu modele) {
@@ -93,7 +97,7 @@ public class MoteurJeu implements Serializable {
     }
 
     // -------------------------------------------------------------------
-    // MÃ©thodes :
+    // Methodes :
     
     /**
      * ecrit l'objet courant dans un fichier
@@ -112,15 +116,30 @@ public class MoteurJeu implements Serializable {
     		oos.close();
     	} catch (Exception e) { // Si sauvegarde n'a pas marché :
     		// Emition d'une exception si sauvegarde impossible :
-    		throw new Exception("Erreur lors de la sauvegarde");
+    		throw new Exception("Erreur lors de la sauvegarde"); //TODO a changer
     	}
     }
 
     /**
      * restaure l'objet courant depuis un fichier
+     * @throws Exception 
      */
-    public void charger() {
-    	//TODO
+    public void charger() throws Exception {
+    	try{
+    	File fichier =  new File("sauvegarde.txt") ;
+
+    	 // ouverture d'un flux sur un fichier
+    	ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(fichier)) ;
+    			
+    	 // désérialization de l'objet
+    	MoteurJeu mj = (MoteurJeu)ois.readObject();
+    	
+    	ois.close();
+    	}
+    	catch (Exception e)
+    	{
+    		throw new Exception("Erreur lors de la sauvegarde"); //TODO a changer
+    	}
     }
 
     /**
@@ -156,8 +175,9 @@ public class MoteurJeu implements Serializable {
     /**
      * met fin a la partie et met a jour les stats du joueur notament le score max
      */
-    public void finPartie() {
+    public void finPartie() throws BddException {
     	this.inGame = false;
+    	this.arrayJoueur.get(this.joueurActif).sauvegarderStats();
     	//TODO mise a jour du score du joueur courant
     	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
     }
@@ -194,8 +214,9 @@ public class MoteurJeu implements Serializable {
 
     /**
      * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
+     * @throws BddException 
      */
-    public void quitter() {
+    public void quitter() throws BddException {
     	this.finPartie();
     	//TODO plus tard si le temps ajouter un malus aux leavers.
     }
