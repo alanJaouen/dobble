@@ -1,9 +1,16 @@
 package dobble;
 
+import java.io.Serializable;
 
 
-public class Mode implements Constantes_defaut_projet, serializable{
+
+public class Mode implements Constantes_defaut_projet, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7597834623218274441L;
+
 	// Attributs:
     private int nbSymbole;
 
@@ -19,13 +26,13 @@ public class Mode implements Constantes_defaut_projet, serializable{
     
     // Par champs:
     public Mode(int nbSymbole, int tempsIA) {
-    	if (nbSymbole < 0 || nbSymbole > this.nbSymboleMax_defaut)
-    		this.nbSymbole = this.nbSymbole_defaut;
+    	if (nbSymbole < 0 || nbSymbole > Constantes_defaut_projet.nbSymboleMax_defaut)
+    		this.nbSymbole = Constantes_defaut_projet.nbSymbole_defaut;
     	else
     		this.nbSymbole = nbSymbole;
     	
-    	if (tempsIA < 0 || tempsIA > this.tempsIAMax_defaut)
-    		this.tempsIA = this.tempsIA_defaut;
+    	if (tempsIA < 0 || tempsIA > Constantes_defaut_projet.tempsIAMax_defaut)
+    		this.tempsIA = Constantes_defaut_projet.tempsIA_defaut;
     	else
     		this.tempsIA = tempsIA;
     }
