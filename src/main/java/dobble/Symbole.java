@@ -1,14 +1,20 @@
 package dobble;
 
 import javax.swing.ImageIcon;
+
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 
-public class Symbole implements serializable{
+public class Symbole implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1793540733891826530L;
 	private int id;
 	private String nom;
 	private transient Image image;
