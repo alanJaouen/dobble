@@ -2,10 +2,10 @@
  *
  * Copyright or © or Copr. Klervi BLESCHET, Eva TERZAGO, Adrien BOIZARD, Kyllian GAUTIER, Alan JAOUEN
  *
- *  -
- *  -
- *  -
- *  -
+ *  - b_klervi@hotmail.fr
+ *  - evalukario@hotmail.fr
+ *  - adria.boizard@live.fr
+ *  - kyllian.gt@hotmail.fr
  *  - alan.jaouen.96@gmail.com 
  *  
  *  This software is a computer program whose purpose is to play to the Dobble game.
@@ -19,8 +19,6 @@
  *  therefore means that it is reserved for developers and experienced professionals having in-depth computer knowledge. Users are therefore encouraged to load and test the software's suitability as regards their requirements in conditions enabling the security of their systems and/or data to be ensured and, more generally, to use and operate it in the same conditions as regards security.
  *
  *  The fact that you are presently reading this means that you have had knowledge of the CeCILL license and that you accept its terms.
- * 
- * 
  */
 
 package dobble;

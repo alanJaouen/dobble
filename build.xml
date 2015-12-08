@@ -21,7 +21,7 @@
 	<target name="jar" depends="compile">
 		<jar destfile="dobble.jar">
 			<manifest>
-				<attribute name="Main-Class" value="ihm.FenetreStat"/>
+				<attribute name="Main-Class" value="dobble.TestMoteurJeu"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 			<zipgroupfileset dir="lib/" includes="**/*.jar" />
