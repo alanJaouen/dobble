@@ -51,26 +51,43 @@ public class JPanelCarte extends JPanel {
 		{
 			super();
 			this.c = c;
-			this.symboles = new Symbole[8];
+			this.symboles = new Symbole[c.getArraySymbole().size()];
 			
-			this.setLayout(new GridLayout(4,3));
+			double nbligne=(c.getArraySymbole().size()+4)/4;
+			
+			System.out.println("sur "+nbligne+" lignes");
+			
+			this.setLayout(new GridLayout(4,(int)nbligne));
 			this.setBackground(Color.BLUE);
 			this.setOpaque(false);
 			
-			for (int i = 0; i < 8; i += 1)
-			{			
-				this.symboles[i] = this.c.getArraySymbole().get(i);
-				
-				
-				if(i == 0 || i == 1 || i == 7)
-				{
-					this.add(new JLabel());
-				}
+			int compteur=0;
 			
-				MonJLabel t=new MonJLabel(this.symboles[i].getImage());
-				t.addMouseListener(new SymboleListener(this.symboles[i]));
-				this.add(t);
-				this.repaint();
+			for(int j=0; j< 4; j+=1)
+			{
+
+				for (int i = 0; i < nbligne; i += 1)
+				{			
+					
+					
+					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
+					{
+						this.add(new JLabel());
+						System.out.println("case blanche");
+						continue;
+					}
+
+					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
+					System.out.println(compteur);
+					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
+					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
+					compteur++;
+					this.add(t);
+					this.repaint();
+
+
+				}
+				
 			}
 			
 			this.setVisible(true);
