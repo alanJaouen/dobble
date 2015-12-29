@@ -23,7 +23,7 @@ public class Symbole implements Serializable {
 	private transient BufferedImage image;
 	
 	
-	Symbole(int id)
+	public Symbole(int id)
 	{
 		setId(id);
 		setNom(lecture("nomSymboles.txt", id));
