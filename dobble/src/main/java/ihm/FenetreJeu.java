@@ -117,12 +117,16 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
 		labPseudo.setText(pseudo);
 		labPseudo.setForeground(Color.white);
-		p.add(labPseudo, BorderLayout.NORTH);
 		
 		labScore = new JLabel();//affiche le score du joueur 1
 		int score = mj.getArrayJoueur().get(0).getScore();
 		labScore.setText("" + score);
-		p.add(labScore, BorderLayout.NORTH);
+		
+		JPanel nord= new JPanel();
+		nord.add(labPseudo);
+		nord.add(labScore);
+		
+		p.add(nord, BorderLayout.NORTH);
 		
 		p.add(new JPanelCarte(new Carte(3)),BorderLayout.CENTER);
 		
