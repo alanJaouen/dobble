@@ -49,7 +49,7 @@ public class TestSymbole {
 	public void testToString()
 	{
 		Symbole s= new Symbole(1);
-		Assert.assertEquals("nom: ampoule - ID: 1" , s.toString());
+		Assert.assertEquals("ampoule - ID 1" , s.toString());
 		
 	}
 	
