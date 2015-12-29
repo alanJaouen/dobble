@@ -31,6 +31,7 @@ public class JPanelCarte extends JPanel {
 		this.add(this.content,BorderLayout.CENTER);
 		this.imgCarte = Toolkit.getDefaultToolkit().getImage("images/carte.png");
 		this.carteOmbre = Toolkit.getDefaultToolkit().getImage("images/carte-ombre.png");
+		this.setBounds(0, 0, 200, 200);
 		this.setVisible(true);
 		this.repaint();
 	}

@@ -2,8 +2,10 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -30,7 +32,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	private MoteurJeu mj;
 	private JMenuBar menubar;
 	private JMenu menuQuitter;
-	private JPanel contentPane;
+	private Container contentPane;
 	private JLabel labScore;
 	private JLabel time;
 	
@@ -46,8 +48,9 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		
 		this.mj = mj;
 		
-		contentPane = new JPanel();
-		this.creePanels();
+		contentPane=this.getContentPane();
+		contentPane.setLayout(new BorderLayout(0,0));
+		this.contentPane.add(this.creePanels(),BorderLayout.CENTER);
 		
 		
 		menubar = this.creeMenuBar();
@@ -76,27 +79,32 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		return menu;
 	}
 	
-	private void creePanels()
+	private JPanel creePanels()
 	{
-		this.setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0,0));
-		JPanel panelCarteCentre = this.creePanelCarteCentre();
-		contentPane.add(panelCarteCentre, BorderLayout.NORTH);
+		JPanel p= new JPanel();
+		p.setLayout(new GridLayout(1,3));
+
 		JPanel panelCarteJoueur = this.creePanelCarteJoueur();
-		contentPane.add(panelCarteJoueur, BorderLayout.WEST);
+		p.add(panelCarteJoueur);
+		
+		JPanel panelCarteCentre = this.creePanelCarteCentre();
+		p.add(panelCarteCentre);
+		
 		JPanel panelCarteAdverse = this.creePanelCarteAdverse();
-		contentPane.add(panelCarteAdverse, BorderLayout.EAST);
+		p.add(panelCarteAdverse);
+		return p;
 	}
 	
 	private JPanel creePanelCarteCentre()
 	{
 		JPanel p = new JPanel();
+		p.setLayout(new BorderLayout(0,0));
 		p.setBackground(Color.blue);
 		time = new JLabel();
 		int tMin = mj.getChrono().getMinutes();
 		int tSec = mj.getChrono().getSeconds();
 		time.setText("" + tMin + " :" + tSec);
-		p.add(time);
+		p.add(time, BorderLayout.NORTH);
 		return p;
 	}
 	
@@ -104,19 +112,19 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	{
 		JPanel p = new JPanel();
 		p.setBackground(Color.red);
-		
+		p.setLayout(new BorderLayout(0,0));
 		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
 		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
 		labPseudo.setText(pseudo);
 		labPseudo.setForeground(Color.white);
-		p.add(labPseudo);
+		p.add(labPseudo, BorderLayout.NORTH);
 		
 		labScore = new JLabel();//affiche le score du joueur 1
 		int score = mj.getArrayJoueur().get(0).getScore();
 		labScore.setText("" + score);
-		p.add(labScore);
+		p.add(labScore, BorderLayout.NORTH);
 		
-		p.add(new JPanelCarte(new Carte(3)));
+		p.add(new JPanelCarte(new Carte(3)),BorderLayout.CENTER);
 		
 		return p;
 	}
