@@ -116,6 +116,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		labScore.setText("" + score);
 		p.add(labScore);
 		
+		p.add(new JPanelCarte(new Carte(3)));
+		
 		return p;
 	}
 	
