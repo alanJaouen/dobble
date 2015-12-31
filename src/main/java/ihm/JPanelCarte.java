@@ -19,93 +19,78 @@ import dobble.Symbole;
 public class JPanelCarte extends JPanel {
 	
 	private Image imgCarte;
-	private Image carteOmbre;
+	private Image imgCarteOmbre;
 	
-	private JPanelCartenotfull content;
+	private Carte c;
+	private Symbole[] symboles;
+	private JLabel[] listLable;
+	
+	
 	
 	public JPanelCarte(Carte c)
 	{
 		super();
 		this.setLayout(new BorderLayout());
-		this.content=new JPanelCartenotfull(c);
-		this.add(this.content,BorderLayout.CENTER);
 		this.imgCarte = Toolkit.getDefaultToolkit().getImage("images/carte.png");
-		this.carteOmbre = Toolkit.getDefaultToolkit().getImage("images/carte-ombre.png");
-		this.setBounds(0, 0, 200, 200);
+		this.imgCarteOmbre = Toolkit.getDefaultToolkit().getImage("images/carte-ombre.png");
+
+		this.c = c;
+		this.symboles = new Symbole[c.getArraySymbole().size()];
+		this.listLable=new JLabel[c.getArraySymbole().size()];
+		
+		double nbligne=(c.getArraySymbole().size()+4)/4;
+		
+		System.out.println("sur "+nbligne+" lignes");
+		
+		this.setLayout(new GridLayout(4,(int)nbligne));
+		this.setBackground(Color.BLUE);
+		this.setOpaque(false);
+		
+		int compteur=0;
+		
+		for(int j=0; j< 4; j+=1)
+		{
+
+			for (int i = 0; i < nbligne; i += 1)
+			{			
+				
+				
+				if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
+				{
+					this.add(new JLabel());
+					System.out.println("case blanche");
+					continue;
+				}
+
+				this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
+				
+				System.out.println(compteur);
+				JLabel t=new MonJLabel(this.symboles[compteur].getImage());
+				t.addMouseListener(new SymboleListener(this.symboles[compteur]));
+				this.listLable[compteur]=t;
+				compteur++;
+				this.add(t);
+			}
+			
+		}
+		
 		this.setVisible(true);
 		this.repaint();
 	}
 	
 	public void paint(Graphics g)
 	{
+			
 		g.drawImage(imgCarte, 0, 0,this.getWidth(),this.getHeight(), this);
-		this.content.paint(g);
-		g.drawImage(carteOmbre, 0, 0,this.getWidth(),this.getHeight(),  this);
+		super.paint(g);
+		g.drawImage(imgCarteOmbre, 0, 0,this.getWidth(),this.getHeight(), this);
 	}
 	
-	public class JPanelCartenotfull extends JPanel
-	{
-		private Carte c;
-		private Symbole[] symboles;
-		
-		public JPanelCartenotfull(Carte c)
-		{
-			super();
-			this.c = c;
-			this.symboles = new Symbole[c.getArraySymbole().size()];
-			
-			double nbligne=(c.getArraySymbole().size()+4)/4;
-			
-			System.out.println("sur "+nbligne+" lignes");
-			
-			this.setLayout(new GridLayout(4,(int)nbligne));
-			this.setBackground(Color.BLUE);
-			this.setOpaque(false);
-			
-			int compteur=0;
-			
-			for(int j=0; j< 4; j+=1)
-			{
-
-				for (int i = 0; i < nbligne; i += 1)
-				{			
-					
-					
-					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
-					{
-						this.add(new JLabel());
-						System.out.println("case blanche");
-						continue;
-					}
-
-					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
-					System.out.println(compteur);
-					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
-					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
-					compteur++;
-					this.add(t);
-					this.repaint();
-
-
-				}
-				
-			}
-			
-			this.setVisible(true);
-		}
 		
 		public void setC(Carte c) {
 			this.c = c;
 		}
 		
-	
-		public void paint(Graphics g)
-		{	
-			super.paint(g);			
-			
-		}
-	
-	
 	
 		public class MonJLabel extends JLabel
 		{
@@ -154,8 +139,8 @@ public class JPanelCarte extends JPanel {
 		         g2d.drawImage(img, at,JPanelCarte.this);
 			 }
 		}
-	
-		public class SymboleListener implements MouseListener{
+
+		public class SymboleListener implements MouseListener{//TODO ecouteur a modifier
 			
 			private Symbole monSymbole;
 			
@@ -197,5 +182,3 @@ public class JPanelCarte extends JPanel {
 			
 		}
 	}
-	
-}
