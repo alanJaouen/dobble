@@ -106,7 +106,7 @@ public class FenetreParametres extends JFrame {
 	
 	private class RetourListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (null, "Tout changement non sauvegardé sera perdu. \nPour sauvegarder, appuyer sur le bouton Enregistrer. \nVoulez-vous vraiment retourner au menu principal ?","Retour", JOptionPane.ERROR_MESSAGE)){
+			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreParametres.this, "Tout changement non sauvegardé sera perdu. \nPour sauvegarder, appuyer sur le bouton Enregistrer. \nVoulez-vous vraiment retourner au menu principal ?","Retour", JOptionPane.ERROR_MESSAGE)){
 				FenetreParametres.this.dispose();
 			}
 		}
