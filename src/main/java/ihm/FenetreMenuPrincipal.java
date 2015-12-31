@@ -76,7 +76,7 @@ public class FenetreMenuPrincipal extends JFrame {
 				JOptionPane.showMessageDialog(FenetreMenuPrincipal.this, "Ce bouton n'est pas encore attribué. Il le sera éventuellement dans une future mise à jour.", "Bouton non attribué", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			case 5: // Bouton quitter
-				if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (null, "Etes-vous sur(e) de vouloir quitter Dobble ?","Quitter Dobble", 0)){
+				if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreMenuPrincipal.this, "Etes-vous sur(e) de vouloir quitter Dobble ?","Quitter Dobble", 0)){
 					FenetreMenuPrincipal.this.dispose();
 				}
 				break;
