@@ -77,6 +77,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		timer = new Timer(1,this);
 		timer.start();
 		
+		
+		ActualiseThread thread= new ActualiseThread("maj ihm");
+		thread.start();
+		
 	}
 	
 	private JMenuBar creeMenuBar()
@@ -398,16 +402,59 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		joueurs.add(j2);
 		
 
-		
+		System.out.println("debut lancement");
 		
 		
 		MoteurJeu jeu = new MoteurJeu(joueurs); //Cree un moteur de jeu
-		
+		System.out.println("1");
 		jeu.initialiser(); //initialisation: scores et chronometre
-		
+		System.out.println("2");
 		jeu.lancerJeu(deck); //Lancement: cartes distribuees
-		
+		System.out.println("3");
 		FenetreJeu j= new FenetreJeu(jeu);
+		System.out.println("4");
+		
 	}
+	
+	/**
+	 * Un thread permettant de rafraichir l'affichage de l'ihm
+	 * @author Alan JAOUEN
+	 *
+	 */
+	public class ActualiseThread extends Thread {
+
+		/**
+		 * Constreucteur par defaut
+		 * @param name nom du Thread
+		 */
+		public ActualiseThread(String name)
+		{
+			super(name);
+		}
+		 
+		/**
+		 * Lance le thread
+		 */
+		@SuppressWarnings("deprecation")
+		@Override
+		public void run()
+		{
+			while(true)
+			{
+				try 
+				{
+					Thread.sleep(100);
+				} 
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+				FenetreJeu.this.contentPane.remove(carte);
+				FenetreJeu.this.contentPane.add(FenetreJeu.this.creePanels(),BorderLayout.CENTER);
+			}
+		}
+
+	}//fin AnctualiseThread
+	
 
 }
