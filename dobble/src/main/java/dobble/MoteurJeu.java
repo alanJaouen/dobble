@@ -174,7 +174,8 @@ public class MoteurJeu implements Serializable {
     				this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1);
     		
     		this.testfin();
-    		this.needupdate=true;
+    		if(idJoueur != this.joueurActif)
+    			this.needupdate=true;
     		return true;
     	}
     	else // Si le joueur s'est trompé :
@@ -404,7 +405,7 @@ public class MoteurJeu implements Serializable {
 				
 				try 
 				{
-					Thread.sleep(3500);//this.getTempsIA());
+					Thread.sleep(10000);//this.getTempsIA());
 				} 
 				catch (InterruptedException e)
 				{
