@@ -54,6 +54,8 @@ public class MoteurJeu implements Serializable {
 
     private int joueurActif;
     
+    private boolean needupdate;
+    
     
     
     // -------------------------------------------------------------------
@@ -103,6 +105,7 @@ public class MoteurJeu implements Serializable {
     	this.modeDeJeu = new Mode();
     	this.inGame = false;
     	this.joueurActif = 0;
+    	this.needupdate=false;
     }
 
     // -------------------------------------------------------------------
@@ -171,6 +174,7 @@ public class MoteurJeu implements Serializable {
     				this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1);
     		
     		this.testfin();
+    		this.needupdate=true;
     		return true;
     	}
     	else // Si le joueur s'est trompé :
@@ -348,6 +352,15 @@ public class MoteurJeu implements Serializable {
 		this.joueurActif = joueurActif;
 	}
 	
+	public void updatedone()
+	{
+		this.needupdate=false;
+	}
+	
+	public boolean getNeedUpdate()
+	{
+		return this.needupdate;
+	}
 	
 	/**
 	 * Un thread permettant le jeu de l'ia
@@ -391,7 +404,7 @@ public class MoteurJeu implements Serializable {
 				
 				try 
 				{
-					Thread.sleep(1000);//this.getTempsIA());
+					Thread.sleep(3500);//this.getTempsIA());
 				} 
 				catch (InterruptedException e)
 				{
