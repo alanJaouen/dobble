@@ -73,6 +73,7 @@ public class FenetreStat extends JFrame {
 		this.contentPane.add(panelCentre, BorderLayout.CENTER);
 		
 		this.charger();
+		this.setVisible(true);
 	}
 	
 	/**
