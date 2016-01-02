@@ -1,17 +1,27 @@
 package ihm;
 
+import ihm.JPanelCarte.MonJLabel;
+import ihm.JPanelCarte.SymboleListener;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,6 +35,7 @@ import dobble.Joueur;
 import dobble.Mode;
 import dobble.MoteurJeu;
 import dobble.Stats;
+import dobble.Symbole;
 
 public class FenetreJeu extends JFrame implements ActionListener{
 	
@@ -37,6 +48,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	private JLabel time;
 	
 	private Timer timer;
+	
+	private Image fond;
 	
 	public FenetreJeu(MoteurJeu mj)  // instancie une fenêtre de jeu pour 2 joueurs pour le moment à partir d'un MoteurJeu
 	{
@@ -56,6 +69,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		menubar = this.creeMenuBar();
 		this.setJMenuBar(menubar);
 		
+		this.fond = new ImageIcon("images/table.jpg").getImage();
+		
 		this.setVisible(true);
 		
 		timer = new Timer(1,this);
@@ -73,20 +88,20 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	
 	private JMenu creeMenuQuitter()
 	{
-		JMenu menu = new JMenu();
-		JMenuItem quitter = new JMenuItem("quitter");
+		JMenu menu = new JMenu("Systeme");
+		JMenuItem quitter = new JMenuItem("Quitter");
 		menu.add(quitter);
 		return menu;
 	}
 	
 	private JPanel creePanels()
 	{
-		JPanel p= new JPanel();
-		p.setLayout(new BorderLayout());
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2,1));
 
 
 		JPanel panelCarteCentre = this.creePanelCarteCentre();
-		p.add(panelCarteCentre, BorderLayout.NORTH);
+		p.add(panelCarteCentre);
 		
 		JPanel panelJoueurs = new JPanel();
 		panelJoueurs.setLayout(new GridLayout(1,2));
@@ -97,7 +112,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			JPanel panelCarteAdverse = this.creePanelCarteAdverse();
 			panelJoueurs.add(panelCarteAdverse);
 		
-		p.add(panelJoueurs, BorderLayout.CENTER);
+		p.add(panelJoueurs);
 		
 		return p;
 	}
@@ -106,7 +121,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	{
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout(0,0));
-		p.setBackground(Color.blue);
+		p.setOpaque(false);
 		time = new JLabel();
 		int tMin = mj.getChrono().getMinutes();
 		int tSec = mj.getChrono().getSeconds();
@@ -120,7 +135,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	private JPanel creePanelCarteJoueur()
 	{
 		JPanel p = new JPanel();
-		p.setBackground(Color.red);
+		p.setOpaque(false);
 		p.setLayout(new BorderLayout());
 		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
 		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
@@ -142,7 +157,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	private JPanel creePanelCarteAdverse()
 	{
 		JPanel p = new JPanel();
-		p.setBackground(Color.black);
+		p.setOpaque(false);
 		JLabel pseudo = new JLabel();
 		String psdo = mj.getArrayJoueur().get(1).getNom(); //affiche le pseudo du joueur adverse
 		pseudo.setText(psdo);
@@ -176,6 +191,188 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		this.update();
 		
 	}
+	
+	public void paint(Graphics g)
+	{
+		g.drawImage(this.fond, 0, 0, this.getWidth(), this.getHeight(), this);  //FIXME la carte doit s'adapter proportionnellement au conteneur
+		super.paint(g);
+	}
+	
+	
+	public class JPanelCarte extends JPanel {
+		
+		private Image imgCarte;
+		private Image imgCarteOmbre;
+		
+		private int tailleCarte;
+		
+		private Carte c;
+		private Symbole[] symboles;
+		private JLabel[] listLable;
+		
+		
+		
+		public JPanelCarte(Carte c)
+		{
+			super();
+			this.setLayout(new BorderLayout());
+			this.imgCarte = Toolkit.getDefaultToolkit().getImage("images/carte.png");
+			this.imgCarteOmbre = Toolkit.getDefaultToolkit().getImage("images/carte-ombre.png");
+
+			this.c = c;
+			this.symboles = new Symbole[c.getArraySymbole().size()];
+			this.listLable=new JLabel[c.getArraySymbole().size()];
+			
+			double nbligne=(c.getArraySymbole().size()+4)/4;
+			
+			System.out.println("sur "+nbligne+" lignes");
+			
+			this.setLayout(new GridLayout(4,(int)nbligne));
+			this.setBackground(Color.BLUE);
+			this.setOpaque(false);
+			
+			int compteur=0;
+			
+			for(int j=0; j< 4; j+=1)
+			{
+
+				for (int i = 0; i < nbligne; i += 1)
+				{			
+					
+					
+					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
+					{
+						this.add(new JLabel());
+						System.out.println("case blanche");
+						continue;
+					}
+
+					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
+					
+					System.out.println(compteur);
+					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
+					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
+					this.listLable[compteur]=t;
+					compteur++;
+					this.add(t);
+				}
+				
+			}
+			
+			this.setVisible(true);
+			this.repaint();
+		}
+		
+		public void paint(Graphics g)
+		{
+			int w = this.getWidth();
+			int h = this.getHeight();
+			if(w >= h)
+			{
+				this.tailleCarte = h;
+			}
+			else this.tailleCarte = w;
+			
+			g.drawImage(imgCarte, 0, 0, this.tailleCarte, this.tailleCarte, this);  //FIXME la carte doit s'adapter proportionnellement au conteneur
+			super.paint(g);
+			g.drawImage(imgCarteOmbre, 0, 0, this.tailleCarte, this.tailleCarte, this);
+		}
+		
+			
+			public void setC(Carte c) {
+				this.c = c;
+			}
+			
+		
+			public class MonJLabel extends JLabel
+			{
+			
+				private int rotation;
+				
+				private Image img;
+				
+				private int taille=0;
+				
+				public MonJLabel(Image m)
+				{
+					super();
+					this.img=m;
+					this.rotation= ((int) (Math.random()*100)%360);
+					this.setVisible(true);
+					this.setOpaque(false);
+			
+				}
+				
+				private int randomH()
+				{
+			
+					return (int)(((this.getHeight())-(((int) (Math.random()*1000))%(this.getHeight()/3)))*1.5f); //TODO faire que le scaling se remarque un minimum?
+				}
+				 
+			
+				 public void paint(Graphics g)
+				 {
+					 super.paint(g);
+					 
+					 if(this.taille==0)
+					 {
+							this.taille=this.randomH();
+							this.img=this.img.getScaledInstance(taille, taille,Image.SCALE_SMOOTH);
+					 }
+						 
+					 
+					 AffineTransform at = new AffineTransform();
+					 
+			         at.translate(getWidth() / 2, getHeight() / 2);
+			         at.rotate(this.rotation);
+			         at.scale(0.7, 0.7);
+			         at.translate(-img.getWidth(this)/2, -img.getHeight(this)/2);
+			         Graphics2D g2d = (Graphics2D) g;
+			         g2d.drawImage(img, at,JPanelCarte.this);
+				 }
+			}
+
+			public class SymboleListener implements MouseListener{//TODO ecouteur a modifier
+				
+				private Symbole monSymbole;
+				
+				public SymboleListener(Symbole monSymbole)
+				{
+					this.monSymbole=monSymbole;
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					
+					
+				}
+		
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+		
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+		
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					System.out.println(this.monSymbole.getNom());
+					//if(this.monSymbole.equals(Carte.getSymboleCommun(mj., c2)));
+				}
+		
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					
+				}
+		
+				
+			}
+		}
 
 	
 	public static void main(String[] args) {
@@ -202,11 +399,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		jeu.lancerJeu(deck); //Lancement: cartes distribuees
 		
 		FenetreJeu j= new FenetreJeu(jeu);
-		
-		while(true)
-		{
-			System.out.println(jeu.getChrono().getSeconds());
-		}
 	}
 
 }
