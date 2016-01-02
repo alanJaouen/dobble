@@ -94,7 +94,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		return menu;
 	}
 	
-	private JPanel creePanels()
+	public JPanel creePanels()
 	{
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(2,1));
@@ -362,7 +362,17 @@ public class FenetreJeu extends JFrame implements ActionListener{
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					System.out.println(this.monSymbole.getNom());
-					//if(this.monSymbole.equals(Carte.getSymboleCommun(mj., c2)));
+					try {
+						if(FenetreJeu.this.mj.interagir(0,this.monSymbole))
+						{
+							System.err.println("YOUPI");
+							FenetreJeu.this.contentPane.add(FenetreJeu.this.creePanels(),BorderLayout.CENTER);							
+						}
+						FenetreJeu.this.repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 				}
 		
 				@Override
@@ -380,7 +390,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		Mode mode = new Mode(); //Mode par defaut
 		ArrayList<Carte> deck = Carte.genererDeck(mode); //Nouveau deck global de 55 cartes
 		
-		Joueur j1 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau", 0, "mdp"); //Nouveau Joueur, sans deck pour l'instant
+		Joueur j1 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Lait", 0, "mdp"); //Nouveau Joueur, sans deck pour l'instant
 		Joueur j2 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Beau", 0, "mdp");
 		
 		
