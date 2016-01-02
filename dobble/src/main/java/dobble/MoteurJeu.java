@@ -170,7 +170,7 @@ public class MoteurJeu implements Serializable {
     		this.arrayJoueur.get(idJoueur).getArrayCartes().remove(
     				this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1);
     		
-    		
+    		this.testfin();
     		return true;
     	}
     	else // Si le joueur s'est trompé :
@@ -178,12 +178,22 @@ public class MoteurJeu implements Serializable {
     }
 
     
-    public void lancerJeu(ArrayList<Carte> paquet)
+    private void testfin() {
+		for(Joueur i : this.arrayJoueur)
+		{
+			if(i.getArrayCartes().size() == 0)
+				this.inGame=false;
+		}
+		
+	}
+
+	public void lancerJeu(ArrayList<Carte> paquet)
     {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
     	this.chrono.start();
-    	//TODO lancer un thread pour l'ia
+    	ActualiseThread t= new ActualiseThread("thread actualisation",3000,1);
+    	
     }
 
     /**
@@ -359,6 +369,7 @@ public class MoteurJeu implements Serializable {
 			super(name);
 			this.tpsIA=tpsIA;
 			this.idJoueur=idJoueur;
+			this.start();
 		}
 		 
 		/**
@@ -371,6 +382,7 @@ public class MoteurJeu implements Serializable {
 			{
 				Carte carteIa = MoteurJeu.this.arrayJoueur.get(idJoueur).getArrayCartes().get(arrayJoueur.get(idJoueur).getArrayCartes().size() -1);
 				Carte carteMilieu = MoteurJeu.this.cartesCentre.get(MoteurJeu.this.cartesCentre.size()-1);
+				
 				try {
 					MoteurJeu.this.interagir(idJoueur,Carte.getSymboleCommun(carteIa, carteMilieu));
 				} catch (Exception e1) {
@@ -379,13 +391,14 @@ public class MoteurJeu implements Serializable {
 				
 				try 
 				{
-					Thread.sleep(this.getTempsIA());
+					Thread.sleep(1000);//this.getTempsIA());
 				} 
 				catch (InterruptedException e)
 				{
 					e.printStackTrace();
 				}
 			}
+			this.stop();
 		}
 		
 		/**
@@ -394,8 +407,7 @@ public class MoteurJeu implements Serializable {
 		 */
 		private int getTempsIA()
 		{
-			return (int)Math.random()*(this.tpsIA*(115/100)-this.tpsIA*(85/100)+1)
-					+ this.tpsIA*(85/100);
+			return (int)((Math.random()*1000)%this.tpsIA); //TODO a changer grosse merde
 			//int pour le moment,  peut-être à changer en double pour plus de réalisme
 		}
 
