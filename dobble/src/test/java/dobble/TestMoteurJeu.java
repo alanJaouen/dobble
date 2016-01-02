@@ -43,9 +43,9 @@ public class TestMoteurJeu {
 			
 			if(jeu.interagir(0, new Symbole(symbole))) //Si symbole trouvé
 			{
-				System.out.println("GG WOW SUCH SKILL, tour suivant");
+				System.out.println("REUSSI, tour suivant");
 			}
-			else System.out.println("NUL ESPECE DE CACA, tour suivant");
+			else System.out.println("RATE, tour suivant");
 			
 		}
 		
