@@ -82,16 +82,23 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	private JPanel creePanels()
 	{
 		JPanel p= new JPanel();
-		p.setLayout(new GridLayout(1,3));
+		p.setLayout(new BorderLayout());
 
-		JPanel panelCarteJoueur = this.creePanelCarteJoueur();
-		p.add(panelCarteJoueur);
-		
+
 		JPanel panelCarteCentre = this.creePanelCarteCentre();
-		p.add(panelCarteCentre);
+		p.add(panelCarteCentre, BorderLayout.NORTH);
 		
-		JPanel panelCarteAdverse = this.creePanelCarteAdverse();
-		p.add(panelCarteAdverse);
+		JPanel panelJoueurs = new JPanel();
+		panelJoueurs.setLayout(new GridLayout(1,2));
+		
+			JPanel panelCarteJoueur = this.creePanelCarteJoueur();
+			panelJoueurs.add(panelCarteJoueur);
+			
+			JPanel panelCarteAdverse = this.creePanelCarteAdverse();
+			panelJoueurs.add(panelCarteAdverse);
+		
+		p.add(panelJoueurs, BorderLayout.CENTER);
+		
 		return p;
 	}
 	
@@ -105,6 +112,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		int tSec = mj.getChrono().getSeconds();
 		time.setText("" + tMin + " :" + tSec);
 		p.add(time, BorderLayout.NORTH);
+		p.add(new JPanelCarte(mj.getCartesCentre().
+				get(mj.getCartesCentre().size() - 1)),BorderLayout.CENTER);//FIXME n'affiche pas la carte
 		return p;
 	}
 	
@@ -112,23 +121,20 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	{
 		JPanel p = new JPanel();
 		p.setBackground(Color.red);
-		p.setLayout(new BorderLayout(0,0));
+		p.setLayout(new BorderLayout());
 		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
 		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
 		labPseudo.setText(pseudo);
 		labPseudo.setForeground(Color.white);
+		p.add(labPseudo, BorderLayout.SOUTH);
 		
 		labScore = new JLabel();//affiche le score du joueur 1
 		int score = mj.getArrayJoueur().get(0).getScore();
 		labScore.setText("" + score);
+		p.add(labScore, BorderLayout.SOUTH);
 		
-		JPanel nord= new JPanel();
-		nord.add(labPseudo);
-		nord.add(labScore);
-		
-		p.add(nord, BorderLayout.NORTH);
-		
-		p.add(new JPanelCarte(new Carte(3)),BorderLayout.CENTER);
+		p.add(new JPanelCarte(mj.getArrayJoueur().get(0).getArrayCartes()
+				.get(mj.getArrayJoueur().get(0).getArrayCartes().size() -1)),BorderLayout.CENTER);
 		
 		return p;
 	}
@@ -141,7 +147,11 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		String psdo = mj.getArrayJoueur().get(1).getNom(); //affiche le pseudo du joueur adverse
 		pseudo.setText(psdo);
 		pseudo.setForeground(Color.white);
-		p.add(pseudo);
+		p.add(pseudo, BorderLayout.SOUTH);
+		
+		p.add(new JPanelCarte(mj.getArrayJoueur().get(1).getArrayCartes()
+				.get(mj.getArrayJoueur().get(1).getArrayCartes().size() -1)),BorderLayout.CENTER);
+		
 		return p;
 	}
 	
