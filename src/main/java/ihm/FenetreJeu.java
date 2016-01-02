@@ -50,6 +50,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	private Timer timer;
 	
 	private Image fond;
+	private JPanel carte;
 	
 	public FenetreJeu(MoteurJeu mj)  // instancie une fenêtre de jeu pour 2 joueurs pour le moment à partir d'un MoteurJeu
 	{
@@ -113,7 +114,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			panelJoueurs.add(panelCarteAdverse);
 		
 		p.add(panelJoueurs);
-		
+		this.carte=p;
 		return p;
 	}
 	
@@ -225,7 +226,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			
 			double nbligne=(c.getArraySymbole().size()+4)/4;
 			
-			System.out.println("sur "+nbligne+" lignes");
 			
 			this.setLayout(new GridLayout(4,(int)nbligne));
 			this.setBackground(Color.BLUE);
@@ -243,13 +243,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
 					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
 					{
 						this.add(new JLabel());
-						System.out.println("case blanche");
 						continue;
 					}
 
 					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
-					
-					System.out.println(compteur);
 					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
 					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
 					this.listLable[compteur]=t;
@@ -365,8 +362,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
 					try {
 						if(FenetreJeu.this.mj.interagir(0,this.monSymbole))
 						{
-							System.err.println("YOUPI");
-							FenetreJeu.this.contentPane.add(FenetreJeu.this.creePanels(),BorderLayout.CENTER);							
+							System.out.println("YOUPI");
+							FenetreJeu.this.contentPane.remove(carte);
+							FenetreJeu.this.contentPane.add(FenetreJeu.this.creePanels(),BorderLayout.CENTER);	
+								
 						}
 						FenetreJeu.this.repaint();
 					} catch (Exception e) {
