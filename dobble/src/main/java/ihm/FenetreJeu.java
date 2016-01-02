@@ -406,13 +406,9 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		
 		
 		MoteurJeu jeu = new MoteurJeu(joueurs); //Cree un moteur de jeu
-		System.out.println("1");
 		jeu.initialiser(); //initialisation: scores et chronometre
-		System.out.println("2");
 		jeu.lancerJeu(deck); //Lancement: cartes distribuees
-		System.out.println("3");
 		FenetreJeu j= new FenetreJeu(jeu);
-		System.out.println("4");
 		
 	}
 	
@@ -449,8 +445,12 @@ public class FenetreJeu extends JFrame implements ActionListener{
 				{
 					e.printStackTrace();
 				}
-				FenetreJeu.this.contentPane.remove(carte);
-				FenetreJeu.this.contentPane.add(FenetreJeu.this.creePanels(),BorderLayout.CENTER);
+				if(mj.getNeedUpdate())
+				{
+					mj.updatedone();
+					FenetreJeu.this.contentPane.remove(carte);
+					FenetreJeu.this.contentPane.add(FenetreJeu.this.creePanels(),BorderLayout.CENTER);
+				}
 			}
 		}
 
