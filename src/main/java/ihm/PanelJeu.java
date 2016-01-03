@@ -57,7 +57,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 		this.setLayout(new BorderLayout(0,0));
 		this.add(this.creePanels(),BorderLayout.CENTER);
 		
-		this.fond = new ImageIcon("images/table.jpg").getImage();
+		this.fond = new ImageIcon("images/table2.jpg").getImage();
 		
 		this.setVisible(true);
 		
