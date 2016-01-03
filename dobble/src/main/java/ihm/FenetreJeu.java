@@ -16,6 +16,7 @@ import dobble.Joueur;
 import dobble.Mode;
 import dobble.MoteurJeu;
 import dobble.Stats;
+import dobble.Stats.BddException;
 
 public class FenetreJeu extends JFrame {
 
@@ -115,31 +116,45 @@ public class FenetreJeu extends JFrame {
 			{
 				try 
 				{
-					Thread.sleep(100);
+					Thread.sleep(200);
 				} 
 				catch (InterruptedException e)
 				{
 					e.printStackTrace();
 				}
-				if(FenetreJeu.this.mj.getNeedUpdate())
+				if (FenetreJeu.this.mj.isInGame())
 				{
-					if (FenetreJeu.this.mj.isInGame())
+					if(FenetreJeu.this.mj.getNeedUpdate())
 					{
 						mj.updatedone();
 						lepanel.remove(lepanel.getCarte());
 						lepanel.add(lepanel.creePanels(),BorderLayout.CENTER);
 					}
-					else
+				}
+				else
+				{
+					if(FenetreJeu.this.mj.getNeedUpdate())
 					{
 						JOptionPane.showMessageDialog(FenetreJeu.this, "Dommage tu as perdu",
 							"bg", JOptionPane.INFORMATION_MESSAGE);
-						
 					}
+					else
+						JOptionPane.showMessageDialog(FenetreJeu.this, "Bravo tu as gagné",
+								"gg", JOptionPane.INFORMATION_MESSAGE);
+					try {
+						FenetreJeu.this.mj.finPartie();
+					} catch (BddException e) {	
+						JOptionPane.showMessageDialog(FenetreJeu.this, e.getMessage(),
+								"err", JOptionPane.ERROR_MESSAGE);
+					}
+					FenetreJeu.this.dispose();
+					new FenetreMenuPrincipal();
+					this.stop();
 				}
-					
 			}
+					
 		}
-
 	}//fin ActualiseThread
-	
+
 }
+	

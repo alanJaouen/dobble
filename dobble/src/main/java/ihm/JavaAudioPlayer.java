@@ -15,7 +15,6 @@ public class JavaAudioPlayer extends Thread
 	public JavaAudioPlayer(int id)
 	{
 		this.id=id;
-		this.start();
 	}
 	
 	public void run()

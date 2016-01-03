@@ -188,6 +188,10 @@ public class MoteurJeu implements Serializable {
     		this.testfin();
     		if(idJoueur != this.joueurActif)
     			this.needupdate=true;
+    		
+    		
+    		this.arrayJoueur.get(idJoueur).setScore(28);//TODO calcul du score
+    		this.arrayJoueur.get(idJoueur).getStats().setTpsReaction(28);//TODO calcul de ca
     		return true;
     	}
     	else // Si le joueur s'est trompé :
@@ -199,7 +203,9 @@ public class MoteurJeu implements Serializable {
 		for(Joueur i : this.arrayJoueur)
 		{
 			if(i.getArrayCartes().size() == 0)
+			{
 				this.inGame=false;
+			}
 		}
 		
 	}
@@ -218,6 +224,8 @@ public class MoteurJeu implements Serializable {
      */
     public void finPartie() throws BddException {
     	this.inGame = false;
+    	this.arrayJoueur.get(this.joueurActif).getStats().setExp(this.arrayJoueur.get(this.joueurActif).getStats().getExp()+20);
+    	this.arrayJoueur.get(this.joueurActif).getStats().setTempsDeJeu(this.arrayJoueur.get(this.joueurActif).getStats().getTempsDeJeu()+this.chrono.getMinutes());
     	this.arrayJoueur.get(this.joueurActif).sauvegarderStats();
     	//TODO mise a jour du score du joueur courant
     	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
