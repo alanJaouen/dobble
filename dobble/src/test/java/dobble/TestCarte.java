@@ -9,7 +9,7 @@ import org.junit.Test;
 public class TestCarte {
 
 	/* test visuel */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		Scanner scan = new Scanner(System.in);
 		while(true) 
@@ -29,13 +29,13 @@ public class TestCarte {
 						break;
 				
 				case 2: System.out.println("TEST CREATION D'UNE CARTE");
-						Carte carte = new Carte(5);
+						Carte carte = new Carte(5, 8);
 						System.out.println("Carte générée:\n" + carte);
 						break;
 			
 				case 3: System.out.println("TEST METHODE GETSYMBOLECOMMUN");
-						Carte carte1 = new Carte(1);
-						Carte carte2 = new Carte(50);
+						Carte carte1 = new Carte(1,8);
+						Carte carte2 = new Carte(50,8);
 				
 						System.out.println("Carte1 :\n" + carte1 + "\nCarte2:\n" + carte2);
 						System.out.println("Symbole commun: " + Carte.getSymboleCommun(carte1, carte2));
@@ -59,28 +59,55 @@ public class TestCarte {
 	@Test
 	public void  testConstructeur2()
 	{
-		for(int i=1; i<55;i++)
-		{
-			int a;
-			Carte c = new Carte(i);
-			Assert.assertNotNull(c);
-		}
+			Carte c;
+			try {
+				c = new Carte(1,3);
+				Assert.assertNotNull(c);
+			} catch (Exception e) {
+				Assert.fail();
+				
+			}
+			
 	}
 	
 	@Test
 	public void  testToString()
 	{
-		Carte c = new Carte(5);
-		Assert.assertNotNull(c.toString());
+		Carte c;
+		try {
+			c = new Carte(5,8);
+			Assert.assertNotNull(c.toString());
+		} catch (Exception e) {
+			Assert.fail();
+		}
 	}
 	
 	@Test
 	public void  testSymboleCommun()
 	{
-		Carte c = new Carte(2);
-		Carte c2 = new Carte(1);
+		Carte c;
+		try {
+			c = new Carte(2,8);
+			Carte c2 = new Carte(1,8);
+			Assert.assertEquals(new Symbole(19), Carte.getSymboleCommun(c, c2));
+		} catch (Exception e) {
+			Assert.fail();
+		}
 		
-		Assert.assertEquals(new Symbole(19), Carte.getSymboleCommun(c, c2));
+		
+		
+	}
+	
+	@Test
+	public void  testSymboleBug()
+	{
+		
+		try {
+			new Carte(2,1);
+			Assert.fail();
+		} catch (Exception e) {
+			
+		}
 	}
 	
 }

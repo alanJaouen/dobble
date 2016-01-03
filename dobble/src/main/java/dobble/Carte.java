@@ -19,10 +19,14 @@ public class Carte implements Serializable {
 	/**
 	 * Constructeur de la carte avec l'id (lecture dans le fichier carte.txt)
 	 * @param id id de la carte (ligne dans le fichier)
+	 * @throws Exception 
 	 */
-    public Carte(int id) { //FIXME verifier l'id de la carte
+    public Carte(int id, int fichier) throws Exception { //FIXME verifier l'id de la carte
+    	if(!(fichier == 3 || fichier == 4 || fichier == 5 || fichier == 8) )
+    		throw new Exception("nb de symbole incorect");
+    		
     	Symbole s;
-    	String symbolesId = Symbole.lecture("cartes.txt", id);
+    	String symbolesId = Symbole.lecture("cartes"+fichier+".txt", id);
     	int[] tab = Carte.intsFromString(symbolesId);
     	int taille = tab.length;
     	
@@ -64,12 +68,13 @@ public class Carte implements Serializable {
      * Genere un deck complet de 55 cartes, sous la forme d'une arrayList
      * @param modedejeu Le mode de jeu
      * @return Le deck
+     * @throws Exception 
      */
-    public static ArrayList<Carte> genererDeck(Mode modedejeu){
+    public static ArrayList<Carte> genererDeck(Mode modedejeu) throws Exception{
     	ArrayList<Carte> deck = new ArrayList<Carte>();
     	for (int i = 1; i <= 55; i += 1) //55 cartes (pour mode normal)
     	{
-    		deck.add(new Carte(i));
+    		deck.add(new Carte(i, modedejeu.getNbSymbole()));
     	}
     	return deck;
     }
