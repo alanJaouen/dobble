@@ -1,8 +1,5 @@
 package ihm;
 
-import ihm.JPanelCarte.MonJLabel;
-import ihm.JPanelCarte.SymboleListener;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;

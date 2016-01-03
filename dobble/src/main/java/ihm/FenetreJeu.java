@@ -25,7 +25,7 @@ public class FenetreJeu extends JFrame {
 	private JMenu menuQuitter;
 	private MoteurJeu mj;
 	
-	public FenetreJeu(MoteurJeu jeu ) {
+	public FenetreJeu(MoteurJeu jeu) {
 		super();
 		
 		this.mj=jeu;
@@ -140,6 +140,6 @@ public class FenetreJeu extends JFrame {
 			}
 		}
 
-	}//fin AnctualiseThread
+	}//fin ActualiseThread
 	
 }
