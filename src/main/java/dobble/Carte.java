@@ -22,7 +22,7 @@ public class Carte implements Serializable {
 	 * @throws Exception 
 	 */
     public Carte(int id, int fichier) throws Exception { //FIXME verifier l'id de la carte
-    	if(!(fichier == 3 || fichier == 4 || fichier == 5 || fichier == 8) )
+    	if(!(fichier == 3 || fichier == 4 || fichier == 8|| fichier == 6) )
     		throw new Exception("nb de symbole incorect");
     		
     	Symbole s;
@@ -71,8 +71,29 @@ public class Carte implements Serializable {
      * @throws Exception 
      */
     public static ArrayList<Carte> genererDeck(Mode modedejeu) throws Exception{
+    	int nbcarte=0;
+    	switch(modedejeu.getNbSymbole())
+    	{
+    	case 3:
+    		nbcarte=7;
+    		break;
+    	case 4:
+    		nbcarte=13;
+    		break;
+      	case 6:
+    		nbcarte=31;
+    		break;
+    	case 7:
+    		nbcarte=42;
+    		break;
+    	case 8:
+        	nbcarte=55;
+        	break;
+    		
+    	}
+    	
     	ArrayList<Carte> deck = new ArrayList<Carte>();
-    	for (int i = 1; i <= 55; i += 1) //55 cartes (pour mode normal)
+    	for (int i = 1; i <= nbcarte; i += 1)
     	{
     		deck.add(new Carte(i, modedejeu.getNbSymbole()));
     	}
@@ -114,7 +135,7 @@ public class Carte implements Serializable {
 	public String toString()
 	{
 		String s = "";
-		for (int i = 0; i < 8; i += 1)
+		for (int i = 0; i < this.arraySymbole.size(); i += 1)
 		{
 			s += i + ". " + arraySymbole.get(i) + "\n";
 		}
