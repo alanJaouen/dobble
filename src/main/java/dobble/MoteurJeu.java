@@ -180,7 +180,10 @@ public class MoteurJeu implements Serializable {
     		
     		//La voix énonce le symbole correct si option activée
     		if(Symbole.lecture("param.txt", 2).equals("1"))
-    			new JavaAudioPlayer(correct.getId());
+    		{
+    			JavaAudioPlayer t=new JavaAudioPlayer(correct.getId());
+    			t.start();
+    		}
     		
     		this.testfin();
     		if(idJoueur != this.joueurActif)
