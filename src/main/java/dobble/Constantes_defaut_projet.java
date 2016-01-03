@@ -5,7 +5,7 @@ public interface Constantes_defaut_projet {
 	
 	// Pour la classe Mode:
 	// Nombre par défaut de symboles sur les cartes:
-	public final static int nbSymbole_defaut = 9;
+	public final static int nbSymbole_defaut = 8;
 	public final static int nbSymboleMax_defaut = 15;
 	
 	// Temps de réaction par défaut de l'IA (unité [à définir]):

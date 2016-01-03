@@ -67,7 +67,7 @@ public class FenetreJeu extends JFrame {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		Mode mode = new Mode(); //Mode par defaut
 		ArrayList<Carte> deck = Carte.genererDeck(mode); //Nouveau deck global de 55 cartes

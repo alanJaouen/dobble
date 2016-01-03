@@ -3,13 +3,17 @@ package ihm;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import dobble.Carte;
+import dobble.Joueur;
 import dobble.Mode;
 import dobble.MoteurJeu;
+import dobble.Stats;
 
 public class FenetreMenuPrincipal extends JFrame {
 	public FenetreMenuPrincipal() {
@@ -64,7 +68,26 @@ public class FenetreMenuPrincipal extends JFrame {
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			switch(this.id) {
 			case 1: // Bouton jouer
-				new FenetreJeu(new MoteurJeu());
+				Mode mode = new Mode(); //Mode par defaut
+				ArrayList<Carte> deck;
+				try {
+					deck = Carte.genererDeck(mode);//Nouveau deck selon mode
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(FenetreMenuPrincipal.this, "erreur fatale:\n"+e1.getMessage(), "Bug", JOptionPane.ERROR_MESSAGE);
+					break;
+				} 
+				
+				Joueur j1 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Lait", 0, "mdp"); //Nouveau Joueur, sans deck pour l'instant
+				Joueur j2 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Beau", 0, "mdp");
+			
+				ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //Liste de joueurs
+				joueurs.add(j1); //Ajout de notre joueur cree a la liste
+				joueurs.add(j2);
+
+				MoteurJeu jeu = new MoteurJeu(joueurs); //Cree un moteur de jeu
+				jeu.initialiser(); //initialisation: scores et chronometre
+				jeu.lancerJeu(deck); //Lancement: cartes distribuees
+				FenetreJeu j= new FenetreJeu(jeu);
 				break;
 			case 2: // Bouton stats
 				new FenetreStat();
