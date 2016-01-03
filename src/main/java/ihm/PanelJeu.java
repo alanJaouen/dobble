@@ -168,15 +168,16 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 	}
 	
+	@Override
 	public void paint(Graphics g)
 	{
-		g.drawImage(this.fond, 0, 0, this.getWidth(), this.getHeight(), this);  //FIXME la carte doit s'adapter proportionnellement au conteneur
+		g.drawImage(this.fond, 0, 0, this.getWidth(), this.getHeight(), this);
 		super.paint(g);
 	}
 	
 	
-	public class JPanelCarte extends JPanel {
-		
+	public class JPanelCarte extends JPanel
+	{		
 		private Image imgCarte;
 		private Image imgCarteOmbre;
 		
@@ -191,19 +192,53 @@ public class PanelJeu extends JPanel implements ActionListener{
 		public JPanelCarte(Carte c)
 		{
 			super();
-			this.setLayout(new BorderLayout());
 			this.imgCarte = Toolkit.getDefaultToolkit().getImage("images/carte.png");
 			this.imgCarteOmbre = Toolkit.getDefaultToolkit().getImage("images/carte-ombre.png");
 
 			this.c = c;
 			this.symboles = new Symbole[c.getArraySymbole().size()];
-			this.listLable=new JLabel[c.getArraySymbole().size()];
+			this.listLable = new JLabel[c.getArraySymbole().size()];
 			
-			double nbligne=(c.getArraySymbole().size()+4)/4;
+			double nbligne = (c.getArraySymbole().size()+4)/4;
 			
+			//---TEST CENTRAGE DES SYMBOLES---//
+			this.setLayout(new GridLayout(1,3)); //DIVISION DU PANEL DU HAUT EN 3 COLONNES
+			this.setOpaque(false);
+			this.add(new JLabel()); //COLONNE DE GAUCHE VIDE
 			
-			this.setLayout(new GridLayout(4,(int)nbligne));
-			this.setBackground(Color.BLUE);
+			JPanel carte = new JPanel(new GridLayout(4,(int)nbligne)); //COLONNE CENTRE GRIDDEE POUR LA CARTE
+			carte.setOpaque(false);
+			
+			int compteur=0;
+			
+			for(int j=0; j< 4; j+=1) //REMPLISSAGE CARTE AVEC SYMBOLES
+			{
+
+				for (int i = 0; i < nbligne; i += 1)
+				{			
+					
+					
+					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
+					{
+						carte.add(new JLabel());
+						continue;
+					}
+
+					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
+					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
+					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
+					this.listLable[compteur]=t;
+					compteur++;
+					carte.add(t);
+				}
+				
+			}
+			
+			this.add(carte); //AJOUT CARTE AU MILIEU
+			this.add(new JLabel()); //COLONNE DE DROITE VIDE			
+			//---FIN TEST CENTRAGE DES SYMBOLES---//
+			
+			/*this.setLayout(new GridLayout(4,(int)nbligne));
 			this.setOpaque(false);
 			
 			int compteur=0;
@@ -229,7 +264,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 					this.add(t);
 				}
 				
-			}
+			}*/
 			
 			this.setVisible(true);
 			this.repaint();
@@ -237,7 +272,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 		public void paint(Graphics g)
 		{
-			int w = this.getWidth();
+			int w = this.getWidth()/3;
 			int h = this.getHeight();
 			if(w >= h)
 			{
@@ -245,9 +280,9 @@ public class PanelJeu extends JPanel implements ActionListener{
 			}
 			else this.tailleCarte = w;
 			
-			g.drawImage(imgCarte, 0, 0, this.tailleCarte, this.tailleCarte, this);  //FIXME la carte doit s'adapter proportionnellement au conteneur
+			g.drawImage(imgCarte, (this.getWidth() - this.tailleCarte)/2, 0, this.tailleCarte, this.tailleCarte, this);  //FIXME la carte doit s'adapter proportionnellement au conteneur
 			super.paint(g);
-			g.drawImage(imgCarteOmbre, 0, 0, this.tailleCarte, this.tailleCarte, this);
+			g.drawImage(imgCarteOmbre, (this.getWidth() - this.tailleCarte)/2, 0, this.tailleCarte, this.tailleCarte, this);
 		}
 		
 			

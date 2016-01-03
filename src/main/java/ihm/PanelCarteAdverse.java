@@ -31,7 +31,7 @@ public class PanelCarteAdverse extends JPanel {
 			else this.tailleCarte = w;
 		}
 		
-		g.drawImage(this.dosCarte, 0, 0, this.tailleCarte, this.tailleCarte, this);
+		g.drawImage(this.dosCarte, (this.getWidth() - this.tailleCarte)/2, 0, this.tailleCarte, this.tailleCarte, this);
 		super.paint(g);
 	}
 }
