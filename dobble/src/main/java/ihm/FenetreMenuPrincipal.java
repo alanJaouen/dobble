@@ -3,6 +3,9 @@ package ihm;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -49,6 +52,29 @@ public class FenetreMenuPrincipal extends JFrame {
 		}
 	}
 	
+	private void razParam()
+	{
+		int[] data = {1, 1, 8, 10};
+		File f = new File ("param.txt");
+		 
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		 
+		    for (int d : data)
+		    {
+		        fw.write (String.valueOf (d));
+		        fw.write ("\r\n");
+		    }
+		 
+		    fw.close();
+		}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+	}
+	
 	// Inner Classes
 	
 	private class BoutonListener implements ActionListener {
@@ -69,9 +95,19 @@ public class FenetreMenuPrincipal extends JFrame {
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			switch(this.id) {
 			case 1: // Bouton jouer
-				Mode mode = new Mode(
+				Mode mode;
+				try{
+				mode = new Mode(
 						Carte.intsFromString(Symbole.lecture("param.txt", 3))[0],//nb de symbole
 						Carte.intsFromString(Symbole.lecture("param.txt", 4))[0]); //tps ia
+				}
+				catch(Exception e7)
+				{
+					mode=new Mode();
+					JOptionPane.showMessageDialog(FenetreMenuPrincipal.this,
+							"erreur fatale:\n"+e7.getMessage()+"\n lancement avec les parametre par défaut et réinitialisation des parametres", "Bug", JOptionPane.ERROR_MESSAGE);
+					FenetreMenuPrincipal.this.razParam();
+				}
 				ArrayList<Carte> deck;
 				try {
 					deck = Carte.genererDeck(mode);//Nouveau deck selon mode
