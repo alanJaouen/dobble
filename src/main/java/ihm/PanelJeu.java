@@ -361,8 +361,9 @@ public class PanelJeu extends JPanel implements ActionListener{
 								PanelJeu.this.add(PanelJeu.this.creePanels(),BorderLayout.CENTER);
 							}
 							else
-								JOptionPane.showMessageDialog(PanelJeu.this, "Bravo tu as gagné",
-										"gg", JOptionPane.INFORMATION_MESSAGE);
+							{
+								
+							}
 							PanelJeu.this.mj.faireDormirIA();
 						}
 						PanelJeu.this.repaint();

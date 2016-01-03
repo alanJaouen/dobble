@@ -223,7 +223,7 @@ public class FenetreStat extends JFrame {
 		    				str=new Integertps(rs.getInt(3));
 		    				break;
 		    			case 4:
-		    				str=new Integertps(rs.getInt(4));
+		    				str=new Integertpsreac(rs.getInt(4));
 		    				break;
 		    			case 5:
 		    				str=new Integer(rs.getInt(5));
@@ -324,6 +324,20 @@ public class FenetreStat extends JFrame {
 		public String toString()
 		{
 			return Integer.toString((int)valeur/60)+" h "+Integer.toString((int)valeur%60)+" min";
+		}
+    }
+	
+	class Integertpsreac extends Integertps{
+		
+		
+		public Integertpsreac(int v)
+		{
+			super(v);
+		}
+		
+		public String toString()
+		{
+			return Integer.toString((int)super.valeur)+" sec";
 		}
     }
 	

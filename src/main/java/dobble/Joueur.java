@@ -44,6 +44,7 @@ public class Joueur implements Serializable {
     public Joueur(String nom, String mdp) throws BddException {
     	this.nom = nom;
     	this.mdp = mdp;
+    	this.arrayCartes=new ArrayList<Carte>();
     	if (!this.chargerStats())
     	{
     		throw this.stats.new BddException("Echec du chargement des stats");
@@ -209,6 +210,8 @@ public class Joueur implements Serializable {
 
 	public void setScore(int score) {
 		this.score = score;
+		if(score>this.getStats().getMeilleurScore())
+			this.getStats().setMeilleurScore(score);
 	}
 	
 	public String getMdp() {
