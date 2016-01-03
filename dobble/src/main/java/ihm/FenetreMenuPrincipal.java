@@ -14,6 +14,7 @@ import dobble.Joueur;
 import dobble.Mode;
 import dobble.MoteurJeu;
 import dobble.Stats;
+import dobble.Symbole;
 
 public class FenetreMenuPrincipal extends JFrame {
 	public FenetreMenuPrincipal() {
@@ -68,7 +69,9 @@ public class FenetreMenuPrincipal extends JFrame {
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			switch(this.id) {
 			case 1: // Bouton jouer
-				Mode mode = new Mode(); //Mode par defaut
+				Mode mode = new Mode(
+						Carte.intsFromString(Symbole.lecture("param.txt", 3))[0],//nb de symbole
+						Carte.intsFromString(Symbole.lecture("param.txt", 4))[0]); //tps ia
 				ArrayList<Carte> deck;
 				try {
 					deck = Carte.genererDeck(mode);//Nouveau deck selon mode

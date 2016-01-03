@@ -58,6 +58,8 @@ public class MoteurJeu implements Serializable {
     
     private boolean needupdate;
     
+    private boolean IAdoisDormir;
+    
     
     
     // -------------------------------------------------------------------
@@ -176,8 +178,9 @@ public class MoteurJeu implements Serializable {
     		this.arrayJoueur.get(idJoueur).getArrayCartes().remove(
     				this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1);
     		
-    		//La voix énonce le symbole correct
-    		JavaAudioPlayer.voix(correct.getId());
+    		//La voix énonce le symbole correct si option activée
+    		if(Symbole.lecture("param.txt", 2).equals("1"))
+    			JavaAudioPlayer.voix(correct.getId());
     		
     		this.testfin();
     		if(idJoueur != this.joueurActif)
@@ -369,6 +372,11 @@ public class MoteurJeu implements Serializable {
 		return this.needupdate;
 	}
 	
+	public void faireDormirIA()
+	{
+		MoteurJeu.this.IAdoisDormir=true;
+	}
+	
 	/**
 	 * Un thread permettant le jeu de l'ia
 	 * @author 
@@ -380,6 +388,8 @@ public class MoteurJeu implements Serializable {
 		
 		private int idJoueur;
 		
+		
+		
 		/**
 		 * Constreucteur par defaut
 		 * @param name nom du Thread
@@ -389,6 +399,7 @@ public class MoteurJeu implements Serializable {
 			super(name);
 			this.tpsIA=tpsIA;
 			this.idJoueur=idJoueur;
+			MoteurJeu.this.IAdoisDormir=true;
 			this.start();
 		}
 		 
@@ -403,20 +414,26 @@ public class MoteurJeu implements Serializable {
 				Carte carteIa = MoteurJeu.this.arrayJoueur.get(idJoueur).getArrayCartes().get(arrayJoueur.get(idJoueur).getArrayCartes().size() -1);
 				Carte carteMilieu = MoteurJeu.this.cartesCentre.get(MoteurJeu.this.cartesCentre.size()-1);
 				
+				if(MoteurJeu.this.IAdoisDormir)
+				{
+					MoteurJeu.this.IAdoisDormir=false;
+					try 
+					{
+						Thread.sleep(5000);//this.getTempsIA());
+					} 
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				
 				try {
 					MoteurJeu.this.interagir(idJoueur,Carte.getSymboleCommun(carteIa, carteMilieu));
+					MoteurJeu.this.IAdoisDormir=true;
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				
-				try 
-				{
-					Thread.sleep(10000);//this.getTempsIA());
-				} 
-				catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
 			}
 			this.stop();
 		}
@@ -430,6 +447,7 @@ public class MoteurJeu implements Serializable {
 			return (int)((Math.random()*1000)%this.tpsIA); //TODO a changer grosse merde
 			//int pour le moment,  peut-être à changer en double pour plus de réalisme
 		}
+		
 
 	}//fin AnctualiseThread
 }

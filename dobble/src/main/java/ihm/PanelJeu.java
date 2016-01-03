@@ -47,6 +47,8 @@ public class PanelJeu extends JPanel implements ActionListener{
 	private Image fond;
 	private JPanel carte;
 	
+	private int graphisme;
+	
 	public PanelJeu(MoteurJeu mj)  // instancie une fenêtre de jeu pour 2 joueurs pour le moment à partir d'un MoteurJeu
 	{
 		
@@ -63,7 +65,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 		timer.start();
 		this.setOpaque(false);
 		
-		
+		this.setGraphisme();
 
 	}
 	
@@ -199,7 +201,24 @@ public class PanelJeu extends JPanel implements ActionListener{
 			this.symboles = new Symbole[c.getArraySymbole().size()];
 			this.listLable = new JLabel[c.getArraySymbole().size()];
 			
-			double nbligne = (c.getArraySymbole().size()+4)/4;
+			int nbligne = 0;
+			int nbcolone = 4;
+			switch(this.c.getArraySymbole().size())
+			{
+			case 3:
+				nbligne = 2;
+				break;
+			case 4:
+				nbligne = 2;
+				break;
+			case 6:
+				nbligne = 3;
+				break;
+			case 8:
+				nbligne = 3;
+				break;
+			}
+			
 			
 			//---TEST CENTRAGE DES SYMBOLES---//
 			this.setLayout(new GridLayout(1,3)); //DIVISION DU PANEL DU HAUT EN 3 COLONNES
@@ -211,25 +230,33 @@ public class PanelJeu extends JPanel implements ActionListener{
 			
 			int compteur=0;
 			
-			for(int j=0; j< 4; j+=1) //REMPLISSAGE CARTE AVEC SYMBOLES
+			for(int j=0; j< nbcolone; j+=1) //REMPLISSAGE CARTE AVEC SYMBOLES
 			{
 
 				for (int i = 0; i < nbligne; i += 1)
 				{			
 					
 					
-					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
+					if((j == 0 || j == nbcolone-1) && (i == 0 || i == nbligne-1))
 					{
 						carte.add(new JLabel());
 						continue;
 					}
-
-					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
-					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
-					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
-					this.listLable[compteur]=t;
+					
+					try
+					{
+						this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
+						JLabel t=new MonJLabel(this.symboles[compteur].getImage());
+						t.addMouseListener(new SymboleListener(this.symboles[compteur]));
+						this.listLable[compteur]=t;
+						carte.add(t);
+					}
+					catch(java.lang.IndexOutOfBoundsException e)
+					{
+						carte.add(new JLabel());
+					}
 					compteur++;
-					carte.add(t);
+					
 				}
 				
 			}
@@ -324,7 +351,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 					 if(this.taille==0)
 					 {
 							this.taille=this.randomH();
-							this.img=this.img.getScaledInstance(taille, taille,Image.SCALE_SMOOTH);
+							this.img=this.img.getScaledInstance(taille, taille,graphisme);
 					 }
 						 
 					 
@@ -381,6 +408,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 							else
 								JOptionPane.showMessageDialog(PanelJeu.this, "Bravo tu as gagné",
 										"gg", JOptionPane.INFORMATION_MESSAGE);
+							PanelJeu.this.mj.faireDormirIA();
 						}
 						PanelJeu.this.repaint();
 					} catch (Exception e) {
@@ -401,6 +429,36 @@ public class PanelJeu extends JPanel implements ActionListener{
 
 	public JPanel getCarte() {
 		return carte;
+	}
+	
+	/**
+	 * 
+	 * @param choix entre 1 et 5, 1 le plus rapide, 5 le plus beau
+	 */
+	public void setGraphisme()
+	{
+		String choix=Symbole.lecture("param.txt", 1);
+		switch(choix)
+		{
+		case "1":
+			this.graphisme=Image.SCALE_FAST;
+			break;
+		case "2":
+			this.graphisme=Image.SCALE_DEFAULT;
+			break;
+		case "3":
+			this.graphisme=Image.SCALE_REPLICATE;
+			break;
+		case "4":
+			this.graphisme=Image.SCALE_AREA_AVERAGING;
+			break;
+		case "5":
+			this.graphisme=Image.SCALE_SMOOTH;
+			break;
+		default:
+			this.graphisme=Image.SCALE_DEFAULT;
+			
+		}
 	}
 	
 	
