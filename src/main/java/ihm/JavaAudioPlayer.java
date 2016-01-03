@@ -8,28 +8,35 @@ import sun.audio.*;
  * AudioStream and AudioPlayer code comes from a javaworld.com example.
  * @author alvin alexander, devdaily.com.
  */
-public class JavaAudioPlayer
+public class JavaAudioPlayer extends Thread
 {
+	private int id;
 	
-	/**
-	 * Lit un fichier audio decrivant un symbole
-	 * @param id l'ID du symbole
-	 */
-	public static void voix(int id) throws Exception //FIXME ne doit pas ralentir tout le jeu...
+	public JavaAudioPlayer(int id)
+	{
+		this.id=id;
+		this.start();
+	}
+	
+	public void run()
 	{
 		String fichier = "sons/son" + id + ".wav";
-		InputStream in = new FileInputStream(fichier);
+		InputStream in=null;
+		try {
+			in = new FileInputStream(fichier);
+		} catch (FileNotFoundException e) {
+		}
 		 
 	    // create an audiostream from the inputstream
-	    AudioStream audioStream = new AudioStream(in);
+	    AudioStream audioStream=null;
+		try {
+			audioStream = new AudioStream(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	 
 	    // play the audio clip with the audioplayer class
 	    AudioPlayer.player.start(audioStream);
+		this.stop();
 	}
-	
-  /*public static void main(String[] args) 
-  throws Exception
-  {
-	  voix(47);
-  }*/
 }

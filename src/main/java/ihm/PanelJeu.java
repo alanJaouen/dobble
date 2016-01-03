@@ -2,42 +2,29 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import dobble.Carte;
-import dobble.Joueur;
-import dobble.Mode;
 import dobble.MoteurJeu;
-import dobble.Stats;
 import dobble.Symbole;
 
 public class PanelJeu extends JPanel implements ActionListener{
 	
 
+	private static final long serialVersionUID = -6174972239935842965L;
 	private MoteurJeu mj;
 	private JLabel labScore;
 	private JLabel time;
@@ -73,24 +60,21 @@ public class PanelJeu extends JPanel implements ActionListener{
 	public JPanel creePanels()
 	{
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(2,1));
-
+		p.setLayout(new GridLayout(2,3));
+		p.add(new JPanelVide());
 
 		JPanel panelCarteCentre = this.creePanelCarteCentre();
 		p.add(panelCarteCentre);
 		
-		JPanel panelJoueurs = new JPanel();
-		panelJoueurs.setLayout(new GridLayout(1,2));
-		
+		p.add(new JPanelVide());
+
 			JPanel panelCarteJoueur = this.creePanelCarteJoueur();
-			panelJoueurs.add(panelCarteJoueur);
-			
+			p.add(panelCarteJoueur);
+			p.add(new JPanelVide());
 			JPanel panelCarteAdverse = this.creePanelCarteAdverse();
-			panelJoueurs.add(panelCarteAdverse);
+			p.add(panelCarteAdverse);
 		
-		p.add(panelJoueurs);
 		p.setOpaque(false);
-		panelJoueurs.setOpaque(false);
 		this.carte=p;
 		return p;
 	}
@@ -180,6 +164,8 @@ public class PanelJeu extends JPanel implements ActionListener{
 	
 	public class JPanelCarte extends JPanel
 	{		
+
+		private static final long serialVersionUID = 2082264326526372498L;
 		private Image imgCarte;
 		private Image imgCarteOmbre;
 		
@@ -220,10 +206,9 @@ public class PanelJeu extends JPanel implements ActionListener{
 			}
 			
 			
-			//---TEST CENTRAGE DES SYMBOLES---//
-			this.setLayout(new GridLayout(1,3)); //DIVISION DU PANEL DU HAUT EN 3 COLONNES
+			this.setLayout(new BorderLayout(0,0)); //DIVISION DU PANEL DU HAUT EN 3 COLONNES
 			this.setOpaque(false);
-			this.add(new JLabel()); //COLONNE DE GAUCHE VIDE
+			//this.add(new JLabel()); //COLONNE DE GAUCHE VIDE
 			
 			JPanel carte = new JPanel(new GridLayout(4,(int)nbligne)); //COLONNE CENTRE GRIDDEE POUR LA CARTE
 			carte.setOpaque(false);
@@ -261,52 +246,22 @@ public class PanelJeu extends JPanel implements ActionListener{
 				
 			}
 			
-			this.add(carte); //AJOUT CARTE AU MILIEU
-			this.add(new JLabel()); //COLONNE DE DROITE VIDE			
-			//---FIN TEST CENTRAGE DES SYMBOLES---//
-			
-			/*this.setLayout(new GridLayout(4,(int)nbligne));
-			this.setOpaque(false);
-			
-			int compteur=0;
-			
-			for(int j=0; j< 4; j+=1)
-			{
-
-				for (int i = 0; i < nbligne; i += 1)
-				{			
-					
-					
-					if((j == 0 || j == 3) && (i == 0 || i == nbligne-1))
-					{
-						this.add(new JLabel());
-						continue;
-					}
-
-					this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
-					JLabel t=new MonJLabel(this.symboles[compteur].getImage());
-					t.addMouseListener(new SymboleListener(this.symboles[compteur]));
-					this.listLable[compteur]=t;
-					compteur++;
-					this.add(t);
-				}
-				
-			}*/
-			
+			this.add(carte, BorderLayout.CENTER); //AJOUT CARTE AU MILIEU		
+			this.add(new JLabelVide("EEEEEEEEEE"), BorderLayout.EAST);//sale
+			this.add(new JLabelVide("EEEEEEEEEE"), BorderLayout.WEST);//sale aussi
 			this.setVisible(true);
 			this.repaint();
 		}
 		
 		public void paint(Graphics g)
 		{
-			int w = this.getWidth()/3;
+			int w = this.getWidth();
 			int h = this.getHeight();
 			if(w >= h)
 			{
 				this.tailleCarte = h;
 			}
 			else this.tailleCarte = w;
-			
 			g.drawImage(imgCarte, (this.getWidth() - this.tailleCarte)/2, 0, this.tailleCarte, this.tailleCarte, this);  //FIXME la carte doit s'adapter proportionnellement au conteneur
 			super.paint(g);
 			g.drawImage(imgCarteOmbre, (this.getWidth() - this.tailleCarte)/2, 0, this.tailleCarte, this.tailleCarte, this);
@@ -320,7 +275,8 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 			public class MonJLabel extends JLabel
 			{
-			
+				private static final long serialVersionUID = -7666504779479544722L;
+
 				private int rotation;
 				
 				private Image img;
@@ -347,7 +303,6 @@ public class PanelJeu extends JPanel implements ActionListener{
 				 public void paint(Graphics g)
 				 {
 					 super.paint(g);
-					 
 					 if(this.taille==0)
 					 {
 							this.taille=this.randomH();
@@ -424,7 +379,64 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 				
 			}
+		}//fin inner class JPanelCarte
+	public class JLabelVide extends JLabel {
+
+		private static final long serialVersionUID = -5982350884964412423L;
+
+		public void paint(Graphics g)
+		{
+			
 		}
+		
+		public JLabelVide(String m)
+		{
+			super(m);
+		}
+	}//fin inner class JLabelVide
+	
+	public class JPanelVide extends JPanel {
+		
+		private static final long serialVersionUID = 8916582012263348044L;
+
+		public JPanelVide()
+		{
+			super();
+			this.setOpaque(false);
+		}
+	}//fin inner class JPanelVide
+	
+	public class PanelCarteAdverse extends JPanel {
+
+		private static final long serialVersionUID = 5610541885102148879L;
+		private Image dosCarte;
+		private int tailleCarte;
+		
+		public PanelCarteAdverse()
+		{
+			super();
+			this.dosCarte = new ImageIcon("images/dosCarte.png").getImage();
+			this.tailleCarte = 0;
+		}
+		
+		@Override
+		public void paint(Graphics g)
+		{
+			if(this.tailleCarte == 0)
+			{
+				int w = this.getWidth();
+				int h = this.getHeight();
+				if(w >= h)
+				{
+					this.tailleCarte = h;
+				}
+				else this.tailleCarte = w;
+			}
+			
+			g.drawImage(this.dosCarte, (this.getWidth() - this.tailleCarte)/2, 0, this.tailleCarte, this.tailleCarte, this);
+			super.paint(g);
+		}
+	}//fin inner class PanelCarteAdverse
 
 
 	public JPanel getCarte() {
