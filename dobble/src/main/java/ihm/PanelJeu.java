@@ -132,7 +132,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 	
 	private JPanel creePanelCarteAdverse()
 	{
-		JPanel p = new JPanel();
+		JPanel p = new PanelCarteAdverse();
 		p.setOpaque(false);
 		JLabel pseudo = new JLabel();
 		String psdo = mj.getArrayJoueur().get(1).getNom(); //affiche le pseudo du joueur adverse
