@@ -1,5 +1,7 @@
 package dobble;
 
+import ihm.JavaAudioPlayer;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -166,12 +168,16 @@ public class MoteurJeu implements Serializable {
     public boolean interagir(int idJoueur,Symbole s) throws Exception
     {
     	// Si symbole commun est trouvé :
-    	if (s.equals(Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
-    			this.cartesCentre.get(cartesCentre.size() - 1)))) {
+    	Symbole correct = Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
+    			this.cartesCentre.get(cartesCentre.size() - 1));
+    	if (s.equals(correct)) {
     			      
     		this.cartesCentre.add(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1));
     		this.arrayJoueur.get(idJoueur).getArrayCartes().remove(
     				this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1);
+    		
+    		//La voix énonce le symbole correct
+    		JavaAudioPlayer.voix(correct.getId());
     		
     		this.testfin();
     		if(idJoueur != this.joueurActif)
