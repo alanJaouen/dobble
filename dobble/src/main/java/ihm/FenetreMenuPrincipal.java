@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dobble.*;
+import dobble.Stats.BddException;
 
 
 
@@ -304,7 +305,9 @@ public class FenetreMenuPrincipal extends JFrame {
 		}	
 	}
 	
-	
+	public static void main(String[] args) {
+		new FenetreMenuPrincipal();
+	}
 
 }
 

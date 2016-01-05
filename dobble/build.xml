@@ -2,6 +2,8 @@
 <project basedir="." default="install" name="dobble">
     <property environment="env"/>
     <property name="junit.output.dir" value="junit"/>
+	<property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <path id="dobble.classpath">
         <pathelement location="bin"/>
@@ -21,7 +23,7 @@
 	<target name="jar" depends="compile">
 		<jar destfile="dobble.jar">
 			<manifest>
-				<attribute name="Main-Class" value="dobble.TestMoteurJeu"/>
+				<attribute name="Main-Class" value="ihm.FenetreMenuPrincipal"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 			<zipgroupfileset dir="lib/" includes="**/*.jar" />
