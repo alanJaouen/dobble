@@ -17,13 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import dobble.Carte;
-import dobble.Joueur;
-import dobble.Mode;
-import dobble.MoteurJeu;
-import dobble.Stats;
-import dobble.Stats.BddException;
-import dobble.Symbole;
+import dobble.*;
+
+
 
 public class FenetreMenuPrincipal extends JFrame {
 	
@@ -72,20 +68,21 @@ public class FenetreMenuPrincipal extends JFrame {
 	{
 		JPanel p = new JPanel();
 		// Layout
-		p.setLayout(new GridLayout(5, 1));
+		p.setLayout(new GridLayout(6, 1));
 		
 		// Noms des boutons :
 		String[] nomBoutons = {"Jouer", 
 							"Statistiques", 
 							"Parametres", 
-							"Nouveau Joueur", 
+							"Nouveau Joueur",
+							"Supprimer mon compte",
 							"Quitter Dobble :'("
 							};
 		
 		
 		// Creation et ajout des boutons a la fenetre :
 		JButton bouton;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			bouton = new JButton(nomBoutons[i]);
 			bouton.addActionListener(new BoutonListener(i + 1));
 			p.add(bouton);
@@ -184,7 +181,30 @@ public class FenetreMenuPrincipal extends JFrame {
 			case 4: // Bouton nouveau joueur
 				FenetreMenuPrincipal.this.nouveauJoueur();
 				break;
-			case 5: // Bouton quitter
+			case 5: // Bouton nouveau joueur
+				if(FenetreMenuPrincipal.this.joueur != null)
+				{
+					if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreMenuPrincipal.this,
+							"Etes-vous sur(e) de vouloir supprimer votre compte Dobble ?","Supprimer mon compte", 0))
+					{
+						try 
+						{
+							FenetreMenuPrincipal.this.joueur.supprimerJoueur();
+							FenetreMenuPrincipal.this.joueur=null;
+							new FenetreMenuPrincipal();
+							FenetreMenuPrincipal.this.dispose();
+						} catch (BddException e1) 
+						{	
+							JOptionPane.showMessageDialog(FenetreMenuPrincipal.this, "erreur fatale:\n"+e1.getMessage(), "Bug", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					
+				}
+				else
+					JOptionPane.showMessageDialog(FenetreMenuPrincipal.this, "Vous devez etre connecté pour pouvoir supprimer votre compte",
+							"Attention", JOptionPane.WARNING_MESSAGE);
+				break;
+			case 6: // Bouton quitter
 				if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreMenuPrincipal.this, "Etes-vous sur(e) de vouloir quitter Dobble ?","Quitter Dobble", 0)){
 					FenetreMenuPrincipal.this.dispose();
 				}
@@ -232,7 +252,14 @@ public class FenetreMenuPrincipal extends JFrame {
 		private void connection()
 		{
 			String id=JOptionPane.showInputDialog("Quel est votre identifiant?");
+			
+			if(id == null)//si l'utilisateur cancel
+				return;
 			String mdp=JOptionPane.showInputDialog("Quel est votre mot de passe?");
+			
+			if(mdp == null)//si l'utilisateur cancel
+				return;
+			
 			
 			try {
 				FenetreMenuPrincipal.this.joueur=new Joueur(id,mdp);
@@ -276,6 +303,8 @@ public class FenetreMenuPrincipal extends JFrame {
 					JOptionPane.ERROR_MESSAGE);
 		}	
 	}
+	
+	
 
 }
 
