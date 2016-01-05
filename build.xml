@@ -2,8 +2,6 @@
 <project basedir="." default="install" name="dobble">
     <property environment="env"/>
     <property name="junit.output.dir" value="junit"/>
-	<property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <path id="dobble.classpath">
         <pathelement location="bin"/>
@@ -15,7 +13,7 @@
 
     <target name="compile">
         <mkdir dir="bin"/>
-        <javac debug="false" destdir="bin" includeantruntime="false" source="${source}" target="${target}" encoding="UTF-8">
+        <javac debug="false" destdir="bin" includeantruntime="false" encoding="UTF-8">
              <src path="src/main/java"/>
              <classpath refid="dobble.classpath"/>
         </javac>
