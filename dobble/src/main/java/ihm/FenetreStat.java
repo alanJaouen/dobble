@@ -285,9 +285,9 @@ public class FenetreStat extends JFrame {
 		public void actionPerformed(ActionEvent e)
 		{
 			
-			//new FenetreMenu();
-			FenetreStat.this.dispose();
 			
+			FenetreStat.this.dispose();
+			new FenetreMenuPrincipal();
 			
 		}    //fin ecouteur menu
 	}
