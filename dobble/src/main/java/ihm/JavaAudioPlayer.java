@@ -11,15 +11,24 @@ import sun.audio.*;
 public class JavaAudioPlayer extends Thread
 {
 	private int id;
+	private int idJoueur;
 	
-	public JavaAudioPlayer(int id)
+	public JavaAudioPlayer(int id, int idJoueur)
 	{
 		this.id=id;
+		this.idJoueur = idJoueur;
 	}
 	
 	public void run()
 	{
-		String fichier = "sons/son" + id + ".wav";
+		String fichier = "sons/";
+		if(this.idJoueur == 0) //Si l'ID correspond au joueur
+			fichier += "moi";
+		else //Si c'est l'adversaire qui a joue
+			fichier += "son";
+		
+		
+		fichier += id + ".wav";
 		InputStream in=null;
 		try {
 			in = new FileInputStream(fichier);
