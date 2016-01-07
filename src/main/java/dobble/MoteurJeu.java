@@ -178,8 +178,8 @@ public class MoteurJeu implements Serializable {
     		this.arrayJoueur.get(idJoueur).getArrayCartes().remove(
     				this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1);
     		
-    		//La voix énonce le symbole correct si option activée
-    		if(Symbole.lecture("param.txt", 2).equals("1"))
+    		//La voix énonce le symbole correct si option activée et si voix non muettes
+    		if(Symbole.lecture("param.txt", 2).equals("1.0") && !(Symbole.lecture("param.txt", 5).equals("0.0")))
     		{
     			JavaAudioPlayer t = new JavaAudioPlayer(correct.getId(), idJoueur);
     			t.start();
