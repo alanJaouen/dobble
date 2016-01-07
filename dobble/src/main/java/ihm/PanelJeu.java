@@ -28,6 +28,8 @@ public class PanelJeu extends JPanel implements ActionListener{
 	private MoteurJeu mj;
 	private JLabel labScore;
 	private JLabel time;
+	private JLabel labNbCartes;
+	private JLabel labNbCartesAdversaire;
 	
 	private Timer timer;
 	
@@ -61,12 +63,14 @@ public class PanelJeu extends JPanel implements ActionListener{
 	{
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(2,3));
-		p.add(new JPanelVide());
+		JPanel panelStatJoueur = this. creePanelStatJoueur();
+		p.add(panelStatJoueur);
 
 		JPanel panelCarteCentre = this.creePanelCarteCentre();
 		p.add(panelCarteCentre);
 		
-		p.add(new JPanelVide());
+		JPanel panelStatJoueurAdverse = this. creePanelStatJoueurAdverse();
+		p.add(panelStatJoueurAdverse);
 
 			JPanel panelCarteJoueur = this.creePanelCarteJoueur();
 			p.add(panelCarteJoueur);
@@ -77,6 +81,69 @@ public class PanelJeu extends JPanel implements ActionListener{
 		p.setOpaque(false);
 		this.carte=p;
 		return p;
+	}
+	private JPanel creePanelStatJoueur()
+	{
+		JPanel panelext = new JPanel();
+		panelext.setOpaque(false);
+		
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(8,1));
+		p.setOpaque(false);
+		
+		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
+		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
+		labPseudo.setText(pseudo);
+		labPseudo.setForeground(Color.red);
+		p.add(labPseudo);
+		
+		labScore = new JLabel();//affiche le score du joueur 1
+		int score = mj.getArrayJoueur().get(0).getScore();
+		labScore.setText("score:" + score);
+		labScore.setForeground(Color.white);
+		p.add(labScore);
+		
+		labNbCartes = new JLabel();
+		int nbCartes = mj.getArrayJoueur().get(0).getArrayCartes().size();
+		labNbCartes.setText("Nombre de cartes: " + nbCartes);
+		labNbCartes.setForeground(Color.white);
+		p.add(labNbCartes);
+		
+		panelext.add(p, BorderLayout.CENTER);
+		
+		return panelext;
+	}
+	
+	private JPanel creePanelStatJoueurAdverse()
+	{
+		JPanel panelext = new JPanel();
+		panelext.setOpaque(false);
+		
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(8,1));
+		p.setOpaque(false);
+		
+		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
+		String pseudo = mj.getArrayJoueur().get(1).getNom(); //TODO ne marche que pour le premier joueur
+		labPseudo.setText(pseudo);
+		labPseudo.setForeground(Color.red);
+		p.add(labPseudo);
+		
+		labScore = new JLabel();//affiche le score du joueur 1
+		int score = mj.getArrayJoueur().get(1).getScore();
+		labScore.setText("score:" + score);
+		labScore.setForeground(Color.white);
+		p.add(labScore);
+		
+		labNbCartesAdversaire = new JLabel();
+		int nbCartes = mj.getArrayJoueur().get(1).getArrayCartes().size();
+		labNbCartesAdversaire.setText("Nombre de cartes: " + nbCartes);
+		labNbCartesAdversaire.setForeground(Color.white);
+		p.add(labNbCartesAdversaire);
+		
+		panelext.add(p, BorderLayout.CENTER);
+		
+		return panelext;
 	}
 	
 	private JPanel creePanelCarteCentre()
@@ -99,16 +166,6 @@ public class PanelJeu extends JPanel implements ActionListener{
 		JPanel p = new JPanel();
 		p.setOpaque(false);
 		p.setLayout(new BorderLayout());
-		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
-		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
-		labPseudo.setText(pseudo);
-		labPseudo.setForeground(Color.white);
-		p.add(labPseudo, BorderLayout.SOUTH);
-		
-		labScore = new JLabel();//affiche le score du joueur 1
-		int score = mj.getArrayJoueur().get(0).getScore();
-		labScore.setText("" + score);
-		p.add(labScore, BorderLayout.SOUTH);
 		
 		p.add(new JPanelCarte(mj.getArrayJoueur().get(0).getArrayCartes()
 				.get(mj.getArrayJoueur().get(0).getArrayCartes().size() -1)),BorderLayout.CENTER);
@@ -120,11 +177,6 @@ public class PanelJeu extends JPanel implements ActionListener{
 	{
 		JPanel p = new PanelCarteAdverse();
 		p.setOpaque(false);
-		JLabel pseudo = new JLabel();
-		String psdo = mj.getArrayJoueur().get(1).getNom(); //affiche le pseudo du joueur adverse
-		pseudo.setText(psdo);
-		pseudo.setForeground(Color.white);
-		p.add(pseudo, BorderLayout.SOUTH);
 		
 		p.add(new JPanelCarte(mj.getArrayJoueur().get(1).getArrayCartes()
 				.get(mj.getArrayJoueur().get(1).getArrayCartes().size() -1)),BorderLayout.CENTER);
@@ -145,7 +197,13 @@ public class PanelJeu extends JPanel implements ActionListener{
 		time.setText(text);
 		
 		int score = mj.getArrayJoueur().get(0).getScore();//update le score du joueur
-		labScore.setText("" + score);
+		labScore.setText("score: " + score);
+		
+		int nbCartes = mj.getArrayJoueur().get(0).getArrayCartes().size();
+		labNbCartes.setText("Nombre de cartes: " + nbCartes);
+		
+		int nbCartesAdversaire = mj.getArrayJoueur().get(0).getArrayCartes().size();
+		labNbCartes.setText("Nombre de cartes: " + nbCartes);
 	}
 	
 	@Override
