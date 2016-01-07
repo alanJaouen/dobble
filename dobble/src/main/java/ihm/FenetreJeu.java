@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,6 +27,7 @@ public class FenetreJeu extends JFrame {
 	private PanelJeu lepanel;
 	private JMenu menuQuitter;
 	private MoteurJeu mj;
+	public ActualiseThread thread;
 	
 	public FenetreJeu(MoteurJeu jeu) {
 		super();
@@ -44,7 +47,7 @@ public class FenetreJeu extends JFrame {
 		this.lepanel=new PanelJeu(jeu);
 		this.setJMenuBar(this.creeMenuBar());
 		
-		ActualiseThread thread= new ActualiseThread("actualisation de l ihm");
+		thread= new ActualiseThread("actualisation de l ihm");
 		thread.start();
 		
 		this.contentPane.add(lepanel, BorderLayout.CENTER);
@@ -63,8 +66,22 @@ public class FenetreJeu extends JFrame {
 	{
 		JMenu menu = new JMenu("Systeme");
 		JMenuItem quitter = new JMenuItem("Quitter");
+		quitter.addActionListener(new MenuQuitterActionListener());
 		menu.add(quitter);
 		return menu;
+	}
+	
+	class MenuQuitterActionListener implements ActionListener{
+
+		@SuppressWarnings("deprecation")
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			FenetreJeu.this.dispose();
+			FenetreJeu.this.thread.stop();
+			FenetreJeu.this.mj.t.stop();
+			new FenetreMenuPrincipal();
+		}
+		
 	}
 	
 	
