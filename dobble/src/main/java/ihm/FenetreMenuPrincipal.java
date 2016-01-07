@@ -17,8 +17,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import dobble.*;
+import com.sun.xml.internal.ws.api.Component;
+
+import dobble.Carte;
+import dobble.Joueur;
+import dobble.Mode;
+import dobble.MoteurJeu;
+import dobble.Stats;
 import dobble.Stats.BddException;
+import dobble.Symbole;
 
 
 
@@ -177,7 +184,6 @@ public class FenetreMenuPrincipal extends JFrame {
 				break;
 			case 3: // Bouton parametres
 				new FenetreParametres(FenetreMenuPrincipal.this.mode);
-				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 4: // Bouton nouveau joueur
 				FenetreMenuPrincipal.this.nouveauJoueur();

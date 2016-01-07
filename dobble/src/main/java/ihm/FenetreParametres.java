@@ -1,9 +1,19 @@
 package ihm;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -17,6 +27,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+
+import com.sun.java_cup.internal.runtime.Scanner;
 
 import dobble.Mode;
 
@@ -25,22 +38,31 @@ public class FenetreParametres extends JFrame {
 	
 	// Attributs :
 	private Mode mode;
+	private int[] valeurs_initiales;
+	
 	private JLabel label_enregistrement;
 	private JButton bouton_enregistrer;
+	private boolean changement;
 	
-	
+	private JComboBox combo_graphismes;
+	private ButtonGroup groupe_son;
+	private ButtonGroup groupe_nombre_symboles;
+	private JSlider slider_diffuculte;
 	
 	
 	public FenetreParametres(Mode mode) {
 		super("Parametres");
 		this.mode = mode;
+		this.changement = false;
+		//this.valeurs_initiales = charger_parametres();
 		this.setSize(550, 400);
-		//this.setResizable(false);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.initialise();
+		//this.setValeurs();
 		this.setVisible(true);
 	}
-	
+
 	private void initialise() {
 		this.setLayout(new BorderLayout());
 		
@@ -79,10 +101,14 @@ public class FenetreParametres extends JFrame {
 			
 			// Radio boutons :
 				JRadioButton rb_3 = new JRadioButton("3");
+				rb_3.addItemListener(new ChangementListener());
 				JRadioButton rb_4 = new JRadioButton("4");
+				rb_4.addItemListener(new ChangementListener());
 				JRadioButton rb_6 = new JRadioButton("6");
-				JRadioButton rb_8 = new JRadioButton("8");
 				rb_6.setSelected(true);
+				rb_6.addItemListener(new ChangementListener());
+				JRadioButton rb_8 = new JRadioButton("8");
+				rb_8.addItemListener(new ChangementListener());
 				
 				ButtonGroup bg = new ButtonGroup();
 				
@@ -120,6 +146,8 @@ public class FenetreParametres extends JFrame {
 				slider_difficulte.setMinorTickSpacing(1);
 				slider_difficulte.setPaintTicks(true);
 				slider_difficulte.setPaintLabels(true);
+				slider_difficulte.addChangeListener(new ChangementListener());
+				this.slider_diffuculte = slider_difficulte;
 				
 			pan_ia.add(slider_difficulte);
 				
@@ -146,6 +174,8 @@ public class FenetreParametres extends JFrame {
 				String[] comboString = { "Basse", "Modérée", "Normale", "Bonne", "Haute" };
 				JComboBox cb = new JComboBox(comboString);
 				cb.setSelectedIndex(2);
+				cb.addItemListener((ItemListener) new ChangementListener());
+				this.combo_graphismes = cb;
 				JPanel pan_combo = new JPanel();
 				pan_combo.add(cb);
 			
@@ -165,11 +195,14 @@ public class FenetreParametres extends JFrame {
 		
 			// Radio sons
 				JRadioButton rb_oui = new JRadioButton("Oui");
-				JRadioButton rb_non = new JRadioButton("Non");
-				
 				rb_oui.setSelected(true);
+				rb_oui.addItemListener(new ChangementListener());
+				JRadioButton rb_non = new JRadioButton("Non");
+				rb_non.addItemListener(new ChangementListener());
+				
 				
 				ButtonGroup bg1 = new ButtonGroup();
+				this.groupe_son = bg1;
 				bg1.add(rb_oui);
 				bg1.add(rb_non);
 				
@@ -184,10 +217,13 @@ public class FenetreParametres extends JFrame {
 		
 			// Radio voix :
 				JRadioButton rb_mute = new JRadioButton("Aucune");
-				JRadioButton rb_alan = new JRadioButton("Alan");
-				JRadioButton rb_moussa = new JRadioButton("Moussa");
-				
 				rb_mute.setSelected(true);
+				rb_mute.addItemListener(new ChangementListener());
+				JRadioButton rb_alan = new JRadioButton("Alan");
+				rb_alan.addItemListener(new ChangementListener());
+				JRadioButton rb_moussa = new JRadioButton("Moussa");
+				rb_moussa.addItemListener(new ChangementListener());
+				
 				
 				ButtonGroup bg2 = new ButtonGroup();
 				bg2.add(rb_mute);
@@ -225,14 +261,16 @@ public class FenetreParametres extends JFrame {
 			pan.add(bouton, BorderLayout.WEST);
 			
 			// - Label :
-			JLabel label = new JLabel("Aucun changement");
+			JLabel label = new JLabel("");
 			label.setHorizontalAlignment(SwingConstants.CENTER);
+			label.setForeground(Color.RED);
 			pan.add(label, BorderLayout.CENTER);
 			this.label_enregistrement = label;
 			
 			// - Enregistrer :
 			bouton = new JButton("Enregistrer");
 			bouton.addActionListener(new EnregistrerListener());
+			bouton.setEnabled(false);
 			pan.add(bouton, BorderLayout.EAST);
 			this.bouton_enregistrer = bouton;
 			
@@ -240,29 +278,133 @@ public class FenetreParametres extends JFrame {
 		return pan;
 	}
 	
-	public void enregistrer() throws Exception {
-		JOptionPane.showMessageDialog(FenetreParametres.this, "Les changements ont bien été sauvegardés", "Changements enregistrés", JOptionPane.INFORMATION_MESSAGE);
+	public void changement() {
+		this.changement = true;
+		this.label_enregistrement.setText("Changement non enregistré !");
+		this.bouton_enregistrer.setEnabled(true);
+	}
+	
+	public void enregistrer() {
+		
+		// Ecrire valeurs dans param.txt :
+		
+		boolean probleme = false;
+		int son = 1, nb_symboles = 6;
+		
+		int[] data = {
+				this.combo_graphismes.getSelectedIndex() + 1,
+				son,
+				nb_symboles,
+				this.slider_diffuculte.getValue() + 1
+				};
+		
+		File f = new File ("param.txt");
+		 
+		try
+		{
+		    PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
+		 
+		    for (double d : data)
+		    {
+		        pw.println (d);
+		    }
+		 
+		    pw.close();
+		}
+		catch (IOException exception)
+		{
+			JOptionPane.showMessageDialog(FenetreParametres.this, "Une erreur s'est produite lors de l'enregistrement.\nVeuillez reesayer plus tard.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			probleme = true;
+		}
+		// Si aucun probleme alors :
+		if (!probleme) {
+			JOptionPane.showMessageDialog(FenetreParametres.this, "Les changements ont bien été sauvegardés", "Changements enregistrés", JOptionPane.INFORMATION_MESSAGE);
+			this.changement = false;
+			this.label_enregistrement.setText("");
+			this.bouton_enregistrer.setEnabled(false);
+		}
+	}
+	
+	private int[] charger_parametres() {
+		int[] valeurs = {0, 0, 0, 0};
+		
+		try
+		{
+		    File file = new File ("param.txt");
+		    Scanner scanner = new Scanner (file);
+		 
+		    String name;
+		    int bornyear;
+		    int curyear = 2007;
+		 
+		    while (true)
+		    {
+		        try
+		        {
+		            name = scanner.next();
+		            bornyear = scanner.nextInt();
+		 
+		            System.out.println (name + " (" + (curyear - bornyear) + " ans)");
+		        }
+		        catch (NoSuchElementException exception)
+		        {
+		            break;
+		        }
+		    }
+		 
+		    scanner.close();
+		}
+		catch (FileNotFoundException exception)
+		{
+		    System.out.println ("Le fichier n'a pas été trouvé");
+		}
+
+		valeurs[0]--;
+		valeurs[3]--;
+		
+		return valeurs;
+	}
+
+	private void setValeurs() {
+		int graph = this.valeurs_initiales[0];
+		int diff = this.valeurs_initiales[3];
+		try {
+			this.combo_graphismes.setSelectedIndex(graph);
+		} catch (Exception e) {
+			//JOptionPane.showMessageDialog(FenetreParametres.this, "Valeur 0: " + this.valeurs_initiales[0] + 
+																	"\nValeur 1: " + this.valeurs_initiales[1] + 
+																	"\nValeur 2: " + this.valeurs_initiales[2] + 
+																	"\nValeur 3: " + this.valeurs_initiales[3], "Erreur de chargement", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 	
 	// Inner classes :
 	
+	private class ChangementListener implements javax.swing.event.ChangeListener, ItemListener {
+		public void stateChanged(ChangeEvent arg0) {
+			FenetreParametres.this.changement();
+		}
+		
+		public void itemStateChanged(ItemEvent e) {
+			FenetreParametres.this.changement();
+		}
+	}
+	
 	private class RetourListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreParametres.this, "Tout changement non sauvegardé sera perdu. \nPour sauvegarder, appuyer sur le bouton Enregistrer. \nVoulez-vous vraiment retourner au menu principal ?","Retour", JOptionPane.ERROR_MESSAGE)){
+			if (FenetreParametres.this.changement) {
+				if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreParametres.this, "Tout changement non sauvegardé sera perdu. \nPour sauvegarder, appuyer sur le bouton Enregistrer. \nVoulez-vous vraiment retourner au menu principal ?","Retour", JOptionPane.ERROR_MESSAGE)){
+					FenetreParametres.this.dispose();
+				}
+			} else
 				FenetreParametres.this.dispose();
-			}
 		}
 	}
 	
 	private class EnregistrerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			try {
-				FenetreParametres.this.enregistrer();
-			} catch (Exception ex) {
-				
-			}
-			FenetreParametres.this.dispose();
+			FenetreParametres.this.enregistrer();
 		}
 	}
 }
