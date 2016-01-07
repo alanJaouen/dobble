@@ -60,6 +60,7 @@ public class MoteurJeu implements Serializable {
     
     private boolean IAdoisDormir;
     
+    public ActualiseThread t;
     
     
     // -------------------------------------------------------------------
@@ -215,7 +216,7 @@ public class MoteurJeu implements Serializable {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
     	this.chrono.start();
-    	ActualiseThread t= new ActualiseThread("thread actualisation",3000,1);
+    	t = new ActualiseThread("thread actualisation",3000,1);
     	
     }
 
