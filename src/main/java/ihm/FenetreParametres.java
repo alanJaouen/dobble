@@ -352,7 +352,6 @@ public class FenetreParametres extends JFrame {
 		            break;
 		        }
 		    }
-		 
 		    scanner.close();
 		}
 		catch (FileNotFoundException exception)
