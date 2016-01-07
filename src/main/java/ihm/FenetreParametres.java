@@ -318,7 +318,8 @@ public class FenetreParametres extends JFrame {
 		}
 		// Si aucun probleme alors :
 		if (!probleme) {
-			JOptionPane.showMessageDialog(FenetreParametres.this, "Les changements ont bien été sauvegardés", "Changements enregistrés", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(FenetreParametres.this, "Les changements ont bien été sauvegardés", 
+					"Changements enregistrés", JOptionPane.INFORMATION_MESSAGE);
 			this.changement = false;
 			this.label_enregistrement.setText("");
 			this.bouton_enregistrer.setEnabled(false);
@@ -371,10 +372,10 @@ public class FenetreParametres extends JFrame {
 		try {
 			this.combo_graphismes.setSelectedIndex(graph);
 		} catch (Exception e) {
-			//JOptionPane.showMessageDialog(FenetreParametres.this, "Valeur 0: " + this.valeurs_initiales[0] + 
+			/*JOptionPane.showMessageDialog(FenetreParametres.this, "Valeur 0: " + this.valeurs_initiales[0] + 
 																	"\nValeur 1: " + this.valeurs_initiales[1] + 
 																	"\nValeur 2: " + this.valeurs_initiales[2] + 
-																	"\nValeur 3: " + this.valeurs_initiales[3], "Erreur de chargement", JOptionPane.INFORMATION_MESSAGE);
+																	"\nValeur 3: " + this.valeurs_initiales[3], "Erreur de chargement", JOptionPane.INFORMATION_MESSAGE);*/
 		}
 	}
 	
