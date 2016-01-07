@@ -1,6 +1,8 @@
 package ihm;
 
 import java.io.*;
+
+import dobble.Symbole;
 import sun.audio.*;
  
 /**
@@ -25,7 +27,16 @@ public class JavaAudioPlayer extends Thread
 		if(this.idJoueur == 0) //Si l'ID correspond au joueur
 			fichier += "moi";
 		else //Si c'est l'adversaire qui a joue
-			fichier += "son";
+			{
+				if(Symbole.lecture("param.txt", 5).equals("1.0")) //Si le joueur a choisi Alan, la voix par defaut
+				{
+					fichier += "son";
+				}
+				else if(Symbole.lecture("param.txt", 5).equals("2.0")) //Si le joueur a choisi Moussa
+				{
+					fichier += "moussa";
+				}
+			}
 		
 		
 		fichier += id + ".wav";
