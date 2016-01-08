@@ -329,7 +329,7 @@ public class FenetreParametres extends JFrame {
 	private int[] charger_parametres() {
 		int[] valeurs = {0, 0, 0, 0};
 		
-		try
+		/*try
 		{
 		    File file = new File ("param.txt");
 		    Scanner scanner = new Scanner (file);
@@ -361,7 +361,7 @@ public class FenetreParametres extends JFrame {
 
 		valeurs[0]--;
 		valeurs[3]--;
-		
+		*/
 		return valeurs;
 	}
 
@@ -395,10 +395,14 @@ public class FenetreParametres extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (FenetreParametres.this.changement) {
 				if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreParametres.this, "Tout changement non sauvegardé sera perdu. \nPour sauvegarder, appuyer sur le bouton Enregistrer. \nVoulez-vous vraiment retourner au menu principal ?","Retour", JOptionPane.ERROR_MESSAGE)){
+					new FenetreMenuPrincipal();
 					FenetreParametres.this.dispose();
 				}
 			} else
+			{
+				new FenetreMenuPrincipal();
 				FenetreParametres.this.dispose();
+			}
 		}
 	}
 	

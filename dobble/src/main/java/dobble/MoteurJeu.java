@@ -60,6 +60,8 @@ public class MoteurJeu implements Serializable {
     
     private boolean IAdoisDormir;
     
+
+    private Chronometer[] tpsr;
     public ActualiseThread t;
     
     
@@ -76,6 +78,11 @@ public class MoteurJeu implements Serializable {
     	this.modeDeJeu = modeDeJeu;
     	this.inGame = false;
     	this.joueurActif = 0;
+    	this.tpsr=new Chronometer[arrayJoueur.size()];
+    	for(int i=0; i<tpsr.length;i++)
+    	{
+    		tpsr[i]=new Chronometer();
+    	}
     }
     
     /**
@@ -111,6 +118,11 @@ public class MoteurJeu implements Serializable {
     	this.inGame = false;
     	this.joueurActif = 0;
     	this.needupdate=false;
+    	this.tpsr=new Chronometer[arrayJoueur.size()];
+    	for(int i=0; i<tpsr.length;i++)
+    	{
+    		tpsr[i]=new Chronometer();
+    	}
     }
 
     // -------------------------------------------------------------------
@@ -190,9 +202,12 @@ public class MoteurJeu implements Serializable {
     		if(idJoueur != this.joueurActif)
     			this.needupdate=true;
     		
-    		
-    		this.arrayJoueur.get(idJoueur).setScore(28);//TODO calcul du score
+    		int score=this.arrayJoueur.get(idJoueur).getScore()+( (int) 100/this.tpsr[idJoueur].getSeconds());
+    		this.arrayJoueur.get(idJoueur).setScore(score);//TODO calcul du score
+    		System.out.println(this.arrayJoueur.get(idJoueur).getScore());
     		this.arrayJoueur.get(idJoueur).getStats().setTpsReaction(28);//TODO calcul de ca
+    		
+    		this.tpsr[idJoueur].start();
     		return true;
     	}
     	else // Si le joueur s'est trompé :
@@ -216,7 +231,11 @@ public class MoteurJeu implements Serializable {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
     	this.chrono.start();
-    	t = new ActualiseThread("thread actualisation",3000,1);
+    	for(int i=0; i<tpsr.length;i++)
+    		tpsr[i].start();
+    	
+    	this.t= new ActualiseThread("thread actualisation",3000,1);
+
     	
     }
 
@@ -266,7 +285,9 @@ public class MoteurJeu implements Serializable {
      * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
      * @throws BddException 
      */
-    public void quitter() throws BddException {
+    @SuppressWarnings("deprecation")
+	public void quitter() throws BddException {
+    	this.t.stop();
     	this.finPartie();
     	//TODO plus tard si le temps ajouter un malus aux leavers.
     }
