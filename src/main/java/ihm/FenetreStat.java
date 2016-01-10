@@ -15,9 +15,11 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
 
 import dobble.MoteurJeu;
+import dobble.Symbole;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,22 +36,18 @@ public class FenetreStat extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private FenetreWait chargement;
-
-	/**
-	 * test TODO a delete
-	 */
-	public static void main(String[] args) {				
-		FenetreStat frame = new FenetreStat();
-		frame.setVisible(true);
+	private String nomJoueur;
 
 
-	}
 
 	/**
 	 * Constructeupar défaut, créer la fenetre
 	 */
-	public FenetreStat() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//TODO a changer
+	public FenetreStat(String nom) {
+		super("Statistiques");
+		this.nomJoueur=nom;
+		this.setIconImage(Symbole.getIcon().getImage());
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Dimension ecran=java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(
 				(int)ecran.getWidth()/2 -(int)ecran.getWidth()/4, 
@@ -57,9 +55,7 @@ public class FenetreStat extends JFrame {
 				(int)ecran.getWidth()/2, 
 				(int)ecran.getHeight()/2);
 		
-		ImageIcon img = new ImageIcon("images/icon.png");
-		this.setIconImage(img.getImage());
-		
+
 		this.contentPane = new JPanel();
 		setContentPane(contentPane);
 		this.contentPane.setLayout(new BorderLayout(0, 0));
@@ -71,6 +67,8 @@ public class FenetreStat extends JFrame {
 		
 		JPanel panelCentre = getPanelCentre();
 		this.contentPane.add(panelCentre, BorderLayout.CENTER);
+		
+
 		
 		this.charger();
 		this.setVisible(true);
@@ -121,6 +119,7 @@ public class FenetreStat extends JFrame {
 		};
 		panelCentre.setLayout(new BorderLayout(0, 0));
 		this.table=new JTable(model);
+		table.setDefaultRenderer(Object.class, new MonCellRenderer(this.nomJoueur));
 		
 		 TableRowSorter trs = new TableRowSorter(model);
 
@@ -340,6 +339,12 @@ public class FenetreStat extends JFrame {
 			return Integer.toString((int)super.valeur)+" sec";
 		}
     }
+	
+	public void dispose()
+	{
+		new FenetreMenuPrincipal();
+		super.dispose();
+	}
 	
 	
 }

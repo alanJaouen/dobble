@@ -38,6 +38,7 @@ public class FenetreMenuPrincipal extends JFrame {
 	
 	public FenetreMenuPrincipal() {
 		super("Dobble");
+		this.setIconImage(Symbole.getIcon().getImage());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(400, 400);
 		this.setResizable(false);
@@ -179,11 +180,14 @@ public class FenetreMenuPrincipal extends JFrame {
 				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 2: // Bouton stats
-				new FenetreStat();
+				if(FenetreMenuPrincipal.this.joueur != null)
+					new FenetreStat(FenetreMenuPrincipal.this.joueur.getNom());
+				else new FenetreStat("");
 				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 3: // Bouton parametres
 				new FenetreParametres(FenetreMenuPrincipal.this.mode);
+				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 4: // Bouton nouveau joueur
 				FenetreMenuPrincipal.this.nouveauJoueur();

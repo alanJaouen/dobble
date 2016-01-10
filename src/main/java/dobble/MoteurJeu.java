@@ -452,7 +452,7 @@ public class MoteurJeu implements Serializable {
 					MoteurJeu.this.IAdoisDormir=false;
 					try 
 					{
-						Thread.sleep(5000);//this.getTempsIA());
+						Thread.sleep(this.getTempsIA());
 					} 
 					catch (InterruptedException e)
 					{
@@ -477,8 +477,7 @@ public class MoteurJeu implements Serializable {
 		 */
 		private int getTempsIA()
 		{
-			return (int)((Math.random()*1000)%this.tpsIA); //TODO a changer grosse merde
-			//int pour le moment,  peut-être à changer en double pour plus de réalisme
+			return this.tpsIA+(int)((Math.random()*1000)%((this.tpsIA*1000)/3)) - (int)((Math.random()*1000)%((this.tpsIA*1000)/3));
 		}
 		
 

@@ -19,6 +19,7 @@ import dobble.Mode;
 import dobble.MoteurJeu;
 import dobble.Stats;
 import dobble.Stats.BddException;
+import dobble.Symbole;
 
 public class FenetreJeu extends JFrame {
 
@@ -31,7 +32,7 @@ public class FenetreJeu extends JFrame {
 	
 	public FenetreJeu(MoteurJeu jeu) {
 		super();
-		
+		this.setIconImage(Symbole.getIcon().getImage());
 		this.mj=jeu;
 		
 		
@@ -39,7 +40,7 @@ public class FenetreJeu extends JFrame {
 		Toolkit t =Toolkit.getDefaultToolkit();
 		Dimension d = t.getScreenSize();
 		this.setSize(d);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		contentPane=this.getContentPane();
 		contentPane.setLayout(new BorderLayout(0,0));
@@ -107,6 +108,17 @@ public class FenetreJeu extends JFrame {
 		
 	}
 	
+	public void dispose()
+	{
+		JOptionPane.showMessageDialog(this, "Vous avez quitter le jeu de facon inaproprié, vous perdrez des points si vous continuez ainsi"
+				, "Attention", JOptionPane.WARNING_MESSAGE);
+		new FenetreMenuPrincipal();
+		FenetreJeu.this.thread.stop();
+		FenetreJeu.this.mj.t.stop();
+		
+		super.dispose();
+	}
+	
 	/**
 	 * Un thread permettant de rafraichir l'affichage de l'ihm
 	 * @author Alan JAOUEN
@@ -150,6 +162,7 @@ public class FenetreJeu extends JFrame {
 				}
 				else
 				{
+					FenetreWait f=null;
 					if(FenetreJeu.this.mj.getNeedUpdate())
 					{
 						JOptionPane.showMessageDialog(FenetreJeu.this, "Dommage tu as perdu",
@@ -159,10 +172,14 @@ public class FenetreJeu extends JFrame {
 						JOptionPane.showMessageDialog(FenetreJeu.this, "Bravo tu as gagné",
 								"gg", JOptionPane.INFORMATION_MESSAGE);
 					try {
+						f=new FenetreWait();
+						f.setLabel("sauvegarde en cours");
 						FenetreJeu.this.mj.finPartie();
+						f.dispose();
 					} catch (BddException e) {	
 						JOptionPane.showMessageDialog(FenetreJeu.this, e.getMessage(),
 								"err", JOptionPane.ERROR_MESSAGE);
+						f.dispose();
 					}
 					FenetreJeu.this.dispose();
 					new FenetreMenuPrincipal();

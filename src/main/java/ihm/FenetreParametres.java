@@ -32,6 +32,7 @@ import javax.swing.event.ChangeEvent;
 import com.sun.java_cup.internal.runtime.Scanner;
 
 import dobble.Mode;
+import dobble.Symbole;
 
 public class FenetreParametres extends JFrame {
 	
@@ -52,6 +53,8 @@ public class FenetreParametres extends JFrame {
 	
 	public FenetreParametres(Mode mode) {
 		super("Parametres");
+		this.setIconImage(Symbole.getIcon().getImage());
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.mode = mode;
 		this.changement = false;
 		//this.valeurs_initiales = charger_parametres();
