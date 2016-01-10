@@ -1,6 +1,7 @@
 package dobble;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import java.awt.Image;
@@ -117,6 +118,11 @@ public class Symbole implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	
+	public static ImageIcon getIcon()
+	{
+		return new ImageIcon("images/favicon.png");
 	}
 
 }
