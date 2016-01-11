@@ -2,6 +2,7 @@ package serveur;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class Client {
 
@@ -13,9 +14,17 @@ public class Client {
 		
 	try {
 		
-		System.out.println("Demande de connexion");
-		socket = new Socket("127.0.0.1",2009);
-		System.out.println("Connexion établie avec le serveur, authentification :"); // Si le message s'affiche c'est que je suis connecté
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Veuillez saisir l'IP :");
+		String str = sc.nextLine();     
+		System.out.println("Veuillez saisir le port :");
+		int str2 = sc.nextInt(); 
+		
+		System.out.println(str+"     "+str2);
+		
+		socket = new Socket(str,str2);
+		
+		System.out.println("Connexion établie avec le serveur"); // Si le message s'affiche c'est que je suis connecté
 		
 		t1 = new Thread(new Connexion(socket));
 		t1.start();
