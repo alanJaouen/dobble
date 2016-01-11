@@ -11,8 +11,13 @@ public class Serveur {
 	public static void main(String[] args) {
 		
 		try {
-			ss = new ServerSocket(2009);
-			System.out.println("Le serveur est à l'écoute du port "+ss.getLocalPort());
+			ss = new ServerSocket(0);
+			int lePortLibre = ss.getLocalPort(); 
+			InetAddress IP = InetAddress.getLocalHost();
+			String MonIP = IP.getHostAddress();
+			
+			System.out.println("Le serveur est à l'écoute du port "+ lePortLibre);
+			System.out.println("à l'IP "+MonIP);
 			
 			t = new Thread(new Accepter_connexion(ss));
 			t.start();
