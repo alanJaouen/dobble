@@ -18,20 +18,46 @@ public class Joueur implements Serializable {
 	 */
 	private static final long serialVersionUID = 8131165726505362546L;
 
+	/**
+	 * deck du joueur
+	 */
 	private ArrayList<Carte> arrayCartes;
 	
+	/**
+	 * statistique du joueur
+	 */
 	private Stats stats;
 	
+	/**
+	 * nom du joueur
+	 */
     private String nom;
     
+    /**
+     * mot de passe du joueur
+     */
     private String mdp;
 
+    /**
+     * score du joueur
+     */
     private int score;
     
+    /**
+     * constructeur par defaut
+     */
     public Joueur(){
     	this(new ArrayList<Carte>(), new Stats(), "admin", 0, "admin");
     }
         
+    /**
+     * constructeur champ a champ
+     * @param arrayCartes deck du joueur
+     * @param stats stats du joueur
+     * @param nom nom du joueur
+     * @param score score du joueur
+     * @param mdp mot de passe du joueur
+     */
     public Joueur(ArrayList<Carte> arrayCartes, Stats stats, String nom, int score, String mdp) {
 		super();
 		this.arrayCartes = arrayCartes;
@@ -41,6 +67,12 @@ public class Joueur implements Serializable {
 		this.mdp = mdp;
 	}
 
+    /**
+     * constructeur en ligne 
+     * @param nom id dans la base de donnée
+     * @param mdp mot de passe dans la base de donnée
+     * @throws BddException si il y a eu un probleme lors de la connection
+     */
     public Joueur(String nom, String mdp) throws BddException {
     	this.nom = nom;
     	this.mdp = mdp;
@@ -87,15 +119,12 @@ public class Joueur implements Serializable {
     		rs = st.executeQuery("SELECT * FROM joueur WHERE nom='"+nom+"'"); //on enregistre le resultat de la requete
     		if(!rs.next())//si pas de resultat
     		{
-	    			System.out.println("nom disponible, essai de creation d'un joueur");
 	    			st.execute("INSERT into joueur VALUES ('" +nom+ "', 1, 0, 0, 0, 0,'"+Crypt.encrypte(mdp)+"');");//on execute le insert
-	    			System.out.println("valeurs inseree");
 	    			rs.close();
 	    			rs = st.executeQuery("SELECT * FROM joueur WHERE nom='"+nom+"'"); //on enregistre le resultat de la requete
 	    			
 	    			if(!rs.next())//si toujours pas de resultat
 	    				throw s.new BddException("probleme lors de l'INSERT");
-	    			else System.out.println("joueur cree");
     		}
     		else throw s.new BddException("nom deja utilise");
 	    	
@@ -146,7 +175,6 @@ public class Joueur implements Serializable {
     		rs = st.executeQuery("SELECT * FROM joueur WHERE nom='"+nom+"'"); //on enregistre le resultat de la requete
     		if(!rs.next())//si pas de resultat
     		{
-    			System.out.println("joueur supprime avec succes");
 	    		return true;
     		}
     		else throw this.stats.new BddException("erreur lors du DELETE");

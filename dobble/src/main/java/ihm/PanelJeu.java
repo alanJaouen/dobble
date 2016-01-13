@@ -38,6 +38,10 @@ public class PanelJeu extends JPanel implements ActionListener{
 	
 	private Image fond;
 	private JPanel carte;
+
+
+	public JPanel carteJ;
+	
 	
 	private int graphisme;
 	
@@ -86,8 +90,39 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 		p.setOpaque(false);
 		this.carte=p;
+		this.carteJ=panelCarteJoueur;
 		return p;
 	}
+	
+	public JPanel creePanels(JPanel carteJoueur)
+	{
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2,3));
+		JPanel panelStatJoueur = this. creePanelStatJoueur();
+		p.add(panelStatJoueur);
+
+		JPanel panelCarteCentre = this.creePanelCarteCentre();
+		p.add(panelCarteCentre);
+		
+		JPanel panelStatJoueurAdverse = this. creePanelStatJoueurAdverse();
+		p.add(panelStatJoueurAdverse);
+
+			p.add(carteJoueur);
+			
+			JPanel panelSousCarte = this.creePanelSousCarte();
+			p.add(panelSousCarte);
+			
+			JPanel panelCarteAdverse = this.creePanelCarteAdverse();
+			p.add(panelCarteAdverse);
+		
+		p.setOpaque(false);
+		this.carte=p;
+
+		this.carteJ=carteJoueur;
+		return p;
+	}
+
+	
 	private JPanel creePanelStatJoueur()
 	{
 		JPanel panelext = new JPanel();
@@ -354,6 +389,81 @@ public class PanelJeu extends JPanel implements ActionListener{
 			this.repaint();
 		}
 		
+		public void change(Carte c)
+		{
+			this.imgCarte = Toolkit.getDefaultToolkit().getImage("images/carte.png");
+			this.imgCarteOmbre = Toolkit.getDefaultToolkit().getImage("images/carte-ombre.png");
+
+			this.c = c;
+			this.symboles = new Symbole[c.getArraySymbole().size()];
+			this.listLable = new JLabel[c.getArraySymbole().size()];
+			
+			int nbligne = 0;
+			int nbcolone = 4;
+			switch(this.c.getArraySymbole().size())
+			{
+			case 3:
+				nbligne = 2;
+				break;
+			case 4:
+				nbligne = 2;
+				break;
+			case 6:
+				nbligne = 3;
+				break;
+			case 8:
+				nbligne = 3;
+				break;
+			}
+			
+			
+			this.setLayout(new BorderLayout(0,0)); //DIVISION DU PANEL DU HAUT EN 3 COLONNES
+			this.setOpaque(false);
+			//this.add(new JLabel()); //COLONNE DE GAUCHE VIDE
+			
+			JPanel carte = new JPanel(new GridLayout(4,(int)nbligne)); //COLONNE CENTRE GRIDDEE POUR LA CARTE
+			carte.setOpaque(false);
+			
+			int compteur=0;
+			
+			for(int j=0; j< nbcolone; j+=1) //REMPLISSAGE CARTE AVEC SYMBOLES
+			{
+
+				for (int i = 0; i < nbligne; i += 1)
+				{			
+					
+					
+					if((j == 0 || j == nbcolone-1) && (i == 0 || i == nbligne-1))
+					{
+						carte.add(new JLabel());
+						continue;
+					}
+					
+					try
+					{
+						this.symboles[compteur] = this.c.getArraySymbole().get(compteur);
+						JLabel t=new MonJLabel(this.symboles[compteur].getImage());
+						t.addMouseListener(new SymboleListener(this.symboles[compteur]));
+						this.listLable[compteur]=t;
+						carte.add(t);
+					}
+					catch(java.lang.IndexOutOfBoundsException e)
+					{
+						carte.add(new JLabel());
+					}
+					compteur++;
+					
+				}
+				
+			}
+			
+			this.add(carte, BorderLayout.CENTER); //AJOUT CARTE AU MILIEU		
+			this.add(new JLabelVide("EEEEEEEEEE"), BorderLayout.EAST);//sale
+			this.add(new JLabelVide("EEEEEEEEEE"), BorderLayout.WEST);//sale aussi
+			this.setVisible(true);
+			this.repaint();
+		}
+		
 		public void paint(Graphics g)
 		{
 			int w = this.getWidth();
@@ -451,11 +561,9 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 				@Override
 				public void mousePressed(MouseEvent arg0) {
-					System.out.println(this.monSymbole.getNom());
 					try {
 						if(PanelJeu.this.mj.interagir(0,this.monSymbole))
 						{
-							System.out.println("YOUPI");	
 							if(PanelJeu.this.mj.isInGame())
 							{
 								PanelJeu.this.remove(carte);

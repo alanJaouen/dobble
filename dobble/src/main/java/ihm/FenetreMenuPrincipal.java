@@ -64,6 +64,13 @@ public class FenetreMenuPrincipal extends JFrame {
 		this.setVisible(true);
 	}
 	
+	
+	public FenetreMenuPrincipal(Joueur j) {
+		this();
+		this.joueur=j;
+		this.info.setText("Bienvenu "+this.joueur.getNom()+", cliquez ici pour vous déconnecter");
+	}
+	
 	private void initialise() {
 		this.setLayout(new BorderLayout());
 		this.add(panelinfo(), BorderLayout.NORTH);
@@ -101,6 +108,7 @@ public class FenetreMenuPrincipal extends JFrame {
 	{
 		JPanel p = new JPanel();
 		this.info=new JLabel();
+		if(this.joueur==null)
 		this.info.setText("Vous n'etes pas encore connecté, cliquez ici pour vous connecter");
 		this.info.addMouseListener(new ConnectionListener());
 		p.add(this.info);
@@ -179,8 +187,8 @@ public class FenetreMenuPrincipal extends JFrame {
 				break;
 			case 2: // Bouton stats
 				if(FenetreMenuPrincipal.this.joueur != null)
-					new FenetreStat(FenetreMenuPrincipal.this.joueur.getNom());
-				else new FenetreStat("");
+					new FenetreStat(FenetreMenuPrincipal.this.joueur);
+				else new FenetreStat(new Joueur());
 				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 3: // Bouton parametres

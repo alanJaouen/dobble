@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Alan JAOUEN
  *
  */
-public class Crypt {
+public final class Crypt {
 	
 	/**
 	 * sel pour le cryptage
@@ -42,12 +42,4 @@ public class Crypt {
 		}
 			return null;
 	}
-
-	/**
-	 * constructeur par defaut
-	 */
-	public Crypt() {
-		super();
-	}
-	
 }
