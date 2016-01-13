@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
+import dobble.Joueur;
+
 public class Client {
 
 	public static Socket socket = null;
@@ -13,6 +15,7 @@ public class Client {
 	
 		
 	try {
+		Joueur j2= new Joueur();
 		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Veuillez saisir l'IP :");
@@ -26,7 +29,7 @@ public class Client {
 		
 		System.out.println("Connexion établie avec le serveur"); // Si le message s'affiche c'est que je suis connecté
 		
-		t1 = new Thread(new Connexion(socket));
+		t1 = new Thread( new Chat_ClientServeur(socket, "serveur"));
 		t1.start();
 		
 		

@@ -20,9 +20,10 @@ public class Accepter_connexion implements Runnable{
 			while(true){
 				
 			socket = socketserver.accept();
-			System.out.println("Un zéro veut se connecter  ");
+			System.out.println("Un adversaire s'est connecté ");
 			
-			t1 = new Thread(new Authentification(socket));
+			t1 = new Thread(new JoueurServeur());
+		
 			t1.start();
 			
 			}

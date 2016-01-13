@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Reception implements Runnable {
 
 	private BufferedReader in;
-	private String message = null, login = null;
+	private String message = "init", login = null;
 	
 	public Reception(BufferedReader in, String login){
 		
@@ -17,17 +17,17 @@ public class Reception implements Runnable {
 	
 	public void run() {
 		
-		while(true){
+		
 	        try {
-	        	
+	        	while(message!=null){	
 			message = in.readLine();
 			System.out.println(login+" : "+message);
-			
-		    } catch (IOException e) {
-				
-				e.printStackTrace();
 			}
-		}
+	        }
+	         catch (IOException e) {
+	 				
+	 			e.printStackTrace();
+	 		}
 	}
 
 }
