@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-import dobble.Joueur;
+
 
 public class Client {
 
@@ -15,7 +15,7 @@ public class Client {
 	
 		
 	try {
-		Joueur j2= new Joueur();
+		
 		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Veuillez saisir l'IP :");

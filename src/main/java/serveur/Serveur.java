@@ -3,13 +3,10 @@ package serveur;
 import java.io.*;
 import java.net.*;
 
-import dobble.Joueur;
-import dobble.MoteurJeu;
-
 public class Serveur {
  public static ServerSocket ss = null;
  public static Thread t;
- public static MoteurJeu mj;
+
  
 	public static void main(String[] args) {
 		
