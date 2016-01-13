@@ -38,9 +38,18 @@ public class FenetreJeu extends JFrame {
 		
 		this.setTitle("Dobble");
 		Toolkit t =Toolkit.getDefaultToolkit();
-		Dimension d = t.getScreenSize();
-		this.setSize(d);
+		double w = (t.getScreenSize().getWidth()) * 0.98;
+		double h = ((double)((2.0/3.0)*w) - (13.0/100.0)*w) * 0.98; //1/2 de h = 1/3 de w - 13% de w
+		
+		if(h >= t.getScreenSize().getHeight()) //Il faut readapter proportionnellement si ca depasse
+		{
+			h = t.getScreenSize().getHeight();
+			w = (double)((3.0/2.0)*h + (13.0/100.0)*h);
+		}
+		
+		this.setSize((int)w,(int)h);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setResizable(false);
 		
 		contentPane=this.getContentPane();
 		contentPane.setLayout(new BorderLayout(0,0));
@@ -52,6 +61,8 @@ public class FenetreJeu extends JFrame {
 		thread.start();
 		
 		this.contentPane.add(lepanel, BorderLayout.CENTER);
+		
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 
