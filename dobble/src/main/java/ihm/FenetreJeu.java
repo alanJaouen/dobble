@@ -48,7 +48,7 @@ public class FenetreJeu extends JFrame {
 		}
 		
 		this.setSize((int)w,(int)h);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		
 		contentPane=this.getContentPane();
@@ -91,7 +91,6 @@ public class FenetreJeu extends JFrame {
 			FenetreJeu.this.dispose();
 			FenetreJeu.this.thread.stop();
 			FenetreJeu.this.mj.t.stop();
-			new FenetreMenuPrincipal();
 		}
 		
 	}
@@ -121,8 +120,6 @@ public class FenetreJeu extends JFrame {
 	
 	public void dispose()
 	{
-		JOptionPane.showMessageDialog(this, "Vous avez quitter le jeu de facon inaproprié, vous perdrez des points si vous continuez ainsi"
-				, "Attention", JOptionPane.WARNING_MESSAGE);
 		new FenetreMenuPrincipal();
 		FenetreJeu.this.thread.stop();
 		FenetreJeu.this.mj.t.stop();

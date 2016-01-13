@@ -56,6 +56,5 @@ public class JavaAudioPlayer extends Thread
 	 
 	    // play the audio clip with the audioplayer class
 	    AudioPlayer.player.start(audioStream);
-		this.stop();
 	}
 }

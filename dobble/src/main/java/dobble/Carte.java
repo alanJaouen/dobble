@@ -83,12 +83,11 @@ public class Carte implements Serializable {
       	case 6:
     		nbcarte=31;
     		break;
-    	case 7:
-    		nbcarte=42;
-    		break;
     	case 8:
         	nbcarte=55;
         	break;
+        default:
+        	return null;
     		
     	}
     	

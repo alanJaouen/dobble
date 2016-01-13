@@ -38,6 +38,11 @@ public class Client {
 	  System.err.println("Impossible de se connecter à l'adresse "+socket.getLocalAddress());
 	} catch (IOException e) {
 	  System.err.println("Aucun serveur à l'écoute du port "+socket.getLocalPort());
+	  e.printStackTrace();
+	}
+	catch (Exception e)
+	{
+		e.printStackTrace();
 	}
 	
 	
