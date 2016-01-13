@@ -22,7 +22,7 @@ public class Accepter_connexion implements Runnable{
 			socket = socketserver.accept();
 			System.out.println("Un adversaire s'est connecté ");
 			
-			t1 = new Thread(new JoueurServeur());
+			t1 = new Thread(new Chat_ClientServeur(socket,"serveur"));
 		
 			t1.start();
 			

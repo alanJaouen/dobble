@@ -19,7 +19,7 @@ public class Reception implements Runnable {
 		
 		
 	        try {
-	        	while(message!=null){	
+	        while(message!=null){	
 			message = in.readLine();
 			System.out.println(login+" : "+message);
 			}
