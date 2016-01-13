@@ -190,7 +190,6 @@ public class FenetreJeu extends JFrame {
 						f.dispose();
 					}
 					FenetreJeu.this.dispose();
-					new FenetreMenuPrincipal();
 					this.stop();
 				}
 			}
