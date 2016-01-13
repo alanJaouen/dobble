@@ -156,7 +156,7 @@ public class PanelJeu extends JPanel implements ActionListener{
 		p.add(labNbCartesAdversaire);
 		
 		JLabel labNiveau = new JLabel();
-		int niveau = mj.getArrayJoueur().get(0).getStats().getNiveau();
+		int niveau = mj.getArrayJoueur().get(1).getStats().getNiveau();
 		labNiveau.setText("niveau :" + niveau);
 		labNiveau.setForeground(Color.white);
 		p.add(labNiveau);
