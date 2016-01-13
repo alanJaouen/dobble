@@ -27,9 +27,12 @@ public class PanelJeu extends JPanel implements ActionListener{
 	private static final long serialVersionUID = -6174972239935842965L;
 	private MoteurJeu mj;
 	private JLabel labScore;
+	private JLabel labScoreAdv;
 	private JLabel time;
 	private JLabel labNbCartes;
+	private JLabel labNbCartes2;
 	private JLabel labNbCartesAdversaire;
+	private JLabel labNbCartesAdversaire2;
 	
 	private Timer timer;
 	
@@ -74,7 +77,10 @@ public class PanelJeu extends JPanel implements ActionListener{
 
 			JPanel panelCarteJoueur = this.creePanelCarteJoueur();
 			p.add(panelCarteJoueur);
-			p.add(new JPanelVide());
+			
+			JPanel panelSousCarte = this.creePanelSousCarte();
+			p.add(panelSousCarte);
+			
 			JPanel panelCarteAdverse = this.creePanelCarteAdverse();
 			p.add(panelCarteAdverse);
 		
@@ -94,7 +100,8 @@ public class PanelJeu extends JPanel implements ActionListener{
 		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
 		String pseudo = mj.getArrayJoueur().get(0).getNom(); //TODO ne marche que pour le premier joueur
 		labPseudo.setText(pseudo);
-		labPseudo.setForeground(Color.red);
+		labPseudo.setForeground(new Color(0x993333));
+		labPseudo.setFont(labPseudo.getFont().deriveFont(30.0f));
 		p.add(labPseudo);
 		
 		labScore = new JLabel();//affiche le score du joueur 1
@@ -108,6 +115,12 @@ public class PanelJeu extends JPanel implements ActionListener{
 		labNbCartes.setText("Nombre de cartes: " + nbCartes);
 		labNbCartes.setForeground(Color.white);
 		p.add(labNbCartes);
+		
+		JLabel labNiveau = new JLabel();
+		int niveau = mj.getArrayJoueur().get(0).getStats().getNiveau();
+		labNiveau.setText("niveau :" + niveau);
+		labNiveau.setForeground(Color.white);
+		p.add(labNiveau);
 		
 		panelext.add(p, BorderLayout.CENTER);
 		
@@ -123,23 +136,30 @@ public class PanelJeu extends JPanel implements ActionListener{
 		p.setLayout(new GridLayout(8,1));
 		p.setOpaque(false);
 		
-		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 1
-		String pseudo = mj.getArrayJoueur().get(1).getNom(); //TODO ne marche que pour le premier joueur
+		JLabel labPseudo = new JLabel();//affiche le pseudo du joueur 2
+		String pseudo = mj.getArrayJoueur().get(1).getNom(); //TODO ne marche que pour l'IA joueur
 		labPseudo.setText(pseudo);
-		labPseudo.setForeground(Color.red);
+		labPseudo.setForeground(new Color(0x993333));
+		labPseudo.setFont(labPseudo.getFont().deriveFont(30.0f));
 		p.add(labPseudo);
 		
-		labScore = new JLabel();//affiche le score du joueur 1
+		labScoreAdv = new JLabel();//affiche le score du joueur 2
 		int score = mj.getArrayJoueur().get(1).getScore();
-		labScore.setText("score:" + score);
-		labScore.setForeground(Color.white);
-		p.add(labScore);
+		labScoreAdv.setText("score:" + score);
+		labScoreAdv.setForeground(Color.white);
+		p.add(labScoreAdv);
 		
 		labNbCartesAdversaire = new JLabel();
 		int nbCartes = mj.getArrayJoueur().get(1).getArrayCartes().size();
 		labNbCartesAdversaire.setText("Nombre de cartes: " + nbCartes);
 		labNbCartesAdversaire.setForeground(Color.white);
 		p.add(labNbCartesAdversaire);
+		
+		JLabel labNiveau = new JLabel();
+		int niveau = mj.getArrayJoueur().get(0).getStats().getNiveau();
+		labNiveau.setText("niveau :" + niveau);
+		labNiveau.setForeground(Color.white);
+		p.add(labNiveau);
 		
 		panelext.add(p, BorderLayout.CENTER);
 		
@@ -151,14 +171,48 @@ public class PanelJeu extends JPanel implements ActionListener{
 		JPanel p = new JPanel();
 		p.setLayout(new BorderLayout(0,0));
 		p.setOpaque(false);
-		time = new JLabel();
-		int tMin = mj.getChrono().getMinutes();
-		int tSec = mj.getChrono().getSeconds();
-		time.setText("" + tMin + " :" + tSec);
-		p.add(time, BorderLayout.NORTH);
 		p.add(new JPanelCarte(mj.getCartesCentre().
-				get(mj.getCartesCentre().size() - 1)),BorderLayout.CENTER);//FIXME n'affiche pas la carte
+				get(mj.getCartesCentre().size() - 1)),BorderLayout.CENTER);
 		return p;
+	}
+	
+	private JPanel creePanelSousCarte()
+	{
+		JPanel res = new JPanel();
+		res.setOpaque(false);
+			JPanel p = new JPanel();
+			p.setOpaque(false);
+			p.setLayout(new GridLayout(4,3));
+			time = new JLabel();
+			int tMin = mj.getChrono().getMinutes();
+			int tSec = mj.getChrono().getSeconds();
+			time.setText("" + tMin + " :" + tSec);
+			time.setForeground(Color.white);
+			time.setFont(time.getFont().deriveFont(20.0f));
+			p.add(new JLabel());
+			p.add(time);
+			p.add(new JLabel());
+			p.add(new JLabel());
+			p.add(new JLabel());
+			p.add(new JLabel());
+			p.add(new JLabel());
+			p.add(new JLabel());
+			p.add(new JLabel());
+				labNbCartes2 = new JLabel();
+				int nbCartes = mj.getArrayJoueur().get(0).getArrayCartes().size();
+				labNbCartes2.setText("" + nbCartes);
+				labNbCartes2.setFont(labNbCartes2.getFont().deriveFont(60.0f));
+				labNbCartes2.setForeground(Color.white);
+			p.add(labNbCartes2);
+			p.add(new JLabel());
+				labNbCartesAdversaire2 = new JLabel();
+				int nbCartesAdv = mj.getArrayJoueur().get(1).getArrayCartes().size();
+				labNbCartesAdversaire2.setText("" + nbCartesAdv);
+				labNbCartesAdversaire2.setFont(labNbCartesAdversaire2.getFont().deriveFont(60.0f));
+				labNbCartesAdversaire2.setForeground(Color.white);
+			p.add(labNbCartesAdversaire2);
+		res.add(p, BorderLayout.CENTER);
+		return res;
 	}
 	
 	private JPanel creePanelCarteJoueur()
@@ -178,9 +232,6 @@ public class PanelJeu extends JPanel implements ActionListener{
 		JPanel p = new PanelCarteAdverse();
 		p.setOpaque(false);
 		
-		p.add(new JPanelCarte(mj.getArrayJoueur().get(1).getArrayCartes()
-				.get(mj.getArrayJoueur().get(1).getArrayCartes().size() -1)),BorderLayout.CENTER);
-		
 		return p;
 	}
 	
@@ -196,14 +247,6 @@ public class PanelJeu extends JPanel implements ActionListener{
 		text += tSec;
 		time.setText(text);
 		
-		int score = mj.getArrayJoueur().get(0).getScore();//update le score du joueur
-		labScore.setText("score: " + score);
-		
-		int nbCartes = mj.getArrayJoueur().get(0).getArrayCartes().size();
-		labNbCartes.setText("Nombre de cartes: " + nbCartes);
-		
-		int nbCartesAdversaire = mj.getArrayJoueur().get(0).getArrayCartes().size();
-		labNbCartes.setText("Nombre de cartes: " + nbCartes);
 	}
 	
 	@Override
