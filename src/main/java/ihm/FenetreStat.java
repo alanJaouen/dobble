@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
 
+import dobble.Joueur;
 import dobble.MoteurJeu;
 import dobble.Symbole;
 
@@ -36,16 +37,16 @@ public class FenetreStat extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private FenetreWait chargement;
-	private String nomJoueur;
+	private Joueur nomJoueur;
 
 
 
 	/**
 	 * Constructeupar défaut, créer la fenetre
 	 */
-	public FenetreStat(String nom) {
+	public FenetreStat(Joueur j) {
 		super("Statistiques");
-		this.nomJoueur=nom;
+		this.nomJoueur=j;
 		this.setIconImage(Symbole.getIcon().getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Dimension ecran=java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -119,7 +120,7 @@ public class FenetreStat extends JFrame {
 		};
 		panelCentre.setLayout(new BorderLayout(0, 0));
 		this.table=new JTable(model);
-		table.setDefaultRenderer(Object.class, new MonCellRenderer(this.nomJoueur));
+		table.setDefaultRenderer(Object.class, new MonCellRenderer(this.nomJoueur.getNom()));
 		
 		 TableRowSorter trs = new TableRowSorter(model);
 
@@ -341,7 +342,7 @@ public class FenetreStat extends JFrame {
 	
 	public void dispose()
 	{
-		new FenetreMenuPrincipal();
+		new FenetreMenuPrincipal(this.nomJoueur);
 		super.dispose();
 	}
 	

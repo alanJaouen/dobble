@@ -62,7 +62,6 @@ public class MoteurJeu implements Serializable {
     
 
     private Chronometer[] tpsr;
-    public ActualiseThread t;
     
     
     // -------------------------------------------------------------------
@@ -127,55 +126,11 @@ public class MoteurJeu implements Serializable {
 
     // -------------------------------------------------------------------
     // Methodes :
-    
-    /**
-     * ecrit l'objet courant dans un fichier
-     */
-    public void sauvegarder() throws Exception {
-    	
-    	// On essaie de faire une sauvegarde :
-    	try {
-    		File fichier =  new File("sauvegarde.txt") ;
 
-    		// Ouverture d'un flux sur un fichier
-    		ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(fichier)) ;
-    	
-    		oos.writeObject(this);
-    		
-    		oos.close();
-    	} catch (Exception e) { // Si sauvegarde n'a pas marché :
-    		// Emition d'une exception si sauvegarde impossible :
-    		throw new Exception("Erreur lors de la sauvegarde"); //TODO a changer
-    	}
-    }
-
-    /**
-     * restaure l'objet courant depuis un fichier
-     * @throws Exception 
-     */
-    public void charger() throws Exception {
-    	try{
-    	File fichier =  new File("sauvegarde.txt") ;
-
-    	 // ouverture d'un flux sur un fichier
-    	ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(fichier)) ;
-    			
-    	 // désérialization de l'objet
-    	MoteurJeu mj = (MoteurJeu)ois.readObject(); //TODO a finir
-    	
-    	ois.close();
-    	}
-    	catch (Exception e)
-    	{
-    		throw new Exception("Erreur lors de la sauvegarde"); //TODO a changer, deg
-    	}
-    }
 
     /**
      * Fais interagir un joueur avec la carte centrale en comparant s et le symbole commun
      * si c'est le meme placer la carte du joueur au centre
-     * 
-     * TODO changer le type de retour de la methode en boolean pour plus tard changer les stats du joueur dynamiquement
      * 
      * @param idJoueur le joueur qui interagit
      * @param s le symbole que le joueur a choisi
@@ -202,10 +157,18 @@ public class MoteurJeu implements Serializable {
     		if(idJoueur != this.joueurActif)
     			this.needupdate=true;
     		
-    		int score=this.arrayJoueur.get(idJoueur).getScore()+( (int) 100/this.tpsr[idJoueur].getSeconds());
-    		this.arrayJoueur.get(idJoueur).setScore(score);//TODO calcul du score
-    		System.out.println(this.arrayJoueur.get(idJoueur).getScore());
-    		this.arrayJoueur.get(idJoueur).getStats().setTpsReaction(28);//TODO calcul de ca
+    		/*score*/
+    		try{
+    		this.arrayJoueur.get(idJoueur).setScore(this.arrayJoueur.get(idJoueur).getScore()+( (int) 100/this.tpsr[idJoueur].getSeconds()));
+    		}
+    		catch(ArithmeticException e)
+    		{
+    			//vide
+    		}
+    		/*temps de reaction*/
+    		this.arrayJoueur.get(idJoueur).getStats().setTpsReaction(
+    				(this.tpsr[idJoueur].getSeconds()+this.arrayJoueur.get(idJoueur).getStats().getTpsReaction())/2
+    				);
     		
     		this.tpsr[idJoueur].start();
     		return true;
@@ -234,24 +197,31 @@ public class MoteurJeu implements Serializable {
     	for(int i=0; i<tpsr.length;i++)
     		tpsr[i].start();
     	
-    	this.t= new ActualiseThread("thread actualisation",3000,1);
+    	new ActualiseThread("thread actualisation",3000,1);
 
     	
     }
 
     /**
-     * met fin a la partie et met a jour les stats du joueur notament le score max
+     * met fin a la partie et met a jour les stats du joueur notament le score max sur le serveur
      */
     public void finPartie() throws BddException {
     	this.inGame = false;
-    	this.arrayJoueur.get(this.joueurActif).getStats().setExp(this.arrayJoueur.get(this.joueurActif).getStats().getExp()+20);
+    	if(this.arrayJoueur.get(this.joueurActif).getStats().getExp() == 80)
+    	{
+    		this.arrayJoueur.get(this.joueurActif).getStats().setNiveau(this.arrayJoueur.get(this.joueurActif).getStats().getNiveau()+1);
+    		this.arrayJoueur.get(this.joueurActif).getStats().setExp(0);
+    	}
+    	else
+    		this.arrayJoueur.get(this.joueurActif).getStats().setExp(this.arrayJoueur.get(this.joueurActif).getStats().getExp()+20);
+    	
     	this.arrayJoueur.get(this.joueurActif).getStats().setTempsDeJeu(this.arrayJoueur.get(this.joueurActif).getStats().getTempsDeJeu()+this.chrono.getMinutes());
     	this.arrayJoueur.get(this.joueurActif).sauvegarderStats();
-    	//TODO mise a jour du score du joueur courant
-    	//TODO sauvegarde du profil du joueur sur la bdd (voir classe Joueur)
     }
 
-    
+    /**
+     * initialise le moteur jeu
+     */
     public void initialiser() {
         
         // Les joueurs sont ajoutés dans le constructeur.
@@ -264,14 +234,27 @@ public class MoteurJeu implements Serializable {
         this.chrono.start();
     }
 
+    /**
+     * ajoute un joueur a la partie
+     * @param nouveauJoueur le joueur a ajouter a la partie
+     */
     public void ajouterJoueur(Joueur nouveauJoueur) {
     	this.arrayJoueur.add(nouveauJoueur);
     }
 
+    /**
+     * supprime un joueur de la partie
+     * @param supprimerJoueur le joueur a supprimer
+     */
     public void supprimerJoueur(Joueur supprimerJoueur) {
     	this.arrayJoueur.remove(supprimerJoueur);
     }
 
+    /**
+     * définie le joueur actif
+     * @param indice id du joueur actif
+     * @throws Exception si l'indice n'est pas valide
+     */
     public void changerJoueurActif(int indice) throws Exception {
     	
     	// Si Indice invalide :
@@ -282,17 +265,14 @@ public class MoteurJeu implements Serializable {
     }
 
     /**
-     * sert a eviter un ragequit du joueur ( on catchera plus tard les ctrl+c , alt+F4 etc)
+     * sert a eviter un ragequit du joueur
      * @throws BddException 
      */
-    @SuppressWarnings("deprecation")
 	public void quitter() throws BddException {
-    	this.t.stop();
+		this.arrayJoueur.get(this.joueurActif).getStats().setExp(this.arrayJoueur.get(this.joueurActif).getStats().getExp()-20);
     	this.finPartie();
-    	//TODO plus tard si le temps ajouter un malus aux leavers.
     }
     
-    //TODO distribuer les cartes equitablement avec de l'aleatoire entre les joueurs, avec la carte au centre
     private void distribuerCarte(ArrayList<Carte> paquet){
     	int nb_alea, i = 0;
     	
@@ -468,7 +448,6 @@ public class MoteurJeu implements Serializable {
 				}
 				
 			}
-			this.stop();
 		}
 		
 		/**

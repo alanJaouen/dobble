@@ -14,6 +14,10 @@ public class Carte implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -6256323073888330163L;
+	
+	/**
+	 * arrayList qui contient les symbole de la carte
+	 */
 	private ArrayList<Symbole> arraySymbole;
 	
 	/**
@@ -21,7 +25,7 @@ public class Carte implements Serializable {
 	 * @param id id de la carte (ligne dans le fichier)
 	 * @throws Exception 
 	 */
-    public Carte(int id, int fichier) throws Exception { //FIXME verifier l'id de la carte
+    public Carte(int id, int fichier) throws Exception {
     	if(!(fichier == 3 || fichier == 4 || fichier == 8|| fichier == 6) )
     		throw new Exception("nb de symbole incorect");
     		
@@ -123,14 +127,25 @@ public class Carte implements Serializable {
     	return null;
     }
 
+    /**
+     * acesseur liste de symbole de la carte
+     * @return l'arraylist de symbole de la carte
+     */
 	public ArrayList<Symbole> getArraySymbole() {
 		return arraySymbole;
 	}
 
+	/**
+	 * mutateur liste de symbole de la carte
+     * @param arraySymbole l'arraylist de symbole de la carte
+	 */
 	public void setArraySymbole(ArrayList<Symbole> arraySymbole) {
 		this.arraySymbole = arraySymbole;
 	}
 	
+	/**
+	 * affichage de l'objet courant sous forme de chaine de caractère
+	 */
 	public String toString()
 	{
 		String s = "";

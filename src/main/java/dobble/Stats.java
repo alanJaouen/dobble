@@ -155,7 +155,6 @@ public class Stats {
     	{
     		st = con.createStatement();//creation stattement
     		
-	    	System.out.println("Connection reussie, lancement de la sauvegarde");
 	    	if(st.executeUpdate("UPDATE joueur "
 	    			+ "SET lvl="+ this.getNiveau()+","
 	    			+"exp = "+this.getExp()+","
@@ -225,7 +224,6 @@ public class Stats {
     		{
 	    		if(mdp.equals(rs.getString("mdp")))
 	    		{
-	    			System.out.println("Connection etablie, donnees copiees en local");
 	    			stats=new Stats(rs.getInt("lvl"),
 	    					rs.getInt("exp"),
 	    					rs.getInt("tpsj"),

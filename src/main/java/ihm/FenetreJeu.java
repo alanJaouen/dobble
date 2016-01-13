@@ -28,7 +28,7 @@ public class FenetreJeu extends JFrame {
 	private PanelJeu lepanel;
 	private JMenu menuQuitter;
 	private MoteurJeu mj;
-	public ActualiseThread thread;
+	private ActualiseThread thread;
 	
 	public FenetreJeu(MoteurJeu jeu) {
 		super();
@@ -83,14 +83,17 @@ public class FenetreJeu extends JFrame {
 		return menu;
 	}
 	
-	class MenuQuitterActionListener implements ActionListener{
 
-		@SuppressWarnings("deprecation")
+	
+	class MenuQuitterActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			FenetreJeu.this.dispose();
-			FenetreJeu.this.thread.stop();
-			FenetreJeu.this.mj.t.stop();
+			try {
+				FenetreJeu.this.mj.quitter();
+			} catch (BddException e) {
+				JOptionPane.showMessageDialog(FenetreJeu.this, "Erreur inattendu:\n"+e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		
 	}
@@ -98,7 +101,7 @@ public class FenetreJeu extends JFrame {
 	
 	public static void main(String[] args) throws Exception {
 
-		Mode mode = new Mode(); //Mode par defaut
+		Mode mode = new Mode(3,1); //Mode par defaut
 		ArrayList<Carte> deck = Carte.genererDeck(mode); //Nouveau deck global de 55 cartes
 		
 		Joueur j1 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Lait", 0, "mdp"); //Nouveau Joueur, sans deck pour l'instant
@@ -114,16 +117,14 @@ public class FenetreJeu extends JFrame {
 		MoteurJeu jeu = new MoteurJeu(joueurs); //Cree un moteur de jeu
 		jeu.initialiser(); //initialisation: scores et chronometre
 		jeu.lancerJeu(deck); //Lancement: cartes distribuees
-		FenetreJeu j= new FenetreJeu(jeu);
+		new FenetreJeu(jeu);
 		
 	}
 	
 	public void dispose()
 	{
-		new FenetreMenuPrincipal();
-		FenetreJeu.this.thread.stop();
-		FenetreJeu.this.mj.t.stop();
-		
+		FenetreJeu.this.thread.fin();
+		new FenetreMenuPrincipal(this.mj.getArrayJoueur().get(this.mj.getJoueurActif()));
 		super.dispose();
 	}
 	
@@ -134,6 +135,7 @@ public class FenetreJeu extends JFrame {
 	 */
 	public class ActualiseThread extends Thread {
 
+		public boolean continu;
 		/**
 		 * Constreucteur par defaut
 		 * @param name nom du Thread
@@ -141,31 +143,30 @@ public class FenetreJeu extends JFrame {
 		public ActualiseThread(String name)
 		{
 			super(name);
+			this.continu=true;
 		}
 		 
+		public void fin() {
+			this.continu=false;
+			
+		}
+
 		/**
 		 * Lance le thread
 		 */
 		@Override
 		public void run()
 		{
-			while(true)
+			while(this.continu)
 			{
-				try 
-				{
-					Thread.sleep(200);
-				} 
-				catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
+
 				if (FenetreJeu.this.mj.isInGame())
 				{
 					if(FenetreJeu.this.mj.getNeedUpdate())
 					{
 						mj.updatedone();
 						lepanel.remove(lepanel.getCarte());
-						lepanel.add(lepanel.creePanels(),BorderLayout.CENTER);
+						lepanel.add(lepanel.creePanels(lepanel.carteJ),BorderLayout.CENTER);
 					}
 				}
 				else
@@ -179,18 +180,31 @@ public class FenetreJeu extends JFrame {
 					else
 						JOptionPane.showMessageDialog(FenetreJeu.this, "Bravo tu as gagné",
 								"gg", JOptionPane.INFORMATION_MESSAGE);
+					f=new FenetreWait();
 					try {
-						f=new FenetreWait();
+						
 						f.setLabel("sauvegarde en cours");
 						FenetreJeu.this.mj.finPartie();
 						f.dispose();
 					} catch (BddException e) {	
-						JOptionPane.showMessageDialog(FenetreJeu.this, e.getMessage(),
-								"err", JOptionPane.ERROR_MESSAGE);
 						f.dispose();
+						JOptionPane.showMessageDialog(FenetreJeu.this, e.getMessage(),
+								"Erreur", JOptionPane.ERROR_MESSAGE);
 					}
+
+					
 					FenetreJeu.this.dispose();
-					this.stop();
+					
+					this.continu=false;
+				}
+				
+				try 
+				{
+					Thread.sleep(200);
+				} 
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
 				}
 			}
 					
