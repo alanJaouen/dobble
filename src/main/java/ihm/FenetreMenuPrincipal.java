@@ -17,8 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.sun.xml.internal.ws.api.Component;
-
 import dobble.Carte;
 import dobble.Joueur;
 import dobble.Mode;
