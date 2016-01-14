@@ -200,9 +200,9 @@ public class FenetreParametres extends JFrame {
 		pan_son.add(new JLabel("Activer une voix"));
 
 		// Radio sons
-		JRadioButton rb_oui = new JRadioButton("Oui");
+		JRadioButton rb_oui = new JRadioButton("Non");
 		rb_oui.addItemListener(new ChangementListener());
-		JRadioButton rb_non = new JRadioButton("Non");
+		JRadioButton rb_non = new JRadioButton("Oui");
 		rb_non.addItemListener(new ChangementListener());
 
 		ButtonGroup bg1 = new ButtonGroup();
@@ -215,8 +215,9 @@ public class FenetreParametres extends JFrame {
 
 		JPanel pan_radio1 = new JPanel();
 		pan_radio1.setLayout(new GridLayout(2, 1)); // hauteur, largeur
-		pan_radio1.add(rb_oui);
 		pan_radio1.add(rb_non);
+		pan_radio1.add(rb_oui);
+		
 
 		pan_son.add(pan_radio1);
 
