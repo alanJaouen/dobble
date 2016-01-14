@@ -163,6 +163,8 @@ public class MoteurJeu implements Serializable {
 	 */
     public boolean interagir(int idJoueur,Symbole s)
     {
+
+    	
     	// Si symbole commun est trouvé :
     	Symbole correct = Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
     			this.cartesCentre.get(cartesCentre.size() - 1));
@@ -201,7 +203,13 @@ public class MoteurJeu implements Serializable {
     	}
     	else // Si le joueur s'est trompé :
     	{
+    		if(idJoueur != 0)
+    		{
+    			return false;
+    		}
+        	
     		this.ajoutePenalite(this.arrayJoueur.get(this.joueurActif)); //penalite +1
+    		System.err.println("Penalite = " + this.arrayJoueur.get(this.joueurActif).getPenalite());
     		if (this.arrayJoueur.get(this.joueurActif).getPenalite() >= 5) //Si plus de 5 penalites
     		{
     			this.needupdate = true; //on fait gagner l'adversaire #jcalc
