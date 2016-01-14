@@ -12,19 +12,32 @@ public class Mode implements Constantes_defaut_projet, Serializable {
 	private static final long serialVersionUID = 7597834623218274441L;
 
 	// Attributs:
+	/**
+	 * nombre de symbole par carte dans ce mode de jeu
+	 */
     private int nbSymbole;
 
+    /**
+     * temps de jeu de l'ia dans ce mode de jeu
+     */
     private int tempsIA;
     
     // -------------------------------------------------------------------
     // Constructeurs:
     // Par défaut:
+    /**
+     * constructeur par defaut
+     */
     public Mode() {
-    	this.nbSymbole = Constantes_defaut_projet.nbSymbole_defaut; // Valeur par défaut contenue dans l'interface Constantes_defaut_projet
-    	this.tempsIA = Constantes_defaut_projet.tempsIA_defaut;     // Valeur par défaut contenue dans l'interface Constantes_defaut_projet
+    	this(Constantes_defaut_projet.nbSymbole_defaut,Constantes_defaut_projet.tempsIA_defaut);
     }
     
     // Par champs:
+    /**
+     * constructeur champs a champs
+     * @param nbSymbole le nombre de symbole par carte de ce mode de jeu
+     * @param tempsIA le temps de jeu de l'ia dans ce mode de jeu
+     */
     public Mode(int nbSymbole, int tempsIA) {
     	if (nbSymbole < 0 || nbSymbole > Constantes_defaut_projet.nbSymboleMax_defaut)
     		this.nbSymbole = Constantes_defaut_projet.nbSymbole_defaut;
@@ -38,19 +51,19 @@ public class Mode implements Constantes_defaut_projet, Serializable {
     }
     
     // Par copie:
+    /**
+     * constructeur par copie
+     * @param modele le Mode a copier
+     */
     public Mode(Mode modele) {
-    	this.nbSymbole = modele.getNbSymbole();
-    	this.tempsIA = modele.getTempsIA();
+    	this(modele.getNbSymbole(),modele.getTempsIA());
     }
     
     // -------------------------------------------------------------------
     // Méthodes:
     
-    /*
-     * toString:
-     * présente les valeurs du mode sous forme
-     * de string.
-     * 
+    /**
+     * présente les valeurs du mode sous forme de string.
      */
     public String toString() {
     	String str = new String("");
@@ -63,7 +76,7 @@ public class Mode implements Constantes_defaut_projet, Serializable {
     }
     
     
-    /*
+    /**
      * equals:
      * compare les valeurs des champs suivants:
      * 	- nbSylbole
@@ -86,18 +99,34 @@ public class Mode implements Constantes_defaut_projet, Serializable {
     // -------------------------------------------------------------------
     // Getter et Setters:
     
+    /**
+     *  accesseur variable tempsIA
+     * @return le temps de jeu de l'ia dans ce mode de jeu
+     */
     public int getTempsIA() {
     	return this.tempsIA;
     }
 
+    /**
+     *  accesseur variable nbSymbole
+     * @return le nombre de symbole par carte dans ce mode de jeu
+     */
 	public int getNbSymbole() {
 		return this.nbSymbole;
 	}
 
+	/**
+	 * mutateur variable nbSymbole
+	 * @param nbSymbole valeur a set
+	 */
 	public void setNbSymbole(int nbSymbole) {
 		this.nbSymbole = nbSymbole;
 	}
 
+	/**
+	 * mutateur variable tempsIA
+	 * @param tempsIA valeur a set
+	 */
 	public void setTempsIA(int tempsIA) {
 		this.tempsIA = tempsIA;
 	}

@@ -1,19 +1,9 @@
 package dobble;
 
 import ihm.JavaAudioPlayer;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Connection;
-
-import org.postgresql.Driver;
-
 import dobble.Stats.BddException;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,24 +33,50 @@ public class MoteurJeu implements Serializable {
 	 */
 	private static String password ="Npei07vJfUOQOw9SQ4hQrRZM5xJlCzqW";
     
-	
+	/**
+	 * la liste des joueur de la partie
+	 */
 	private ArrayList<Joueur> arrayJoueur;
 	
+	/**
+	 * la pile de carte au centre
+	 */
 	private ArrayList<Carte> cartesCentre;
 	
+	/**
+	 * le chronometre de la partie
+	 */
 	private Chronometer chrono;
 	
+	/**
+	 * le mode de jeu de la partie
+	 */
 	private Mode modeDeJeu;
 	
+	/**
+	 * vrai si une partie est en cours, faux sinon
+	 */
     private boolean inGame;
 
+    /**
+     * id du joueur humain
+     */
     private int joueurActif;
     
+    /**
+     * indique aux vue si l'état a changer
+     */
     private boolean needupdate;
     
+    /**
+     * variable responsable du jeu de l'ia
+     */
     private boolean IAdoisDormir;
     
 
+    /**
+     * tableau de chonometre par joueur
+     */
     private Chronometer[] tpsr;
     
     
@@ -68,7 +84,11 @@ public class MoteurJeu implements Serializable {
     // Constructeurs :
     
     /**
-     * Constructeur par champs :
+     * construvteur champs a champs
+     * @param arrayJoueur la liste  de joueur
+     * @param cartesCentre la carte au centre
+     * @param chrono un chronometre
+     * @param modeDeJeu le mode de jeu
      */
     public MoteurJeu(ArrayList<Joueur> arrayJoueur, ArrayList<Carte> cartesCentre, Chronometer chrono, Mode modeDeJeu) {
     	this.arrayJoueur = arrayJoueur;
@@ -85,7 +105,8 @@ public class MoteurJeu implements Serializable {
     }
     
     /**
-     * Constructeur par copie :
+     * constructeur par copie
+     * @param modele le moteurJeu a copier
      */
     public MoteurJeu(MoteurJeu modele) {
     	this.arrayJoueur = new ArrayList<Joueur>(modele.getArrayJoueur());
@@ -109,6 +130,10 @@ public class MoteurJeu implements Serializable {
     	this.joueurActif = 0;
     }
     
+    /**
+     * constructeur par liste de joueur avec mode par defaut
+     * @param joueurs la liste de joueur
+     */
     public MoteurJeu(ArrayList<Joueur> joueurs) {
     	this.arrayJoueur = joueurs;
     	this.cartesCentre = new ArrayList<Carte>();
@@ -128,14 +153,15 @@ public class MoteurJeu implements Serializable {
     // Methodes :
 
 
-    /**
-     * Fais interagir un joueur avec la carte centrale en comparant s et le symbole commun
+	/**
+	 * Fais interagir un joueur avec la carte centrale en comparant s et le symbole commun
      * si c'est le meme placer la carte du joueur au centre
      * 
      * @param idJoueur le joueur qui interagit
      * @param s le symbole que le joueur a choisi
-     */
-    public boolean interagir(int idJoueur,Symbole s) throws Exception
+	 * @return succes ou echec de l'opération
+	 */
+    public boolean interagir(int idJoueur,Symbole s)
     {
     	// Si symbole commun est trouvé :
     	Symbole correct = Carte.getSymboleCommun(this.arrayJoueur.get(idJoueur).getArrayCartes().get(this.arrayJoueur.get(idJoueur).getArrayCartes().size() - 1),
@@ -177,7 +203,9 @@ public class MoteurJeu implements Serializable {
     		return false;
     }
 
-    
+    /**
+     * verifie si la parie est terminée
+     */
     private void testfin() {
 		for(Joueur i : this.arrayJoueur)
 		{
@@ -189,6 +217,10 @@ public class MoteurJeu implements Serializable {
 		
 	}
 
+    /**
+     * lance la partie avec le paque passer en parametre
+     * @param paquet paquet de carte a utiliser
+     */
 	public void lancerJeu(ArrayList<Carte> paquet)
     {
     	this.distribuerCarte(paquet);
@@ -203,7 +235,8 @@ public class MoteurJeu implements Serializable {
     }
 
     /**
-     * met fin a la partie et met a jour les stats du joueur notament le score max sur le serveur
+     *  met fin a la partie et met a jour les stats du joueur notament le score max sur le serveur
+     * @throws BddException si probleme de comunication avec la bdd
      */
     public void finPartie() throws BddException {
     	this.inGame = false;
@@ -266,13 +299,17 @@ public class MoteurJeu implements Serializable {
 
     /**
      * sert a eviter un ragequit du joueur
-     * @throws BddException 
+     * @throws BddException si un probleme survient lors de la communication avec la bdd
      */
 	public void quitter() throws BddException {
 		this.arrayJoueur.get(this.joueurActif).getStats().setExp(this.arrayJoueur.get(this.joueurActif).getStats().getExp()-20);
     	this.finPartie();
     }
     
+	/**
+	 * distribu les carte entre les joueurs
+	 * @param paquet paquet de carte a distribuer
+	 */
     private void distribuerCarte(ArrayList<Carte> paquet){
     	int nb_alea, i = 0;
     	
@@ -327,37 +364,40 @@ public class MoteurJeu implements Serializable {
     // -------------------------------------------------------------------
 	// Getters & Setters :
     
+    /**
+     * accesseur liste de joueur
+     * @return la liste de joueurs
+     */
 	public ArrayList<Joueur> getArrayJoueur() {
 		return arrayJoueur;
 	}
-	
-	public void setArrayJoueur(ArrayList<Joueur> arrayJoueur) {
-		this.arrayJoueur = arrayJoueur;
-	}
 
+	/**
+	 * accesseur pile de carte au centre
+	 * @return la pile de crte au centre
+	 */
 	public ArrayList<Carte> getCartesCentre() {
 		return cartesCentre;
 	}
 
-	public void setCartesCentre(ArrayList<Carte> cartesCentre) {
-		this.cartesCentre = cartesCentre;
-	}
 
+	/**
+	 * accesseur chronometre de la partie
+	 * @return le chrnometre de la partie
+	 */
 	public Chronometer getChrono() {
 		return chrono;
 	}
 
-	public void setChrono(Chronometer chrono) {
-		this.chrono = chrono;
-	}
 
+	/**
+	 * accesseur mode de jeu de la partie
+	 * @return le mode de jeu de la partie
+	 */
 	public Mode getModeDeJeu() {
 		return modeDeJeu;
 	}
 
-	public void setModeDeJeu(Mode modeDeJeu) {
-		this.modeDeJeu = modeDeJeu;
-	}
 
 	public boolean isInGame() {
 		return inGame;
@@ -392,7 +432,7 @@ public class MoteurJeu implements Serializable {
 	
 	/**
 	 * Un thread permettant le jeu de l'ia
-	 * @author 
+	 * @author Alan JAOUEN, Adrien BOIZARD
 	 *
 	 */
 	public class ActualiseThread extends Thread {
@@ -404,8 +444,10 @@ public class MoteurJeu implements Serializable {
 		
 		
 		/**
-		 * Constreucteur par defaut
-		 * @param name nom du Thread
+		 * constructeur champ a champ
+		 * @param name nom du thread
+		 * @param tpsIA temps de jeu de l'ia
+		 * @param idJoueur id du joueur que l'ia fais jouer
 		 */
 		public ActualiseThread(String name, int tpsIA, int idJoueur)
 		{
