@@ -28,11 +28,11 @@ public class JavaAudioPlayer extends Thread
 			fichier += "moi";
 		else //Si c'est l'adversaire qui a joue
 			{
-				if(Symbole.lecture("param.txt", 5).equals("1.0")) //Si le joueur a choisi Alan, la voix par defaut
+				if(Symbole.lecture("param.txt", 5).equals("1")) //Si le joueur a choisi Alan, la voix par defaut
 				{
 					fichier += "son";
 				}
-				else if(Symbole.lecture("param.txt", 5).equals("2.0")) //Si le joueur a choisi Moussa
+				else if(Symbole.lecture("param.txt", 5).equals("2")) //Si le joueur a choisi Moussa
 				{
 					fichier += "moussa";
 				}
