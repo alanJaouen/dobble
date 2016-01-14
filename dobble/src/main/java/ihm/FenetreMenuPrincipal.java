@@ -173,7 +173,7 @@ public class FenetreMenuPrincipal extends JFrame {
 				else
 					j1= FenetreMenuPrincipal.this.joueur;
 				
-				Joueur j2 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Beau", 0, "mdp");
+				Joueur j2 = new Joueur(new ArrayList<Carte>(), new Stats(), "Ordinateur", 0, "mdp");
 			
 				ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //Liste de joueurs
 				joueurs.add(j1); //Ajout de notre joueur cree a la liste
@@ -223,11 +223,10 @@ public class FenetreMenuPrincipal extends JFrame {
 				break;
 			case 6: // Bouton quitter
 				if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog (FenetreMenuPrincipal.this, "Etes-vous sur(e) de vouloir quitter Dobble ?","Quitter Dobble", 0)){
-					FenetreMenuPrincipal.this.dispose();
+					System.exit(0);
 				}
 				break;
 			}
-			
 		}
 	}
 	

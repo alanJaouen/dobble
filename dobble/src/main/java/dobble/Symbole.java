@@ -9,48 +9,76 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
+/**
+ * Modélise un Symbole
+ * @author Adrien BOIZZARD, Eva TERZAGO
+ *
+ */
+public class Symbole  {
 
-public class Symbole implements Serializable {
 	/**
-	 * 
+	 * l'id du symbole
 	 */
-	private static final long serialVersionUID = 1793540733891826530L;
 	private int id;
+	/**
+	 * le nom du symbole
+	 */
 	private String nom;
-	private transient BufferedImage image;
+	/**
+	 * l'image du symbole
+	 */
+	private  BufferedImage image;
 	
-	
+	/**
+	 * constructeur de symbole
+	 * @param id l'id du symbole a construire
+	 */
 	public Symbole(int id)
 	{
-		setId(id);
+		this.id=id;
 		setNom(lecture("nomSymboles.txt", id));
 		setImage();
 	}
 	
+	/**
+	 * accesseur varaible id
+	 * @return l'id du symbole
+	 */
 	public int getId()
 	{
 		return this.id;
 	}
-	public void setId(int id)
-	{
-		this.id = id;
-	}
+
 	
+	/**
+	 * acesseur nom du symbole
+	 * @return e nom du symbole
+	 */
 	public String getNom()
 	{
 		return this.nom;
 	}
+	/**
+	 * mutateur varable nom
+	 * @param nom le nom a set
+	 */
 	public void setNom(String nom)
 	{
 		this.nom = nom;
 	}
 	
+	/**
+	 * accesseur image du symbole
+	 * @return l'image du symbole
+	 */
 	public BufferedImage getImage()
 	{
 		return image;
 	}
 	
+	/**
+	 * recupere l'image corespondant au symbole courant et la stocke dans l'instance
+	 */
 	public void setImage()
 	{
 		
@@ -117,6 +145,10 @@ public class Symbole implements Serializable {
 		return true;
 	}
 	
+	/**
+	 * génere l'icon pour les fenetre
+	 * @return l'icone du logiciel
+	 */
 	public static ImageIcon getIcon()
 	{
 		return new ImageIcon("images/favicon.png");
