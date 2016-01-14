@@ -94,6 +94,12 @@ public class Joueur implements Serializable {
     			 Pattern.compile(";").matcher(str).find() ;
     }
     
+    /**
+     * Creer un nouveau joueur dans la base de donnée
+     * @param nom id a entrer dans la bdd
+     * @param mdp mdp a entrer dans la bdd
+     * @throws BddException en cas de probleme lors de la communication ou de champ incorect
+     */
     public static void nouveauJoueur(String nom, String mdp) throws BddException{
     	Stats s= new Stats();
     	/* Verification */
@@ -154,8 +160,8 @@ public class Joueur implements Serializable {
     
     /**
      * supprime le joueur courant de la bdd
-     * @return
-     * @throws BddException 
+     * @return succes ou echec de l'opération
+     * @throws BddException si problemme de comunication avec la bdd
      */
     public boolean supprimerJoueur() throws BddException{
     	
@@ -204,58 +210,97 @@ public class Joueur implements Serializable {
     	
     }
 
+    /**
+     * permet d'acceder aux stats du joueur au format texte
+     * @return les stats au format texte
+     */
     public String voirStats() {
     	return this.stats.toString();
     }
 
+    /**
+     * acesseur liste de carte du joueur
+     * @return la liste de carte du joueur
+     */
 	public ArrayList<Carte> getArrayCartes() {
 		return this.arrayCartes;
 	}
 
+	/**
+	 * mutateur liste de carte du joueur
+	 * @param arrayCartes la liste de carte a set
+	 */
 	public void setArrayCartes(ArrayList<Carte> arrayCartes) {
 		this.arrayCartes = arrayCartes;
 	}
 
+    /**
+     * acesseur stats du joueur
+     * @return les stats du joueur
+     */
 	public Stats getStats() {
 		return stats;
 	}
-
+	
+	/**
+	 * mutateur statistique du joueur
+	 * @param stats les stats a set
+	 */
 	public void setStats(Stats stats) {
 		this.stats = stats;
 	}
 
+	/**
+	 * acesseur nom du joueur
+	 * @return le nom du joueur
+	 */
 	public String getNom() {
 		return this.nom;
 	}
 
+	/**
+	 * mutateur nom du joueur
+	 * @param nom nom a set
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * acesseur score du joueur
+	 * @return le score du joueur
+	 */
 	public int getScore() {
 		return this.score;
 	}
 
+	/**
+	 * mutateur score du joueur
+	 * @param score le score a set
+	 */
 	public void setScore(int score) {
 		this.score = score;
 		if(score>this.getStats().getMeilleurScore())
 			this.getStats().setMeilleurScore(score);
 	}
+
 	
-	public String getMdp() {
-		return this.mdp;
-	}
-
-	public void setMdp(String mdp) {
-		this.mdp = mdp;
-	}
-
+	/**
+	 * charge les stats du joueur courant depuis la bdd
+	 * @return true si aucun probleme, null sinon
+	 * @throws BddException si probleme lors de la communication avec la bdd
+	 */
 	public boolean chargerStats() throws BddException {
 			this.stats= new Stats();
 			this.stats.charger(this.nom, this.mdp);
 			return true;
 	}
 
+	/**
+	 * sauvegarde les stats du joueur courant sur la bdd
+	 * @return true si aucun probleme, null sinon
+	 * @throws BddException si probleme lors de la communication avec la bdd
+	 */
 	public boolean sauvegarderStats() throws BddException {
 			this.stats.sauvegarder(this.nom, this.mdp);
 			return true;

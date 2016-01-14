@@ -28,8 +28,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dobble.Stats.BddException;
-
 /**
  * Classe modelisant les statistiques d'un joueur
  * test55
@@ -96,7 +94,7 @@ public class Stats {
      * Constructeur par copie depuis la bdd
      * @param nom le nom du joueur dans la bdd
      * @param mdp le mot de passe du joueur dans la bdd
-     * @throws BddException
+     * @throws BddException si un probleme survient lors de la communication avec la bdd
      */
     public Stats( String nom, String mdp) throws BddException
     {
@@ -118,12 +116,11 @@ public class Stats {
 	 * permet de changer les attribut de l'objet courant pour correspondre avec ceux stokes en ligne
 	 * @param nom id dans la bdd des stats a recuperer
 	 * @param mdp mot de passe associe aux stats a recuperer sur la bdd
-	 * @throws BddException
+	 * @throws BddException si un probleme survient lors de la communication avec la bdd
 	 */
     public void charger(String nom, String mdp) throws BddException 
     {
 		Stats st= this.getBddStat(nom, mdp);
-		System.out.println(st);
 		this.setNiveau(st.getNiveau());
 		this.setExp(st.getExp());
 		this.setMeilleurScore(st.getMeilleurScore());
@@ -132,6 +129,12 @@ public class Stats {
 	}
     
 
+    /**
+     * sauvegarde les stats dans la base de donnée
+     * @param nom id de connection
+     * @param mdp mot de passe de connection
+     * @throws BddException si un probleme survient lors de la communication avec la bdd
+     */
     public void sauvegarder(String nom, String mdp) throws BddException 
 	{
 		/* Verification */
@@ -190,10 +193,10 @@ public class Stats {
     
     /**
      * Creer une instance de {@link dobble.Stats} corespondant aux donnï¿½e stokees sur la bdd avec protection par id et mot de passe
-     * @param nom
-     * @param mdp
-     * @return
-     * @throws BddException
+     * @param nom id de connection
+     * @param mdp mot de passe de connection
+     * @return l'instance de Stats générée a partir des donnée de la bdd
+     * @throws BddException si un probleme survient lors de la communication avec la bdd
      */
     public Stats getBddStat(String nom, String mdp) throws BddException
     {
@@ -370,8 +373,7 @@ public class Stats {
 	
 	/**
 	 * Compare l'objet courant avec un autre
-	 * @see java.lang.Object#equals()
-	 * @return true si les objets sont ï¿½gaux, false sinon
+	 * @return true si les objets sont égaux, false sinon
 	 */
 	@Override
 	public boolean equals(Object obj) {

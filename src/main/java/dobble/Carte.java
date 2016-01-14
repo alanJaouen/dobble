@@ -2,7 +2,6 @@ package dobble;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +22,8 @@ public class Carte implements Serializable {
 	/**
 	 * Constructeur de la carte avec l'id (lecture dans le fichier carte.txt)
 	 * @param id id de la carte (ligne dans le fichier)
-	 * @throws Exception 
+	 * @param fichier le nom du fichier dans lequel lire
+	 * @throws Exception si le nom du ficier est incorect
 	 */
     public Carte(int id, int fichier) throws Exception {
     	if(!(fichier == 3 || fichier == 4 || fichier == 8|| fichier == 6) )
@@ -71,8 +71,8 @@ public class Carte implements Serializable {
     /**
      * Genere un deck complet de 55 cartes, sous la forme d'une arrayList
      * @param modedejeu Le mode de jeu
-     * @return Le deck
-     * @throws Exception 
+     * @return Le deck généré
+     * @throws Exception si probleme lors de la lecure des cartes
      */
     public static ArrayList<Carte> genererDeck(Mode modedejeu) throws Exception{
     	int nbcarte=0;
