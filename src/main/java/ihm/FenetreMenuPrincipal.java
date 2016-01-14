@@ -1,6 +1,8 @@
 package ihm;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,7 +42,7 @@ public class FenetreMenuPrincipal extends JFrame {
 		super("Dobble");
 		this.setIconImage(Symbole.getIcon().getImage());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(400, 400);
+		this.setSize(850, 650);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		
@@ -68,13 +72,30 @@ public class FenetreMenuPrincipal extends JFrame {
 	public FenetreMenuPrincipal(Joueur j) {
 		this();
 		this.joueur=j;
-		this.info.setText("Bienvenu "+this.joueur.getNom()+", cliquez ici pour vous déconnecter");
+		this.info.setText("Bienvenue "+this.joueur.getNom()+", cliquez ici pour vous déconnecter");
 	}
 	
 	private void initialise() {
 		this.setLayout(new BorderLayout());
-		this.add(panelinfo(), BorderLayout.NORTH);
-		this.add(panelbouton(), BorderLayout.CENTER);
+		
+		JPanel pan_principal = new JPanelFond();
+		pan_principal.setLayout(new BorderLayout());
+		
+		JPanel pan = new JPanel();
+		pan.setBorder(BorderFactory.createTitledBorder("Menu"));
+		pan.setLayout(new BorderLayout());
+		pan.add(panelinfo(), BorderLayout.NORTH);
+		pan.add(panelbouton(), BorderLayout.CENTER);
+		
+		JPanel pan2 = new JPanelVide();
+		pan2.setLayout(new GridLayout(1, 3)); // hauteur, largeur
+		pan2.add(new JPanelVide());
+		pan2.add(pan);
+		pan2.add(new JPanelVide());
+		
+		pan_principal.add(pan2, BorderLayout.SOUTH);
+		
+		this.add(pan_principal, BorderLayout.CENTER);
 	}
 	
 	
@@ -109,7 +130,7 @@ public class FenetreMenuPrincipal extends JFrame {
 		JPanel p = new JPanel();
 		this.info=new JLabel();
 		if(this.joueur==null)
-		this.info.setText("Vous n'etes pas encore connecté, cliquez ici pour vous connecter");
+		this.info.setText("Cliquez ici pour vous connecter");
 		this.info.addMouseListener(new ConnectionListener());
 		p.add(this.info);
 		return p;
@@ -139,6 +160,16 @@ public class FenetreMenuPrincipal extends JFrame {
 	}
 	
 	// Inner Classes
+	
+	private class JPanelFond extends JPanel {
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			
+			Dimension dim = this.getSize();
+			
+			g.drawImage(new ImageIcon("images/fond_menu_principal.jpg").getImage(), 0, 0, (int) dim.getWidth(), (int) dim.getHeight(), this);
+		}
+	}
 	
 	private class BoutonListener implements ActionListener {
 		
@@ -267,7 +298,7 @@ public class FenetreMenuPrincipal extends JFrame {
 		
 		private void connection()
 		{
-			String id=JOptionPane.showInputDialog("Quel est votre identifiant?");
+			String id=JOptionPane.showInputDialog(FenetreMenuPrincipal.this, "Quel est votre identifiant?");
 			
 			if(id == null)//si l'utilisateur cancel
 				return;
@@ -323,6 +354,17 @@ public class FenetreMenuPrincipal extends JFrame {
 	public static void main(String[] args) {
 		new FenetreMenuPrincipal();
 	}
+	
+	public class JPanelVide extends JPanel {
+		  
+		  private static final long serialVersionUID = 8916582012263348044L;
+
+		  public JPanelVide()
+		  {
+			  super();
+			  this.setOpaque(false);
+		  }
+	}//fin inner class JPanelVide
 
 }
 
