@@ -44,6 +44,11 @@ public class Joueur implements Serializable {
     private int score;
     
     /**
+     * compteur de penalites du joueur
+     */
+    private int penalite;
+    
+    /**
      * constructeur par defaut
      */
     public Joueur(){
@@ -65,6 +70,7 @@ public class Joueur implements Serializable {
 		this.nom = nom;
 		this.score = score;
 		this.mdp = mdp;
+		this.penalite = 0;
 	}
 
     /**
@@ -81,6 +87,7 @@ public class Joueur implements Serializable {
     	{
     		throw this.stats.new BddException("Echec du chargement des stats");
     	}
+    	this.penalite = 0;
     }
     
     /**
@@ -219,7 +226,7 @@ public class Joueur implements Serializable {
     }
 
     /**
-     * acesseur liste de carte du joueur
+     * accesseur liste de carte du joueur
      * @return la liste de carte du joueur
      */
 	public ArrayList<Carte> getArrayCartes() {
@@ -235,7 +242,7 @@ public class Joueur implements Serializable {
 	}
 
     /**
-     * acesseur stats du joueur
+     * accesseur stats du joueur
      * @return les stats du joueur
      */
 	public Stats getStats() {
@@ -251,7 +258,7 @@ public class Joueur implements Serializable {
 	}
 
 	/**
-	 * acesseur nom du joueur
+	 * accesseur nom du joueur
 	 * @return le nom du joueur
 	 */
 	public String getNom() {
@@ -267,7 +274,7 @@ public class Joueur implements Serializable {
 	}
 
 	/**
-	 * acesseur score du joueur
+	 * accesseur score du joueur
 	 * @return le score du joueur
 	 */
 	public int getScore() {
@@ -282,6 +289,22 @@ public class Joueur implements Serializable {
 		this.score = score;
 		if(score>this.getStats().getMeilleurScore())
 			this.getStats().setMeilleurScore(score);
+	}
+	
+	/**
+	 * accesseur penalites du joueur
+	 * @return penalite du joueur
+	 */
+	public int getPenalite() {
+		return this.penalite;
+	}
+	
+	/**
+	 * mutateur penalites du joueur
+	 * @param la penalite a set
+	 */
+	public void setPenalite(int penalite) {
+		this.penalite = penalite;
 	}
 
 	

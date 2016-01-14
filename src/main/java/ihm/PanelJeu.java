@@ -32,6 +32,9 @@ public class PanelJeu extends JPanel implements ActionListener{
 	private JLabel labNbCartes2;
 	private JLabel labNbCartesAdversaire;
 	private JLabel labNbCartesAdversaire2;
+	private JLabel labPenalite;
+	
+	
 	
 	private Timer timer;
 	
@@ -140,21 +143,27 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 		labScore = new JLabel();//affiche le score du joueur 1
 		int score = mj.getArrayJoueur().get(0).getScore();
-		labScore.setText("score:" + score);
+		labScore.setText(score + " points");
 		labScore.setForeground(Color.white);
 		p.add(labScore);
 		
 		labNbCartes = new JLabel();
 		int nbCartes = mj.getArrayJoueur().get(0).getArrayCartes().size();
-		labNbCartes.setText("Nombre de cartes: " + nbCartes);
+		labNbCartes.setText(nbCartes + " cartes");
 		labNbCartes.setForeground(Color.white);
 		p.add(labNbCartes);
 		
 		JLabel labNiveau = new JLabel();
 		int niveau = mj.getArrayJoueur().get(0).getStats().getNiveau();
-		labNiveau.setText("niveau :" + niveau);
+		labNiveau.setText("Niveau " + niveau);
 		labNiveau.setForeground(Color.white);
 		p.add(labNiveau);
+		
+		labPenalite = new JLabel();
+		int penalite = mj.getArrayJoueur().get(0).getPenalite();
+		labPenalite.setText(penalite + "/5 erreurs");
+		labPenalite.setForeground(Color.red);
+		p.add(labPenalite);
 		
 		panelext.add(p, BorderLayout.CENTER);
 		
@@ -179,19 +188,19 @@ public class PanelJeu extends JPanel implements ActionListener{
 		
 		labScoreAdv = new JLabel();//affiche le score du joueur 2
 		int score = mj.getArrayJoueur().get(1).getScore();
-		labScoreAdv.setText("score:" + score);
+		labScoreAdv.setText(score + " points");
 		labScoreAdv.setForeground(Color.white);
 		p.add(labScoreAdv);
 		
 		labNbCartesAdversaire = new JLabel();
 		int nbCartes = mj.getArrayJoueur().get(1).getArrayCartes().size();
-		labNbCartesAdversaire.setText("Nombre de cartes: " + nbCartes);
+		labNbCartesAdversaire.setText(nbCartes + " cartes");
 		labNbCartesAdversaire.setForeground(Color.white);
 		p.add(labNbCartesAdversaire);
 		
 		JLabel labNiveau = new JLabel();
 		int niveau = mj.getArrayJoueur().get(1).getStats().getNiveau();
-		labNiveau.setText("niveau :" + niveau);
+		labNiveau.setText("Niveau " + niveau);
 		labNiveau.setForeground(Color.white);
 		p.add(labNiveau);
 		
