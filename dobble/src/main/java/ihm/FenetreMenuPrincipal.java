@@ -111,7 +111,7 @@ public class FenetreMenuPrincipal extends JFrame {
 							"Parametres", 
 							"Nouveau Joueur",
 							"Supprimer mon compte",
-							"Quitter Dobble :'("
+							"Quitter Dobble"
 							};
 		
 		
@@ -167,7 +167,7 @@ public class FenetreMenuPrincipal extends JFrame {
 			
 			Dimension dim = this.getSize();
 			
-			g.drawImage(new ImageIcon("images/fond_menu_principal.jpg").getImage(), 0, 0, (int) dim.getWidth(), (int) dim.getHeight(), this);
+			g.drawImage(new ImageIcon("images/fondmenu.png").getImage(), 0, 0, (int) dim.getWidth(), (int) dim.getHeight(), this);
 		}
 	}
 	
