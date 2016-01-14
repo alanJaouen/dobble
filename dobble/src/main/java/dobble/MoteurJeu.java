@@ -209,7 +209,6 @@ public class MoteurJeu implements Serializable {
     		}
         	
     		this.ajoutePenalite(this.arrayJoueur.get(this.joueurActif)); //penalite +1
-    		System.err.println("Penalite = " + this.arrayJoueur.get(this.joueurActif).getPenalite());
     		if (this.arrayJoueur.get(this.joueurActif).getPenalite() >= 5) //Si plus de 5 penalites
     		{
     			this.needupdate = true; //on fait gagner l'adversaire #jcalc

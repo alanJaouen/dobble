@@ -587,7 +587,6 @@ public class PanelJeu extends JPanel implements ActionListener{
 						}
 						else
 						{
-							System.out.println("oui");
 							int penalite = mj.getArrayJoueur().get(0).getPenalite();
 							labPenalite.setText(penalite + "/5 erreurs");
 							if(penalite >= 4)
