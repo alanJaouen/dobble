@@ -179,7 +179,7 @@ public class MoteurJeu implements Serializable {
     			t.start();
     		}
     		
-    		this.testfin();
+    		this.testfin(); //update
     		if(idJoueur != this.joueurActif)
     			this.needupdate=true;
     		
@@ -200,7 +200,16 @@ public class MoteurJeu implements Serializable {
     		return true;
     	}
     	else // Si le joueur s'est trompé :
+    	{
+    		this.ajoutePenalite(this.arrayJoueur.get(this.joueurActif)); //penalite +1
+    		if (this.arrayJoueur.get(this.joueurActif).getPenalite() >= 5) //Si plus de 5 penalites
+    		{
+    			this.needupdate = true; //on fait gagner l'adversaire #jcalc
+    			this.inGame = false;
+    		}
     		return false;
+    	}
+    		
     }
 
     /**
@@ -226,13 +235,22 @@ public class MoteurJeu implements Serializable {
     	this.distribuerCarte(paquet);
     	this.inGame = true;
     	this.chrono.start();
-    	for(int i=0; i<tpsr.length;i++)
+    	for(int i=0; i<tpsr.length; i++)
     		tpsr[i].start();
     	
     	new ActualiseThread("thread actualisation",3000,1);
 
     	
     }
+	
+	/**
+	 * ajoute une penalite au joueur
+	 * @param j 
+	 */
+	public void ajoutePenalite(Joueur j)
+	{
+		j.setPenalite(j.getPenalite() + 1);
+	}
 
     /**
      *  met fin a la partie et met a jour les stats du joueur notament le score max sur le serveur
