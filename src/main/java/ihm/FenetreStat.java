@@ -2,26 +2,19 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
-
 import dobble.Joueur;
 import dobble.MoteurJeu;
 import dobble.Symbole;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

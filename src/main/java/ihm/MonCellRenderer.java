@@ -3,13 +3,15 @@ package ihm;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 public class MonCellRenderer extends DefaultTableCellRenderer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 378120311047655647L;
 	private String nom;
 	public MonCellRenderer(String nomJoueur)
 	{

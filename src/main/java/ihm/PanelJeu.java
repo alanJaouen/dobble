@@ -14,7 +14,6 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import dobble.Carte;
