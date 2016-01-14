@@ -335,7 +335,7 @@ public class FenetreStat extends JFrame {
 	
 	public void dispose()
 	{
-		new FenetreMenuPrincipal(this.nomJoueur);
+		new FenetreMenuPrincipal();
 		super.dispose();
 	}
 	
