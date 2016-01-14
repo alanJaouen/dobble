@@ -134,11 +134,11 @@ public class MoteurJeu implements Serializable {
      * constructeur par liste de joueur avec mode par defaut
      * @param joueurs la liste de joueur
      */
-    public MoteurJeu(ArrayList<Joueur> joueurs) {
+    public MoteurJeu(ArrayList<Joueur> joueurs, Mode m) {
     	this.arrayJoueur = joueurs;
     	this.cartesCentre = new ArrayList<Carte>();
     	this.chrono = new Chronometer();
-    	this.modeDeJeu = new Mode();
+    	this.modeDeJeu = m;
     	this.inGame = false;
     	this.joueurActif = 0;
     	this.needupdate=false;
@@ -246,7 +246,7 @@ public class MoteurJeu implements Serializable {
     	for(int i=0; i<tpsr.length; i++)
     		tpsr[i].start();
     	
-    	new ActualiseThread("thread actualisation",3000,1);
+    	new ActualiseThread("thread actualisation",this.modeDeJeu.getTempsIA()*1000,1);
 
     	
     }
@@ -490,30 +490,43 @@ public class MoteurJeu implements Serializable {
 		@Override
 		public void run()
 		{
+			try 
+			{
+				Thread.sleep(this.getTempsIA());
+			} 
+			catch (InterruptedException e)
+			{
+				
+			}
+			
 			while(MoteurJeu.this.isInGame())
 			{
+				System.out.println(this.getTempsIA());
 				Carte carteIa = MoteurJeu.this.arrayJoueur.get(idJoueur).getArrayCartes().get(arrayJoueur.get(idJoueur).getArrayCartes().size() -1);
 				Carte carteMilieu = MoteurJeu.this.cartesCentre.get(MoteurJeu.this.cartesCentre.size()-1);
 				
 				if(MoteurJeu.this.IAdoisDormir)
 				{
 					MoteurJeu.this.IAdoisDormir=false;
+					
+					try {
+						MoteurJeu.this.interagir(idJoueur,Carte.getSymboleCommun(carteIa, carteMilieu));
+						MoteurJeu.this.IAdoisDormir=true;
+					} catch (Exception e1) {
+						
+					}
+					
 					try 
 					{
 						Thread.sleep(this.getTempsIA());
 					} 
 					catch (InterruptedException e)
 					{
-						e.printStackTrace();
+					
 					}
 				}
 				
-				try {
-					MoteurJeu.this.interagir(idJoueur,Carte.getSymboleCommun(carteIa, carteMilieu));
-					MoteurJeu.this.IAdoisDormir=true;
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				
 				
 			}
 		}
