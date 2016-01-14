@@ -570,19 +570,13 @@ public class PanelJeu extends JPanel implements ActionListener{
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					try {
-						if(PanelJeu.this.mj.interagir(0,this.monSymbole))
+						if(PanelJeu.this.mj.isInGame())
 						{
-							if(PanelJeu.this.mj.isInGame())
-							{
-								PanelJeu.this.remove(carte);
-								PanelJeu.this.add(PanelJeu.this.creePanels(),BorderLayout.CENTER);
-							}
-							else
-							{
-								
-							}
-							PanelJeu.this.mj.faireDormirIA();
+							PanelJeu.this.remove(carte);
+							PanelJeu.this.add(PanelJeu.this.creePanels(),BorderLayout.CENTER);
 						}
+
+						PanelJeu.this.mj.faireDormirIA();
 						PanelJeu.this.repaint();
 					} catch (Exception e) {
 						e.printStackTrace();
