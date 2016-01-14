@@ -52,6 +52,7 @@ public class FenetreParametres extends JFrame {
 
 	public FenetreParametres(Mode mode) {
 		super("Parametres");
+		this.setVisible(true);
 		this.setIconImage(Symbole.getIcon().getImage());
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.mode = mode;
@@ -62,7 +63,6 @@ public class FenetreParametres extends JFrame {
 		this.initialise();
 		this.setValeurs();
 		this.reset_changements();
-		this.setVisible(true);
 	}
 
 	private void initialise() {
@@ -143,7 +143,7 @@ public class FenetreParametres extends JFrame {
 		pan_ia.setLayout(new GridLayout(2, 1)); // hauteur, largeur
 
 		// Label :
-		pan_ia.add(new JLabel("Difficulté de l'IA")); // TODO changer le titre
+		pan_ia.add(new JLabel("Niveau de difficulté")); // TODO changer le titre
 														// de ce reglage
 
 		// Slider :
@@ -353,10 +353,11 @@ public class FenetreParametres extends JFrame {
 				valeurs[i] = Integer.parseInt(Symbole.lecture("param.txt", i + 1));
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(FenetreParametres.this,
+			JOptionPane.showMessageDialog(null,
 					"Erreur : une erreur à été trouvée lors du chargement de vos\nparametres. Veuillez reesayer plus tard.",
 					"Erreur de chargement", JOptionPane.ERROR_MESSAGE);
-			// TODO : quitter les parametres si erreur de chargement
+			this.dispose();
+			new FenetreMenuPrincipal(); // TODO sauvegarde utilisateur (Alan)
 		}
 
 		valeurs[0]--;
