@@ -101,30 +101,11 @@ public class FenetreJeu extends JFrame {
 	}
 	
 	
-	public static void main(String[] args) throws Exception {
-
-		Mode mode = new Mode(3,1); //Mode par defaut
-		ArrayList<Carte> deck = Carte.genererDeck(mode); //Nouveau deck global de 55 cartes
-		
-		Joueur j1 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Lait", 0, "mdp"); //Nouveau Joueur, sans deck pour l'instant
-		Joueur j2 = new Joueur(new ArrayList<Carte>(), new Stats(), "Bonneau Beau", 0, "mdp");
-		
-		
-		ArrayList<Joueur> joueurs = new ArrayList<Joueur>(); //Liste de joueurs
-		joueurs.add(j1); //Ajout de notre joueur cree a la liste
-		joueurs.add(j2);
-		
-		
-		
-		MoteurJeu jeu = new MoteurJeu(joueurs); //Cree un moteur de jeu
-		jeu.initialiser(); //initialisation: scores et chronometre
-		jeu.lancerJeu(deck); //Lancement: cartes distribuees
-		new FenetreJeu(jeu);
-		
-	}
+	
 	
 	public void dispose()
 	{
+		this.mj.getArrayJoueur().get(0).setPenalite(0); //jcalc
 		FenetreJeu.this.thread.fin();
 		new FenetreMenuPrincipal(this.mj.getArrayJoueur().get(this.mj.getJoueurActif()));
 		super.dispose();

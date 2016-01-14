@@ -162,7 +162,13 @@ public class PanelJeu extends JPanel implements ActionListener{
 		labPenalite = new JLabel();
 		int penalite = mj.getArrayJoueur().get(0).getPenalite();
 		labPenalite.setText(penalite + "/5 erreurs");
-		labPenalite.setForeground(Color.red);
+		
+		if (penalite >= 4)
+		{
+			labPenalite.setForeground(Color.red);
+		}
+		else labPenalite.setForeground(Color.white);
+		
 		p.add(labPenalite);
 		
 		panelext.add(p, BorderLayout.CENTER);
@@ -577,11 +583,17 @@ public class PanelJeu extends JPanel implements ActionListener{
 								PanelJeu.this.remove(carte);
 								PanelJeu.this.add(PanelJeu.this.creePanels(),BorderLayout.CENTER);
 							}
-							else
-							{
-								
-							}
 							PanelJeu.this.mj.faireDormirIA();
+						}
+						else
+						{
+							System.out.println("oui");
+							int penalite = mj.getArrayJoueur().get(0).getPenalite();
+							labPenalite.setText(penalite + "/5 erreurs");
+							if(penalite >= 4)
+							{
+								labPenalite.setForeground(Color.red);
+							}
 						}
 						PanelJeu.this.repaint();
 					} catch (Exception e) {
