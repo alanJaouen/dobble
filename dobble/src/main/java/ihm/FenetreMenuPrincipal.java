@@ -179,7 +179,7 @@ public class FenetreMenuPrincipal extends JFrame {
 				joueurs.add(j1); //Ajout de notre joueur cree a la liste
 				joueurs.add(j2);
 
-				MoteurJeu jeu = new MoteurJeu(joueurs); //Cree un moteur de jeu
+				MoteurJeu jeu = new MoteurJeu(joueurs, FenetreMenuPrincipal.this.mode); //Cree un moteur de jeu
 				jeu.initialiser(); //initialisation: scores et chronometre
 				jeu.lancerJeu(deck); //Lancement: cartes distribuees
 				FenetreJeu j= new FenetreJeu(jeu);

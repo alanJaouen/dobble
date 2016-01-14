@@ -158,11 +158,11 @@ public class FenetreJeu extends JFrame {
 					if(FenetreJeu.this.mj.getNeedUpdate())
 					{
 						JOptionPane.showMessageDialog(FenetreJeu.this, "Dommage tu as perdu",
-							"bg", JOptionPane.INFORMATION_MESSAGE);
+							"DOMMAGE", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else
 						JOptionPane.showMessageDialog(FenetreJeu.this, "Bravo tu as gagné",
-								"gg", JOptionPane.INFORMATION_MESSAGE);
+								"BRAVO", JOptionPane.INFORMATION_MESSAGE);
 					f=new FenetreWait();
 					try {
 						
