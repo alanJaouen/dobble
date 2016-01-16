@@ -336,6 +336,11 @@ public class MoteurJeu implements Serializable {
 	 * @param paquet paquet de carte a distribuer
 	 */
     private void distribuerCarte(ArrayList<Carte> paquet){
+    	
+    	for(Joueur i: this.arrayJoueur)
+    	{
+    		i.getArrayCartes().clear();
+    	}
     	int nb_alea, i = 0;
     	
     	while (paquet.size() > 1) {
@@ -368,8 +373,6 @@ public class MoteurJeu implements Serializable {
     	} 
     	catch ( ClassNotFoundException e ) 
     	{
-    	   System.out.println("echec du changement de Driver BDD");
-    	   e.printStackTrace();
     	}
     	
     	/*connection a la bdd*/
@@ -380,7 +383,7 @@ public class MoteurJeu implements Serializable {
 	    } 
     	catch (SQLException ex) 
     	{
-    		System.out.println("echec de la connection a la bdd");
+    		
     	}
 	    	
     	return null;
@@ -500,7 +503,7 @@ public class MoteurJeu implements Serializable {
 			
 			while(MoteurJeu.this.isInGame())
 			{
-				System.out.println(this.getTempsIA());
+				
 				Carte carteIa = MoteurJeu.this.arrayJoueur.get(idJoueur).getArrayCartes().get(arrayJoueur.get(idJoueur).getArrayCartes().size() -1);
 				Carte carteMilieu = MoteurJeu.this.cartesCentre.get(MoteurJeu.this.cartesCentre.size()-1);
 				
