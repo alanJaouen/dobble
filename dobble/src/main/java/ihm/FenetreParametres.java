@@ -30,13 +30,15 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 
+import dobble.Joueur;
 import dobble.Mode;
 import dobble.Symbole;
 import javafx.scene.control.RadioButton;
 
 public class FenetreParametres extends JFrame {
 
-	// Attributs :
+	// Attributs :.
+	private Joueur j;
 	private Mode mode;
 	private int[] valeurs_initiales;
 
@@ -50,8 +52,9 @@ public class FenetreParametres extends JFrame {
 	private ArrayList<JRadioButton> groupe_nombre_symboles;
 	private JSlider slider_diffuculte;
 
-	public FenetreParametres(Mode mode) {
+	public FenetreParametres(Mode mode, Joueur j) {
 		super("Parametres");
+		this.j=j;
 		this.setVisible(true);
 		this.setIconImage(Symbole.getIcon().getImage());
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -301,7 +304,6 @@ public class FenetreParametres extends JFrame {
 		data[3] = 17 - (this.slider_diffuculte.getValue() + 1);
 		data[4] = this.indexRadioButton(this.groupe_voix);
 		
-		
 		switch (this.indexRadioButton(this.groupe_nombre_symboles)) {
 		case 0:
 			data[2] = 3;
@@ -451,7 +453,7 @@ public class FenetreParametres extends JFrame {
 					FenetreParametres.this.dispose();
 				}
 			} else {
-				new FenetreMenuPrincipal();
+				new FenetreMenuPrincipal(FenetreParametres.this.j);
 				FenetreParametres.this.dispose();
 			}
 		}

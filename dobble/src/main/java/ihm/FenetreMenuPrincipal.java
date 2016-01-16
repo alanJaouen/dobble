@@ -223,7 +223,7 @@ public class FenetreMenuPrincipal extends JFrame {
 				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 3: // Bouton parametres
-				new FenetreParametres(FenetreMenuPrincipal.this.mode);
+				new FenetreParametres(FenetreMenuPrincipal.this.mode, FenetreMenuPrincipal.this.joueur);
 				FenetreMenuPrincipal.this.dispose();
 				break;
 			case 4: // Bouton nouveau joueur
